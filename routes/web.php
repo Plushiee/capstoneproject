@@ -18,3 +18,7 @@ Route::get('/', function () {
 // Admin Start
 Route::get('admin/dashboard', 'PageController@adminDashboard')->name('adminDashboard');
 // Admin End
+
+// User Start
+Route::get('user/dashboard', 'PageUserController@userDashboard')->name('userDashboard');
+// User End
