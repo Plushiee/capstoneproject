@@ -20,7 +20,7 @@
                         </li>
 
                         <li>
-                            <a href="{{ route('dashboard') }}">
+                            <a href="{{ route('userDashboard') }}">
                                 <span class="nav-icon">
                                     <i class="material-icons">&#xe3fc;
                                     </i>
@@ -29,7 +29,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="{{ route('order') }}">
+                            <a href="{{ route('userOrder') }}">
                                 <span class="nav-icon">
                                     <i class="material-icons">add_shopping_cart
                                     </i>
@@ -108,12 +108,12 @@
                             </a>
                             <ul class="nav-sub">
                                 <li>
-                                    <a href="{{ route('mempelai') }}">
+                                    <a href="{{ route('userMempelai') }}">
                                         <span class="nav-text">Mempelai</span>
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="{{ route('acara') }}">
+                                    <a href="{{ route('userAcara') }}">
                                         <span class="nav-text">Acara</span>
                                     </a>
                                 </li>
@@ -123,7 +123,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="{{ route('cerita') }}">
+                                    <a href="{{ route('userCerita') }}">
                                         <span class="nav-text">Cerita</span>
                                     </a>
                                 </li>

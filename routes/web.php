@@ -19,24 +19,27 @@ Route::get('/', function () {
 Route::get('admin/dashboard', 'PageController@adminDashboard')->name('adminDashboard');
 // Admin End
 
-Route::get('/dashboard',  'PageUserController@userDashboard')->name('userDashboard');
+Route::get('users/dashboard',  'PageUserController@userDashboard')->name('userDashboard');
 
 // Route::get('/dashboard', function () {
 //     return view('users.dashboard');
 // })->name('dashboard');
 
-Route::get('/order', function () {
-    return view('users.order');
-})->name('order');
+// Route::get('/mempelai', function () {
+//     return view('users.mempelai');
+// })->name('mempelai');
 
-Route::get('/mempelai', function () {
-    return view('users.mempelai');
-})->name('mempelai');
+// Route::get('/cerita', function () {
+//     return view('users.cerita');
+// })->name('cerita');
 
-Route::get('/cerita', function () {
-    return view('users.cerita');
-})->name('cerita');
+// Route::get('/acara', function () {
+//     return view('users.acara');
+// })->name('acara');
 
-Route::get('/acara', function () {
-    return view('users.acara');
-})->name('acara');
+
+Route::get('users/order',  'PageUserController@userOrder')->name('userOrder');
+Route::get('users/mempelai',  'PageUserController@userMempelai')->name('userMempelai');
+Route::get('users/cerita',  'PageUserController@userCerita')->name('userCerita');
+Route::get('users/acara',  'PageUserController@userOrder')->name('userAcara');
+Route::get('users/listtamu',  'PageUserController@userListTamu')->name('userListTamu');

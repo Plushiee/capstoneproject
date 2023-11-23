@@ -12,5 +12,26 @@ class PageUserController extends Controller
         return view('users.dashboard');
     }
 
+    public function userMempelai()
+    {
+        return view('users.mempelai');
+    }
+
+    public function userCerita()
+    {
+        return view('users.cerita');
+    }
+
+    public function userOrder()
+    {
+        return view('users.order');
+    }
+
+    public function userListTamu()
+    {
+        return view('users.listtamu');
+    }
+
+
 
 }
