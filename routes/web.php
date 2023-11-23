@@ -22,3 +22,23 @@ Route::get('admin/dashboard', 'PageController@adminDashboard')->name('adminDashb
 // User Start
 Route::get('user/dashboard', 'PageUserController@userDashboard')->name('userDashboard');
 // User End
+
+Route::get('/dashboard', function () {
+    return view('users.dashboard');
+})->name('dashboard');;
+
+Route::get('/order', function () {
+    return view('users.order');
+})->name('order');
+
+Route::get('/mempelai', function () {
+    return view('users.mempelai');
+})->name('mempelai');
+
+Route::get('/cerita', function () {
+    return view('users.cerita');
+})->name('cerita');
+
+Route::get('/acara', function () {
+    return view('users.acara');
+})->name('acara');
