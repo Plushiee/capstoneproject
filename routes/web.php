@@ -19,13 +19,11 @@ Route::get('/', function () {
 Route::get('admin/dashboard', 'PageController@adminDashboard')->name('adminDashboard');
 // Admin End
 
-// User Start
-Route::get('user/dashboard', 'PageUserController@userDashboard')->name('userDashboard');
-// User End
+Route::get('/dashboard',  'PageUserController@userDashboard')->name('userDashboard');
 
-Route::get('/dashboard', function () {
-    return view('users.dashboard');
-})->name('dashboard');;
+// Route::get('/dashboard', function () {
+//     return view('users.dashboard');
+// })->name('dashboard');
 
 Route::get('/order', function () {
     return view('users.order');

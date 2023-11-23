@@ -9,6 +9,8 @@ class PageUserController extends Controller
     // User Dashboard 
     public function userDashboard()
     {
-        return view('user.dashboard');
+        return view('users.dashboard');
     }
+
+
 }
