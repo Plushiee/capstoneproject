@@ -128,9 +128,13 @@
                                     <div
                                         class="col-12 col-md-6 col-lg-6 d-flex align-items-center justify-content-center mt-3">
                                         <div class="btn btn-primary">
-                                            <input type="file" class="file-upload" id="groom" name="profile_picture"
-                                                accept="image/*"> Upload Foto
+                                            <label class="mb-0 pb-0" for="groom" style="cursor: pointer;">
+                                                <input type="file" class="file-upload" id="groom"
+                                                    name="profile_picture" accept="image/*" style="display: none;">
+                                                Upload Foto
+                                            </label>
                                         </div>
+
                                     </div>
                                 </div>
                             </div>
@@ -185,8 +189,11 @@
                                     <div
                                         class="col-12 col-md-6 col-lg-6 d-flex align-items-center justify-content-center mt-3">
                                         <div class="btn btn-primary">
-                                            <input type="file" class="file-upload" id="bride" name="profile_picture"
-                                                accept="image/*"> Upload Foto
+                                            <label class="mb-0 pb-0" for="bride" style="cursor: pointer;">
+                                                <input type="file" class="file-upload" id="bride"
+                                                    name="profile_picture" accept="image/*" style="display: none;">
+                                                Upload Foto
+                                            </label>
                                         </div>
                                     </div>
                                 </div>
@@ -245,8 +252,11 @@
                                     <div
                                         class="col-12 col-md-6 col-lg-6 d-flex align-items-center justify-content-center mt-3">
                                         <div class="btn btn-primary">
-                                            <input type="file" class="file-upload" id="sampul"
-                                                name="profile_picture" accept="image/*"> Upload Foto
+                                            <label class="mb-0 pb-0" for="sampul" style="cursor: pointer;">
+                                                <input type="file" class="file-upload" id="sampul"
+                                                    name="profile_picture" accept="image/*" style="display: none;">
+                                                Upload Foto
+                                            </label>
                                         </div>
                                     </div>
                                 </div>
