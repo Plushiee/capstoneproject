@@ -7,7 +7,7 @@
                 <a class="navbar-brand">
                     <div ui-include="{{ asset('assets/images/logo.svg') }}"></div>
                     <img src="{{ asset('assets/images/logo.png') }}" alt="." class="hide">
-                    <span class="hidden-folded inline">MyCapstone   </span>
+                    <span class="hidden-folded inline">MyCapstone </span>
                 </a>
                 <!-- / brand -->
             </div>
@@ -83,7 +83,7 @@
                             </a>
                             <ul class="nav-sub">
                                 <li>
-                                    <a href="headers.html">
+                                    <a href="{{ route('userListTamu') }}">
                                         <span class="nav-text">List Tamu</span>
                                     </a>
                                 </li>
