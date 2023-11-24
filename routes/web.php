@@ -43,3 +43,10 @@ Route::get('users/mempelai',  'PageUserController@userMempelai')->name('userMemp
 Route::get('users/cerita',  'PageUserController@userCerita')->name('userCerita');
 Route::get('users/acara',  'PageUserController@userOrder')->name('userAcara');
 Route::get('users/listtamu',  'PageUserController@userListTamu')->name('userListTamu');
+Route::get('users/galeri',  'PageUserController@userGaleri')->name('userGaleri');
+Route::get('users/ucapan',  'PageUserController@userUcapan')->name('userUcapan');
+
+
+//testing undngan
+Route::get('/{domain}',  'UndanganController@index');
+Route::get('/{domain}/{tamu}',  'UndanganController@tamu');

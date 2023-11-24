@@ -127,7 +127,7 @@
                                     </div>
                                     <div
                                         class="col-12 col-md-6 col-lg-6 d-flex align-items-center justify-content-center mt-3">
-                                        <div class="btn btn-primary">
+                                        <div class="btn btn-fw primary">
                                             <label class="mb-0 pb-0" for="groom" style="cursor: pointer;">
                                                 <input type="file" class="file-upload" id="groom"
                                                     name="profile_picture" accept="image/*" style="display: none;">
@@ -164,7 +164,7 @@
                                 value="" required>
                         </div>
                         <div class="col my-3">
-                            <button class="btn btn-primary" data-toggle="modal" data-target="#modalPria">Simpan</button>
+                            <button class="btn btn-fw primary" data-toggle="modal" data-target="#modalPria">Simpan</button>
                         </div>
                     </div>
                 </div>
@@ -188,7 +188,7 @@
                                     </div>
                                     <div
                                         class="col-12 col-md-6 col-lg-6 d-flex align-items-center justify-content-center mt-3">
-                                        <div class="btn btn-primary">
+                                        <div class="btn btn-fw primary">
                                             <label class="mb-0 pb-0" for="bride" style="cursor: pointer;">
                                                 <input type="file" class="file-upload" id="bride"
                                                     name="profile_picture" accept="image/*" style="display: none;">
@@ -225,7 +225,7 @@
                         </div>
 
                         <div class="col my-3 ">
-                            <button class="btn btn-primary" data-toggle="modal"
+                            <button class="btn btn-fw primary" data-toggle="modal"
                                 data-target="#modalWanita">Simpan</button>
                         </div>
                     </div>
@@ -251,7 +251,7 @@
                                     </div>
                                     <div
                                         class="col-12 col-md-6 col-lg-6 d-flex align-items-center justify-content-center mt-3">
-                                        <div class="btn btn-primary">
+                                        <div class="btn btn-fw primary">
                                             <label class="mb-0 pb-0" for="sampul" style="cursor: pointer;">
                                                 <input type="file" class="file-upload" id="sampul"
                                                     name="profile_picture" accept="image/*" style="display: none;">

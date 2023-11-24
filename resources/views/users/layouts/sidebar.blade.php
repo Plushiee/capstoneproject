@@ -88,7 +88,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="asides.html">
+                                    <a href="{{ route('userUcapan') }}">
                                         <span class="nav-text">Ucapan</span>
                                     </a>
                                 </li>
@@ -118,7 +118,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="footers.html">
+                                    <a href="{{ route('userGaleri') }}">
                                         <span class="nav-text">Galeri</span>
                                     </a>
                                 </li>

@@ -81,7 +81,7 @@
     <script src="{{ asset('assets/js/ui-device.js') }}"></script>
     <script src="{{ asset('assets/js/ui-form.js') }}"></script>
     <script src="{{ asset('assets/js/ui-nav.js') }}"></script>
-    <script src="{{ asset('assets/js/ui-screenfull.js') }}"></script>
+    {{-- <script src="{{ asset('assets/js/ui-screenfull.js') }}"></script> --}}
     <script src="{{ asset('assets/js/ui-scroll-to.js') }}"></script>
     <script src="{{ asset('assets/js/ui-toggle-class.js') }}"></script>
 

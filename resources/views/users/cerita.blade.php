@@ -26,7 +26,7 @@
                         <div class="col d-flex justify-content-between">
                             <h6 class="font-weight-bold text-primary my-auto">Data Cerita</h6>
 
-                            <a id="addCerita" class="btn btn-primary" style="color:#fff">Tambah
+                            <a id="addCerita" class="btn btn-fw primary" style="color:#fff">Tambah
                                 Cerita</a>
                         </div>
                     </div>
@@ -102,35 +102,39 @@
 
 
         </div>
-    @endsection
-    @section('addJS')
-        <script>
-            var i = <?php echo $jml_cerita; ?>;
+    </div>
+@endsection
 
-            $(document).on('click', '.btn_remove', function() {
+@section('addJS')
 
-                var button_id = $(this).attr("id");
-                $('#cerita' + button_id + '').remove();
-                i--;
+    <script>
+        var i = <?php echo $jml_cerita; ?>;
 
-                if (i == 0) {
-                    $("..form-control").prop('required', true);
-                }
+        $(document).on('click', '.btn_remove', function() {
 
-            });
+            var button_id = $(this).attr("id");
+            $('#cerita' + button_id + '').remove();
+            i--;
 
-            $('#addCerita').click(function() {
+            if (i == 0) {
+                $("..form-control").prop('required', true);
+            }
 
-                i++;
+        });
 
-                $('#konten-cerita').append('<div id="cerita' + i +
-                    '"><div class="row align-items-center mt-3"><div class="col-auto"><a style="color: #2c3e50;margin-bottom:0px;font-size: 20px;font-weight: 600;display: flex;">#' +
-                    i + '</a></div><div class="col"><a id="' + i +
-                    '" class="btn btn-sm btn_remove" style="background-color: #dc3545;padding: 5px;font-size: 12px;border-radius: 5px;">Hapus</a></div></div><div class="row align-items-center"><div class="col"><label>Tanggal</label><input name="tanggal_cerita[]" type="text" class="form-control" placeholder="Contoh : 14 Januari 2020 " required></div></div><div class="row align-items-center mt-3"><div class="col"><label>Judul</label><input name="judul_cerita[]" type="text" class="form-control" placeholder="Contoh : Pertama Bertemu" required></div></div><div class="row align-items-center mt-3"><div class="col"><label>Isi Cerita</label><textarea name="isi_cerita[]" type="text" class="form-control" placeholder="Maximal 500 Karakter" maxlength="500" rows="4" required></textarea></div></div></div>'
-                );
-                $(".form-control").prop('required', false);
-            });
-        </script>
+        $('#addCerita').click(function() {
+            console.log('tes');
+
+            i++;
+
+            $('#konten-cerita').append('<div id="cerita' + i +
+                '"><div class="row align-items-center mt-3"><div class="col-auto"><a style="color: #2c3e50;margin-bottom:0px;font-size: 20px;font-weight: 600;display: flex;">#' +
+                i + '</a></div><div class="col"><a id="' + i +
+                '" class="btn btn-sm btn_remove" style="background-color: #dc3545;padding: 5px;font-size: 12px;border-radius: 5px;">Hapus</a></div></div><div class="row align-items-center"><div class="col"><label>Tanggal</label><input name="tanggal_cerita[]" type="text" class="form-control" placeholder="Contoh : 14 Januari 2020 " required></div></div><div class="row align-items-center mt-3"><div class="col"><label>Judul</label><input name="judul_cerita[]" type="text" class="form-control" placeholder="Contoh : Pertama Bertemu" required></div></div><div class="row align-items-center mt-3"><div class="col"><label>Isi Cerita</label><textarea name="isi_cerita[]" type="text" class="form-control" placeholder="Maximal 500 Karakter" maxlength="500" rows="4" required></textarea></div></div></div>'
+            );
+            $(".form-control").prop('required', false);
+        });
+    </script>
 
 
-    @endsection
+@endsection

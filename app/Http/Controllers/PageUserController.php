@@ -31,7 +31,12 @@ class PageUserController extends Controller
     {
         return view('users.listtamu');
     }
-
-
-
+    public function userGaleri()
+    {
+        return view('users.galeri');
+    }
+    public function userUcapan()
+    {
+        return view('users.ucapan');
+    }
 }
