@@ -14,7 +14,7 @@ class TblSalamsModel extends Model
 
     protected $fillable = [
         'id_acara',
-        'tangga;_sala,',
+        'tanggal_salam',
         'nama_pengirim',
         'isi_salam',
     ];
