@@ -37,6 +37,8 @@ Route::get('users/dashboard',  'PageUserController@userDashboard')->name('userDa
 //     return view('users.acara');
 // })->name('acara');
 
+// Login
+Route::get('login', 'PageController@login')->name('login');
 
 Route::get('users/order',  'PageUserController@userOrder')->name('userOrder');
 Route::get('users/mempelai',  'PageUserController@userMempelai')->name('userMempelai');
@@ -45,7 +47,6 @@ Route::get('users/acara',  'PageUserController@userOrder')->name('userAcara');
 Route::get('users/listtamu',  'PageUserController@userListTamu')->name('userListTamu');
 Route::get('users/galeri',  'PageUserController@userGaleri')->name('userGaleri');
 Route::get('users/ucapan',  'PageUserController@userUcapan')->name('userUcapan');
-
 
 //testing undngan
 Route::get('/{domain}',  'UndanganController@index');
