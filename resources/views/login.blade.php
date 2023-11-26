@@ -4,7 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>iofrm</title>
+    <title>- Login</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
     <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="assets/css/fontawesome-all.min.css">
     <link rel="stylesheet" type="text/css" href="assets/css/iofrm-style.css">
@@ -30,19 +31,31 @@
             <div class="form-holder">
                 <div class="form-content">
                     <div class="form-items">
-                        <h3>Get more things done with Loggin platform.</h3>
-                        <p>Access to the most powerfull tool in the entire design and web industry.</p>
+                        <h3>Get more things done with MyCaptsone.</h3>
+                        <p>Access to the most powerfull tool in the entire digital wedding design in Indonesia.</p>
                         <div class="page-links">
-                            <a href="login2.html" class="active">Login</a><a href="register2.html">Register</a>
+                            <a href="login" class="active">Login</a><a href="register">Register</a>
                         </div>
-                        <form>
-                            <input class="form-control" type="text" name="username" placeholder="E-mail Address"
+                        <form action="{{ route('loginSave') }}" method="POST">
+                            @csrf
+                            <input class="form-control" type="text" name="email" placeholder="Alamat E-mail"
                                 required>
-                            <input class="form-control" type="password" name="password" placeholder="Password" required>
-                            <input type="checkbox" id="chk1"><label for="chk1">Remmeber me</label>
+                            <div class="input-group px-0">
+                                <input type="password" class="form-control" id="passwordLogin" name="passwordLogin"
+                                    placeholder="Kata Sandi" autocomplete="passwordLogin" required>
+                                <div class="input-group-append">
+                                    <span class="input-group-text pass" id="pass">
+                                        <i class="bi bi-eye-fill" id="showPass"></i>
+                                        <i class="bi bi-eye-slash-fill" id="hidePass"></i>
+                                    </span>
+                                </div>
+                            </div>
+                            <input type="checkbox" name="remember" id="remember"
+                                {{ old('remember') ? 'checked' : '' }}>
+                            <label for="remember">Remmeber me</label>
                             <div class="form-button">
                                 <button id="submit" type="submit" class="ibtn">Login</button> <a
-                                    href="forget2.html">Forget password?</a>
+                                    href="forget">Forget password?</a>
                             </div>
                         </form>
                     </div>
@@ -53,7 +66,83 @@
     <script src="assets/js/jquery.min.js"></script>
     <script src="assets/js/popper.min.js"></script>
     <script src="assets/js/bootstrap.min.js"></script>
-    <script src="assets/js/main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="assets/js/login.js"></script>
+    @if (session('success'))
+        <script>
+            $(document).ready(function() {
+                // Alert
+                var toastMixin = Swal.mixin({
+                    toast: true,
+                    icon: 'success',
+                    title: 'General Title',
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                        toast.addEventListener('mouseenter', Swal.stopTimer)
+                        toast.addEventListener('mouseleave', Swal.resumeTimer)
+                    }
+                });
+
+                toastMixin.fire({
+                    animation: true,
+                    title: 'Akun Berhasil Ditambahkan'
+                });
+            });
+        </script>
+    @endif
+    @if (session('errorWrong'))
+        <script>
+            $(document).ready(function() {
+                // Alert
+                var toastMixin = Swal.mixin({
+                    toast: true,
+                    icon: 'error',
+                    title: 'General Title',
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                        toast.addEventListener('mouseenter', Swal.stopTimer)
+                        toast.addEventListener('mouseleave', Swal.resumeTimer)
+                    }
+                });
+
+                toastMixin.fire({
+                    animation: true,
+                    title: 'Email atau kata sandi salah'
+                });
+            });
+        </script>
+    @endif
+    @if (session('error'))
+        <script>
+            $(document).ready(function() {
+                // Alert
+                var toastMixin = Swal.mixin({
+                    toast: true,
+                    icon: 'error',
+                    title: 'General Title',
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                        toast.addEventListener('mouseenter', Swal.stopTimer)
+                        toast.addEventListener('mouseleave', Swal.resumeTimer)
+                    }
+                });
+
+                toastMixin.fire({
+                    animation: true,
+                    title: 'Email tidak terdaftar'
+                });
+            });
+        </script>
+    @endif
 </body>
 
 </html>

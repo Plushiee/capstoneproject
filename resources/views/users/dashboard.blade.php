@@ -103,7 +103,34 @@
         </div>
     </div>
 
+@endsection
 
+@section('addJS')
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+@if (session('user'))
+<script>
+    $(document).ready(function() {
+        // Alert
+        var toastMixin = Swal.mixin({
+            toast: true,
+            icon: 'success',
+            title: 'General Title',
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+        });
 
+        toastMixin.fire({
+            animation: true,
+            title: 'Selamat datang, User'
+        });
+    });
+</script>
+@endif
 @endsection

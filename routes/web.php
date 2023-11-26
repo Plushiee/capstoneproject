@@ -19,8 +19,6 @@ Route::get('/', function () {
 Route::get('admin/dashboard', 'PageController@adminDashboard')->name('adminDashboard');
 // Admin End
 
-Route::get('users/dashboard',  'PageUserController@userDashboard')->name('userDashboard');
-
 // Route::get('/dashboard', function () {
 //     return view('users.dashboard');
 // })->name('dashboard');
@@ -37,17 +35,27 @@ Route::get('users/dashboard',  'PageUserController@userDashboard')->name('userDa
 //     return view('users.acara');
 // })->name('acara');
 
-// Login
+// Login Index Register Start
 Route::get('login', 'PageController@login')->name('login');
+Route::post('login', 'LoginController@login')->name('loginSave');
+Route::get('register', 'PageController@register')->name('register');
+Route::post('register', 'RegisterController@register')->name('registerSave');
+Route::get('forgot', 'PageController@forgot')->name('forgot');
 
-Route::get('users/order',  'PageUserController@userOrder')->name('userOrder');
-Route::get('users/mempelai',  'PageUserController@userMempelai')->name('userMempelai');
-Route::get('users/cerita',  'PageUserController@userCerita')->name('userCerita');
-Route::get('users/acara',  'PageUserController@userOrder')->name('userAcara');
-Route::get('users/listtamu',  'PageUserController@userListTamu')->name('userListTamu');
-Route::get('users/galeri',  'PageUserController@userGaleri')->name('userGaleri');
-Route::get('users/ucapan',  'PageUserController@userUcapan')->name('userUcapan');
+// Users Start
+Route::middleware(['auth:users'])->group(function () {
+    Route::get('users/dashboard', 'PageUserController@userDashboard')->name('userDashboard');
+    Route::get('users/order', 'PageUserController@userOrder')->name('userOrder');
+    Route::get('users/mempelai', 'PageUserController@userMempelai')->name('userMempelai');
+    Route::get('users/cerita', 'PageUserController@userCerita')->name('userCerita');
+    Route::get('users/acara', 'PageUserController@userOrder')->name('userAcara');
+    Route::get('users/listtamu', 'PageUserController@userListTamu')->name('userListTamu');
+    Route::get('users/galeri', 'PageUserController@userGaleri')->name('userGaleri');
+    Route::get('users/ucapan', 'PageUserController@userUcapan')->name('userUcapan');
+    Route::post('users/logout', 'LoginController@logout')->name('userLogout');
+});
+// Users End
 
 //testing undngan
-Route::get('/{domain}',  'UndanganController@index');
-Route::get('/{domain}/{tamu}',  'UndanganController@tamu');
+Route::get('/{domain}', 'UndanganController@index');
+Route::get('/{domain}/{tamu}', 'UndanganController@tamu');
