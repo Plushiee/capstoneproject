@@ -19,7 +19,8 @@ class PageUserController extends Controller
 
     public function userCerita()
     {
-        return view('users.cerita');
+        $jml_cerita = 0;
+        return view('users.cerita', ['jml_cerita' => $jml_cerita]);
     }
 
     public function userOrder()

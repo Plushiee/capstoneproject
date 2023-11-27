@@ -63,7 +63,8 @@
 
     <!-- build:js ('assets/js/app.html.js')  -->
     <!-- jQuery -->
-    <script src="{{ asset('assets/libs/jquery/jquery/dist/jquery.js') }}"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
     <!-- Bootstrap -->
     <script src="{{ asset('assets/libs/jquery/tether/dist/js/tether.min.js') }}"></script>
     <script src="{{ asset('assets/libs/jquery/bootstrap/dist/js/bootstrap.js') }}"></script>
@@ -81,7 +82,7 @@
     <script src="{{ asset('assets/js/ui-device.js') }}"></script>
     <script src="{{ asset('assets/js/ui-form.js') }}"></script>
     <script src="{{ asset('assets/js/ui-nav.js') }}"></script>
-    {{-- <script src="{{ asset('assets/js/ui-screenfull.js') }}"></script> --}}
+    <script src="{{ asset('assets/js/ui-screenfull.js') }}"></script>
     <script src="{{ asset('assets/js/ui-scroll-to.js') }}"></script>
     <script src="{{ asset('assets/js/ui-toggle-class.js') }}"></script>
 
@@ -91,7 +92,7 @@
     <script src="{{ asset('assets/libs/jquery/jquery-pjax/jquery.pjax.js') }}"></script>
     <script src="{{ asset('assets/js/ajax.js') }}"></script>
 
-    @yield('addJS')
+    @yield('addJs')
 
 </body>
 
