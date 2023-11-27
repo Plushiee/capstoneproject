@@ -77,6 +77,7 @@
 
 @section('addJs')
     <script>
+        $(document).ready(function () {
             var i = {{ $jml_cerita }};
 
             $(document).on('click', '.btn_remove', function() {
@@ -101,5 +102,6 @@
                 );
                 $(".form-control").prop('required', false);
             });
+        });
     </script>
 @endsection
