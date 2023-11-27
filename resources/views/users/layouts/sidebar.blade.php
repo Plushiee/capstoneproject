@@ -6,8 +6,9 @@
                 <!-- brand -->
                 <a class="navbar-brand">
                     <div ui-include="{{ asset('assets/images/logo.svg') }}"></div>
-                    <img src="{{ asset('assets/images/logo.png') }}" alt="." class="hide">
-                    <span class="hidden-folded inline">MyCapstone </span>
+                    {{-- <img src="{{ asset('assets/images/logo-only.png') }}" alt="."> --}}
+                    <span class="hidden-folded inline"><img src="{{ asset('assets/images/logo-cp.png') }}" alt=".">
+                    </span>
                 </a>
                 <!-- / brand -->
             </div>

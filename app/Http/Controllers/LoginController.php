@@ -51,6 +51,4 @@ class LoginController extends Controller
         Auth::guard($tipeAkun)->logout();
         return redirect('/login');
     }
-
-
 }
