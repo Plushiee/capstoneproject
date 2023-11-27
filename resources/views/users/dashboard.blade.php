@@ -102,7 +102,6 @@
             </div>
         </div>
     </div>
-
 @endsection
 
 @section('addJS')

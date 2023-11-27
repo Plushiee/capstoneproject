@@ -75,7 +75,7 @@
     </div>
 @endsection
 
-@section('addJs')
+@section('addJS')
     <script>
         $(document).ready(function () {
             var i = {{ $jml_cerita }};
