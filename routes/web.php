@@ -57,5 +57,5 @@ Route::middleware(['auth:users'])->group(function () {
 // Users End
 
 //testing undngan
-Route::get('/{domain}', 'UndanganController@index');
-Route::get('/{domain}/{tamu}', 'UndanganController@tamu');
+// Route::get('/{domain}', 'UndanganController@index');
+Route::get('/{domain}/{tamu?}', 'UndanganController@tamu');
