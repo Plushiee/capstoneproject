@@ -13,7 +13,7 @@
             <li class="nav-item dropdown">
                 <a class="nav-link p-0 clear" href="#" data-toggle="dropdown">
                     <span class="hidden-md-down nav-text m-l-sm text-left">
-                        <span class="_500 ">Rose Martin</span>
+                        <span class="_500 ">{{ Auth::user()->nama }}</span>
                         <small class="text-muted">Administrator</small>
                     </span>
                     <span class="avatar w-32">

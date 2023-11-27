@@ -1,0 +1,174 @@
+/*brand*/
+.container-utama{
+	z-index: 3;
+	background-color: white;
+}
+
+/*=====*/
+.background{
+  background-image: url("/gambar/6.jpg");
+
+  filter: revert;
+  background-size: 100%;
+  background-repeat: no-repeat;
+  background-position: center;
+  height: 100vh;
+  color: white;
+  }
+  .backround {
+  	margin-top: 180px;
+  }
+ .backround h1{
+ 	font-family: 'Ubuntu', sans-serif;
+ 	font-weight: bold;
+ 	color: #ffbf00;
+ 	font-size: 45px;
+ }
+ .backround p{
+ 	font-family: 'PT Sans', sans-serif;
+ 	font-size: 18px;
+ 	color: black;
+ }
+.backround button{
+  	margin-top: 50px;
+  	color: black;
+  	border-color: yellow;
+  	background-color: #ffbf00;
+  }
+.backround button:hover{
+  	margin-top: 50px;
+  	color: black;
+  	border-color: yellow;
+  	background-color: #ffbf00;
+  }
+/*tentang*/
+
+.tentang{
+	width: 70%;
+	margin-top: 100px;
+	margin-bottom: 100px;
+	padding: 50px;
+	border-radius: 50px;
+	box-shadow: 0 0 4px 4px silver ;
+}
+.clearfix img{
+	border-radius: 50px;
+	object-fit: scale-down;
+}
+.clearfix p{
+	margin-top: 20px;
+	font-family: 'PT Sans', sans-serif;
+}
+.clearfix h2{
+	font-family: 'Archivo Black', sans-serif;
+	color: #3d3d3d;
+	font-size: 25px;
+}
+/* /tentang */
+
+/* tema */
+.tema{
+	background-color: #e0fceb;
+	width: 100%;
+	padding-top: 20px;
+	padding-bottom: 50px;
+}
+.card{
+	margin-bottom: 20px;
+}
+.card-body .btn{
+	margin-left: 40px;
+	border-color: #fc8f00;
+}
+.card-body .card-link{
+	color: #666464;
+}
+.card-body .card-link:hover{
+	color: blue;
+}
+
+.card-body .red{
+	text-decoration: line-through;
+	color: red;
+}
+.card-body p{
+	line-height: 5px;
+}
+.card-body h5{
+	margin-bottom: 20px;
+}
+.foto-tema{
+	padding: 5px;
+	border-radius: 10px;
+}
+.tema-item{
+	border-radius: 10px;
+}
+/* /tema wedding */
+
+/*pricelist*/
+.pricelist{
+	padding-top: 50px;
+	padding-bottom: 20px;
+}
+.list{
+}
+.pricelist .judul{
+	margin-bottom: 50px;
+}
+.tema h2{
+	margin-bottom: 50px;
+} 
+.price{
+	background-color: #e0fceb;
+}
+.price h5{
+	color: #ffcc00;
+}
+.price h6{
+	text-decoration: line-through;
+}
+.price p{
+	padding-left: 30px;
+}
+.price .bi-check-circle{
+	margin-right: 10px;
+}
+.price .btn{
+	margin: auto;
+	padding: 7px 20px;
+	font-size: 14px;
+}
+/* /pricelist */
+
+/*tambahan*/
+
+.tambahan{
+	margin: auto;
+	padding: 10px;
+}
+
+/* /tambahan */
+
+/*footer*/
+footer{
+	display: flex;
+	justify-content: center;
+	align-items: start;
+	gap: 90px;
+	margin-top: 50px;
+	background-color: #e0fceb;
+}
+.footer-item{
+	line-height: 16px;
+	width: 40%;
+}
+.footer-itemm{
+	width: 30%;
+	
+}
+.icon-sosial i{
+	font-size: 18px;
+	margin-right: 10px;
+}
+/* /footer */
