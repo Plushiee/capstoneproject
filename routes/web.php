@@ -40,7 +40,7 @@ Route::get('login', 'PageController@login')->name('login');
 Route::post('login', 'LoginController@login')->name('loginSave');
 Route::get('register', 'PageController@register')->name('register');
 Route::post('register', 'RegisterController@register')->name('registerSave');
-Route::get('forgot', 'PageController@forgot')->name('forgot');
+Route::get('forget', 'PageController@forget')->name('forget');
 
 // Users Start
 Route::middleware(['auth:users'])->group(function () {

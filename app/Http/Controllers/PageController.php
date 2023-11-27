@@ -21,8 +21,8 @@ class PageController extends Controller
         return view('register');
     }
 
-    public function forgot()
+    public function forget()
     {
-        return view('forgot');
+        return view('forget');
     }
 }

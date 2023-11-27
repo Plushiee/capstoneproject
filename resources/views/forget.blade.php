@@ -31,7 +31,7 @@
                 <div class="form-content">
                     <div class="form-items">
                         <h3>Password Reset</h3>
-                        <p>To reset your password, enter the email address you use to sign in to iofrm</p>
+                        <p>To reset your password, enter the email address you use to sign in to MyCapstone</p>
                         <form>
                             <input class="form-control" type="text" name="username" placeholder="E-mail Address"
                                 required>
