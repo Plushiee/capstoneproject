@@ -36,7 +36,7 @@
                     <form action="{{ route('userLogout') }}" method="post">
                         @csrf
                         <input type="hidden" name="tipeAkun" value="users">
-                        <button type="submit" class="dropdown-item" ui-sref="access.signin">Sign out</button>
+                        <button type="submit" class="dropdown-item">Sign out</button>
                     </form>
                 </div>
             </li>

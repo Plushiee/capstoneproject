@@ -35,7 +35,7 @@ Route::get('admin/dashboard', 'PageController@adminDashboard')->name('adminDashb
 //     return view('users.acara');
 // })->name('acara');
 
-Route::middleware(['guests:users', 'guests:admin'])->group(function () {
+Route::middleware(['guest:users', 'guest:admin'])->group(function () {
     Route::get('login', 'PageController@login')->name('login');
     Route::post('login', 'LoginController@login')->name('loginSave');
     Route::get('register', 'PageController@register')->name('register');
@@ -45,9 +45,7 @@ Route::middleware(['guests:users', 'guests:admin'])->group(function () {
 
 // Users Start
 Route::middleware(['auth:users'])->group(function () {
-    Route::permanentRedirect('/login', 'users/dashboard');
-    Route::permanentRedirect('/register', 'users/dashboard');
-    Route::permanentRedirect('/forget', 'users/dashboard');
+    Route::permanentRedirect('/home', 'users/dashboard');
     Route::get('users/dashboard', 'PageUserController@userDashboard')->name('userDashboard');
     Route::get('users/order', 'PageUserController@userOrder')->name('userOrder');
     Route::get('users/mempelai', 'PageUserController@userMempelai')->name('userMempelai');

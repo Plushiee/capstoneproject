@@ -48,7 +48,11 @@ class LoginController extends Controller
     public function logout(Request $request)
     {
         $tipeAkun = $request->tipeAkun;
-        Auth::guard($tipeAkun)->logout();
-        return redirect('/login');
+        if (Auth::guard($tipeAkun)->check()) {
+            Auth::guard($tipeAkun)->logout();
+            return redirect('/login');
+        }
+
+        return 'gagal';
     }
 }
