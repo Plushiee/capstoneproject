@@ -35,15 +35,19 @@ Route::get('admin/dashboard', 'PageController@adminDashboard')->name('adminDashb
 //     return view('users.acara');
 // })->name('acara');
 
-// Login Index Register Start
-Route::get('login', 'PageController@login')->name('login');
-Route::post('login', 'LoginController@login')->name('loginSave');
-Route::get('register', 'PageController@register')->name('register');
-Route::post('register', 'RegisterController@register')->name('registerSave');
-Route::get('forget', 'PageController@forget')->name('forget');
+Route::middleware(['guests:users', 'guests:admin'])->group(function () {
+    Route::get('login', 'PageController@login')->name('login');
+    Route::post('login', 'LoginController@login')->name('loginSave');
+    Route::get('register', 'PageController@register')->name('register');
+    Route::post('register', 'RegisterController@register')->name('registerSave');
+    Route::get('forget', 'PageController@forget')->name('forget');
+});
 
 // Users Start
 Route::middleware(['auth:users'])->group(function () {
+    Route::permanentRedirect('/login', 'users/dashboard');
+    Route::permanentRedirect('/register', 'users/dashboard');
+    Route::permanentRedirect('/forget', 'users/dashboard');
     Route::get('users/dashboard', 'PageUserController@userDashboard')->name('userDashboard');
     Route::get('users/order', 'PageUserController@userOrder')->name('userOrder');
     Route::get('users/mempelai', 'PageUserController@userMempelai')->name('userMempelai');
