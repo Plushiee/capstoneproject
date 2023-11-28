@@ -26,9 +26,9 @@
                 </div>
             </div>
             <div>
-                <table class="table m-b-none" ui-jp="footable" data-filter="#filter" data-page-size="5">
+                <table class="table m-b-none" ui-jp="footable" data-filter="#filter" data-page-size="10">
                     <thead class="thead-light">
-                        <tr>
+                        {{-- <tr>
                             <th></th>
                             <th>Nama Tamu</th>
                             <th>No Whatsapp</th>
@@ -36,9 +36,29 @@
                             <th>Tgl Kirim Undangan</th>
                             <th>Status Undangan</th>
                             <th>Aksi</th>
+                        </tr> --}}
+                        <tr>
+                            <td>No.</td>
+                            <td>Nama tamu</td>
+                            <td>Alamat</td>
                         </tr>
                     </thead>
                     <tbody>
+                        @foreach (DB::table('tbl_buku_tamus')->where(
+                'id_acara',
+                DB::table('tbl_acaras')->where(
+                        'id_pesanan',
+                        DB::table('tbl_pesanans')->where('id_user', Auth::user()->id)->value('id'), // Retrieve the id column value directly
+                    )->value('id'), // Retrieve the id column value directly
+            )->get() as $tamunya)
+                            <tr>
+                                <td> {{ $loop->index + 1 }}</td>
+                                <td> {{ $tamunya->nama_tamu }}</td>
+                                <td> {{ $tamunya->alamat_tamu }} </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                    {{-- <tbody>
                         <tr>
                             <td><input type="checkbox"></td>
                             <td>Isidra</td>
@@ -123,7 +143,7 @@
                             <td data-value="3"><span class="label warning" title="Suspended">Suspended</span>
                             </td>
                         </tr>
-                    </tbody>
+                    </tbody> --}}
                     <tfoot class="hide-if-no-paging">
                         <tr>
                             <td colspan="5" class="text-center">

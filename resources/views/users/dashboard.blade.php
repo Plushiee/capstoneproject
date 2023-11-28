@@ -22,7 +22,15 @@
                         </span>
                     </div>
                     <div class="clear">
-                        <h4 class="m-0 text-lg _300"><a href>125
+                        <h4 class="m-0 text-lg _300"><a href>
+                                {{-- {{ DB::table('tbl_buku_tamus')->where('id_acara', DB::table('tbl_acaras')->where('id_pesanan', DB::table('tbl_pesanans')->where('id_user','1')))->count() }} --}}
+                                {{ DB::table('tbl_buku_tamus')->where(
+                                        'id_acara',
+                                        DB::table('tbl_acaras')->where(
+                                                'id_pesanan',
+                                                DB::table('tbl_pesanans')->where('id_user', Auth::user()->id)->value('id'), // Retrieve the id column value directly
+                                            )->value('id'), // Retrieve the id column value directly
+                                    )->count() }}
                                 <span class="text-sm">Tamu</span>
                             </a></h4>
                         <small class="text-muted">Diundang</small>
