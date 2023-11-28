@@ -18,6 +18,7 @@ class CreateTblBukuTamus extends Migration
             $table->unsignedBigInteger('id_acara')->nullable();
             $table->foreign('id_acara')->references('id')->on('tbl_acaras');
             $table->string('nama_tamu')->nullable();
+            $table->string('alamat_tamu')->nullable();
             $table->date('tanggal')->nullable();
             $table->string('hadir')->nullable();
             $table->string('salam')->nullable();

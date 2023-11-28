@@ -9,16 +9,14 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
-    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+
     <link rel="icon" href="https://cepetnikah.my.id/assets/users/mIjh78y8ge13b89d99c1a29132e57d2ca/kita.png">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet"
-        href="https://cepetnikah.my.id/assets/themes/jellyblack/themes-rsvp/sw-vendor/jellyblack/jellyblack.css">
-    <link rel="stylesheet"
-        href="https://cepetnikah.my.id/assets/themes/jellyblack/themes-rsvp/sw-vendor/css/swipebox.min.css">
+        href="{{ asset('assets/themes/jellyblack/themes-rsvp/sw-vendor/jellyblack/jellyblack.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/themes/jellyblack/themes-rsvp/sw-vendor/css/swipebox.min.css') }}">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-    <script src="https://cepetnikah.my.id/assets/themes/jellyblack/themes-rsvp/sw-vendor/js/jquery.countdown.min.js">
-    </script>
+    <script src="{{ asset('assets/themes/jellyblack/themes-rsvp/sw-vendor/js/jquery.countdown.min.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.8/clipboard.min.js"></script>
 </head>
 
@@ -48,7 +46,8 @@
                         <div class="sw-content-inner sw-content-flex">
                             <div class="col-md-12">
                                 <div class="sw-invitation-home text-center  wow bounceInUp">
-                                    <h3>Andra & Amel</h3>
+                                    <h3>{{ $mempelainya->nama_panggilan_pria }} &
+                                        {{ $mempelainya->nama_panggilan_wanita }}</h3>
                                     <p><span id="tanggal-wedding"></span><input id="tgl_wedding" type="hidden"
                                             value="2022/12/15"></p>
                                     <figure><img class="img-responsive"
@@ -56,14 +55,14 @@
                                     </figure>
                                     <p>Kepada Yang Terhormat</p>
                                     <h3>{{ $tamunya->nama_tamu }}</h3>
-                                    <p>Di Tempat</p>
+                                    <p>Di {{ $tamunya->alamat_tamu }}</p>
                                 </div>
                             </div>
                         </div>
                 </section>
                 <section class="sw-item">
                     <div class="sw-content">
-                        <div class="sw-content-inner">
+                        <div class="sw-content-inner sw-content-flex">
 
                             <div class="sw-ceremony"><img class="sw-el-top"
                                     src="https://cepetnikah.my.id/assets/themes/jellyblack/themes-rsvp/sw-vendor/jellyblack/img/sw-element-top.png">
@@ -76,15 +75,18 @@
                                     <img
                                         src="https://cepetnikah.my.id/assets/users/mIjh78y8ge13b89d99c1a29132e57d2ca/groom.png">
                                 </figure>
-                                <h2>Andra Leksmana</h2>
-                                <p class="sw-binti">Putra Bpk Kusmanto dan Ibu Muslimah</p>
+                                <h2>{{ $mempelainya->nama_pria }}</h2>
+                                <p class="sw-binti">Putra Bapak {{ $mempelainya->nama_ayah_pria }} dan Ibu
+                                    {{ $mempelainya->nama_ibu_pria }}
+                                </p>
                                 <p class="sw-or">dengan</p>
                                 <figure>
                                     <img
                                         src="https://cepetnikah.my.id/assets/users/mIjh78y8ge13b89d99c1a29132e57d2ca/bride.png">
                                 </figure>
-                                <h2>Siti Amelia</h2>
-                                <p class="sw-binti">Putri Bpk Soekatmo dan Ibu Siti Fatimah</p>
+                                <h2>{{ $mempelainya->nama_wanita }}</h2>
+                                <p class="sw-binti"> Putri Bapak{{ $mempelainya->nama_ayah_wanita }} dan Ibu
+                                    {{ $mempelainya->nama_ibu_wanita }}</p>
                                 <img class="sw-el-bottom"
                                     src="https://cepetnikah.my.id/assets/themes/jellyblack/themes-rsvp/sw-vendor/jellyblack/img/sw-element-bottom.png">
                             </div>
@@ -97,33 +99,33 @@
                         <div class="sw-content-inner ">
                             <div class="sw-block">
                                 <h3>Acara</h3>
-                                <div class="sw-ceremony">
-                                    <div class="sw-akad-resepsi">
-                                        <h2>Akad Nikah</h2>
-                                        <p><span id="tanggal-acara2"></span><input id="tgl_acara2" type="hidden"
-                                                value="2022/12/14">
-                                            <br> Jam 09:00 - 10:00 <br> Kediaman Mempelai Wanita<br>Jl. Medan Merdeka
-                                            Utara No.3 RT.02/RW.03. Gambir, Jakarta Pusat.
-                                        </p>
-                                    </div>
-                                    <div class="sw-akad-resepsi">
-                                        <h2>Resepsi</h2>
-                                        <p><span id="tanggal-acara3"></span><input id="tgl_acara3" type="hidden"
-                                                value="2022/12/15">
-                                            <br> Jam 10:00 - 22:00 <br> Kediaman Mempelai Wanita<br>Jl. Medan Merdeka
-                                            Utara No.3 RT.02/RW.03. Gambir, Jakarta Pusat.
-                                        </p>
-                                        <a href="#" data-toggle="modal" data-target="#sw-maps" title="Lokasi">Buka
-                                            di google map</a>
-                                    </div>
-                                    <div class="sw-akad-resepsi">
-                                        <h2>Unduh Mantu</h2>
-                                        <p><span id="tanggal-acara4"></span><input id="tgl_acara4" type="hidden"
-                                                value="2022/12/31">
-                                            <br> Jam 10:00 - 22:00 <br> Kediaman Mempelai Pria<br>Dukun RT 002 RW 002
-                                        </p>
-                                    </div>
+
+                                <div class="sw-akad-resepsi">
+                                    <h2>Akad Nikah</h2>
+                                    <p><span id="tanggal-acara2"></span><input id="tgl_acara2" type="hidden"
+                                            value="2022/12/14">
+                                        <br> Jam 09:00 - 10:00 <br> Kediaman Mempelai Wanita<br>Jl. Medan Merdeka
+                                        Utara No.3 RT.02/RW.03. Gambir, Jakarta Pusat.
+                                    </p>
                                 </div>
+                                <div class="sw-akad-resepsi">
+                                    <h2>Resepsi</h2>
+                                    <p><span id="tanggal-acara3"></span><input id="tgl_acara3" type="hidden"
+                                            value="2022/12/15">
+                                        <br> Jam 10:00 - 22:00 <br> Kediaman Mempelai Wanita<br>Jl. Medan Merdeka
+                                        Utara No.3 RT.02/RW.03. Gambir, Jakarta Pusat.
+                                    </p>
+                                    <a href="#" data-toggle="modal" data-target="#sw-maps" title="Lokasi">Buka
+                                        di google map</a>
+                                </div>
+                                <div class="sw-akad-resepsi">
+                                    <h2>Unduh Mantu</h2>
+                                    <p><span id="tanggal-acara4"></span><input id="tgl_acara4" type="hidden"
+                                            value="2022/12/31">
+                                        <br> Jam 10:00 - 22:00 <br> Kediaman Mempelai Pria<br>Dukun RT 002 RW 002
+                                    </p>
+                                </div>
+
                             </div>
                         </div>
                     </div>
@@ -598,19 +600,16 @@
         </div>
     </div>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="https://cepetnikah.my.id/assets/themes/jellyblack/themes-rsvp/sw-vendor/js/modernizr.custom.js"></script>
-    <script src="https://cepetnikah.my.id/assets/themes/jellyblack/themes-rsvp/sw-vendor/js/jquerypp.custom.js"></script>
-    <script src="https://cepetnikah.my.id/assets/themes/jellyblack/themes-rsvp/sw-vendor/js/jquery.bookblock.min.js">
-    </script>
-    <script src="https://cepetnikah.my.id/assets/themes/jellyblack/themes-rsvp/sw-vendor/js/jquery.swipebox.min.js">
-    </script>
-    <script src="https://cepetnikah.my.id/assets/themes/jellyblack/themes-rsvp/sw-vendor/js/sw-main.js"></script>
-    <script src="https://cepetnikah.my.id/assets/themes/jellyblack/themes-rsvp/sw-vendor/js/moment-with-locales.js">
-    </script>
+    <script src="{{ asset('assets/themes/jellyblack/themes-rsvp/sw-vendor/js/modernizr.custom.js') }}"></script>
+    <script src="{{ asset('assets/themes/jellyblack/themes-rsvp/sw-vendor/js/jquerypp.custom.js') }}"></script>
+    <script src="{{ asset('assets/themes/jellyblack/themes-rsvp/sw-vendor/js/jquery.bookblock.min.js') }}"></script>
+    <script src="{{ asset('assets/themes/jellyblack/themes-rsvp/sw-vendor/js/jquery.swipebox.min.js') }}"></script>
+    <script src="{{ asset('assets/themes/jellyblack/themes-rsvp/sw-vendor/js/sw-main.js') }}"></script>
+    <script src="{{ asset('assets/themes/jellyblack/themes-rsvp/sw-vendor/js/moment-with-locales.js') }}"></script>
     <script>
         var base_url = 'https://cepetnikah.my.id';
     </script>
-    <script src="https://cepetnikah.my.id/assets/themes/jellyblack/themes-rsvp/sw-vendor/js/jquery.classyqr.js"></script>
+    <script src="{{ asset('assets/themes/jellyblack/themes-rsvp/sw-vendor/js/jquery.classyqr.js') }}"></script>
     <script>
         $(document).ready(function() {
             var kode = "Tidak Ada Qrcode";

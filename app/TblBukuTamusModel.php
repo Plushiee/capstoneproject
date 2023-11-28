@@ -15,6 +15,7 @@ class TblBukuTamusModel extends Model
     protected $fillable = [
         'id_acara',
         'nama_tamu',
+        'alamat_tamu',
         'tanggal',
         'hadir',
         'salam',
