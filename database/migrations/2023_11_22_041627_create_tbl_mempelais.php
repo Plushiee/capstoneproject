@@ -17,6 +17,9 @@ class CreateTblMempelais extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('id_acara')->nullable();
             $table->foreign('id_acara')->references('id')->on('tbl_acaras');
+            $table->string('foto_sampul')->nullable();
+            $table->string('foto_pria')->nullable();
+            $table->string('foto_wanita')->nullable();
             $table->string('nama_ayah_pria')->nullable();
             $table->string('nama_ayah_wanita')->nullable();
             $table->string('nama_ibu_pria')->nullable();

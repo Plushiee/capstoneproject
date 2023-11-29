@@ -23,7 +23,7 @@ class CreateTblPesanans extends Migration
             $table->foreign('id_produk')->references('id')->on('tbl_produks');
             $table->string('domain')->nullable();
             $table->integer('biaya')->nullable();
-            $table->string('status_pembayaran')->nullable();
+            $table->string('status_pembayaran')->default('belum lunas');
             $table->string('status_pesanan')->nullable();
             $table->string('file_musik')->nullable();
             $table->timestamps();

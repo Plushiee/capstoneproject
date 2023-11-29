@@ -20,7 +20,7 @@ class CreateTblBukuTamus extends Migration
             $table->string('nama_tamu')->nullable();
             $table->string('alamat_tamu')->nullable();
             $table->date('tanggal')->nullable();
-            $table->string('hadir')->nullable();
+            $table->string('hadir')->default('tidak hadir');
             $table->string('salam')->nullable();
             $table->timestamps();
         });
