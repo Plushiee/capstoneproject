@@ -49,7 +49,7 @@
                                     <h3>{{ $mempelainya->nama_panggilan_pria }} &
                                         {{ $mempelainya->nama_panggilan_wanita }}</h3>
                                     <p><span id="tanggal-wedding"></span><input id="tgl_wedding" type="hidden"
-                                            value="2022/12/15"></p>
+                                            value="2023/12/2"></p>
                                     <figure><img class="img-responsive"
                                             src="https://cepetnikah.my.id/assets/themes/jellyblack/themes-rsvp/sw-vendor/jellyblack/img/sw-wedding-invitation.png">
                                     </figure>
@@ -100,36 +100,30 @@
                             <div class="sw-block">
                                 <h3>Acara</h3>
 
-                                <div class="sw-akad-resepsi">
-                                    <h2>Akad Nikah</h2>
-                                    <p><span id="tanggal-acara2"></span><input id="tgl_acara2" type="hidden"
-                                            value="2022/12/14">
-                                        <br> Jam 09:00 - 10:00 <br> Kediaman Mempelai Wanita<br>Jl. Medan Merdeka
-                                        Utara No.3 RT.02/RW.03. Gambir, Jakarta Pusat.
-                                    </p>
-                                </div>
-                                <div class="sw-akad-resepsi">
-                                    <h2>Resepsi</h2>
-                                    <p><span id="tanggal-acara3"></span><input id="tgl_acara3" type="hidden"
-                                            value="2022/12/15">
-                                        <br> Jam 10:00 - 22:00 <br> Kediaman Mempelai Wanita<br>Jl. Medan Merdeka
-                                        Utara No.3 RT.02/RW.03. Gambir, Jakarta Pusat.
-                                    </p>
-                                    <a href="#" data-toggle="modal" data-target="#sw-maps" title="Lokasi">Buka
-                                        di google map</a>
-                                </div>
-                                <div class="sw-akad-resepsi">
-                                    <h2>Unduh Mantu</h2>
-                                    <p><span id="tanggal-acara4"></span><input id="tgl_acara4" type="hidden"
-                                            value="2022/12/31">
-                                        <br> Jam 10:00 - 22:00 <br> Kediaman Mempelai Pria<br>Dukun RT 002 RW 002
-                                    </p>
-                                </div>
+                                @foreach ($acaranya as $acara)
+                                    <div class="sw-akad-resepsi">
+                                        <h2>{{ $acara->nama_acara }}</h2>
+                                        <p><span id="{{ 'tanggal_acara' . $acara->id }}"></span><input id="tgl_acara2"
+                                                type="hidden" value="2022/12/14">
+                                            <br> Jam 09:00 - 10:00 <br> Kediaman Mempelai Wanita<br>Jl. Medan Merdeka
+                                            Utara No.3 RT.02/RW.03. Gambir, Jakarta Pusat.
+                                        </p>
+                                        @if ($acara->lat_acara != null)
+                                            <a href="#" data-toggle="modal" data-target="#sw-maps"
+                                                title="Lokasi">Buka
+                                                di google map</a>
+                                        @endif
+
+
+                                    </div>
+                                @endforeach
 
                             </div>
                         </div>
                     </div>
                 </section>
+
+
                 <section class="sw-item">
                     <div class="sw-content">
                         <div class="sw-content-inner">
@@ -138,75 +132,31 @@
                                 <div class="col-md-12">
                                     <div class="main-timeline">
 
-                                        <div class="timeline">
-                                            <div class="timeline-icon"></div>
-                                            <div class="timeline-content right">
-                                                <span class="date">14 Januari 2021</span>
-                                                <h4 class="title">Pertama bertemu</h4>
-                                                <p class="description">
-                                                    Waktu Pertama Kali
-                                                    Kulihat Dirimu Hadir
-                                                    Rasa hati ini inginkan dirimu </p>
-                                            </div>
-                                        </div>
-
-
-
-                                        <div class="timeline">
-                                            <div class="timeline-icon"></div>
-                                            <div class="timeline-content">
-                                                <span class="date">15 Maret 2021</span>
-                                                <h4 class="title">Jatuh Cinta</h4>
-                                                <p class="description">
-                                                    Hati tenang mendengar
-                                                    suara indah menyapa
-                                                    Geloranya hati ini
-                                                    Tak ku sangka.. </p>
-                                            </div>
-                                        </div>
-
-
-                                        <div class="timeline">
-                                            <div class="timeline-icon"></div>
-                                            <div class="timeline-content right">
-                                                <span class="date">1 Mei 2021</span>
-                                                <h4 class="title">Ta'aruf</h4>
-                                                <p class="description">
-                                                    Rasa ini.. tak tertahan..
-                                                    Hati ini..slalu untukmu.. </p>
-                                            </div>
-                                        </div>
-
-
-
-                                        <div class="timeline">
-                                            <div class="timeline-icon"></div>
-                                            <div class="timeline-content">
-                                                <span class="date">16 Mei 2021</span>
-                                                <h4 class="title">Khitbah</h4>
-                                                <p class="description">
-                                                    Terimalah lagu ini dari orang biasa
-                                                    Tapi cintaku padamu luar biasa
-                                                    Aku tak punya bunga
-                                                    Aku tak punya harta
-                                                    Yang ku punya hanyalah
-                                                    Hati yang setia.. Tulus.. Padamu.. :) </p>
-                                            </div>
-                                        </div>
-
-
-                                        <div class="timeline">
-                                            <div class="timeline-icon"></div>
-                                            <div class="timeline-content right">
-                                                <span class="date">19 Desember</span>
-                                                <h4 class="title">Pertemuan Antar Keluarga Besar</h4>
-                                                <p class="description">
-                                                    Membicarakan Tanggal dan Waktu Pernikahan </p>
-                                            </div>
-                                        </div>
-
-
-
+                                        @foreach ($ceritanya->get() as $cerita)
+                                            @if ($loop->index % 2 == 0)
+                                                <div class="timeline">
+                                                    <div class="timeline-icon"></div>
+                                                    <div class="timeline-content">
+                                                        <span class="date">{{ $cerita->tanggal_cerita }}</span>
+                                                        <h4 class="title">{{ $cerita->judul_cerita }}</h4>
+                                                        <p class="description">
+                                                            {{ $cerita->isi_cerita }}
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            @else
+                                                <div class="timeline">
+                                                    <div class="timeline-icon"></div>
+                                                    <div class="timeline-content right">
+                                                        <span class="date">{{ $cerita->tanggal_cerita }}</span>
+                                                        <h4 class="title">{{ $cerita->judul_cerita }}</h4>
+                                                        <p class="description">
+                                                            {{ $cerita->isi_cerita }}
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            @endif
+                                        @endforeach
                                     </div>
                                 </div>
                             </div>
@@ -362,21 +312,41 @@
                     <div class="sw-content">
                         <div class="sw-content-inner">
                             <div class="sw-block">
-                                <h2>Beri Ucapan</h2>
+                                <h2>RSVP</h2>
                                 <div class="sw-form">
                                     <form id="guestbook" action="javascript:void();" novalidate="true">
-                                        <div class="col-md-5 col-sm-12 col-xs-12">
+                                        <div class="col-md-6 col-sm-12 col-xs-12">
                                             <div class="form-group">
+                                                <label for="nama" class="">
+                                                    <p>Nama</p>
+                                                </label>
                                                 <input type="text" name="nama" id="nama"
                                                     class="form-control" value="{{ $tamunya->nama_tamu }}"
                                                     placeholder="Nama" required>
                                             </div>
                                         </div>
+                                        <div class="col-md-6 col-sm-12 col-xs-12">
+                                            <div class="form-group">
+                                                <label for="kehadiran" class="">
+                                                    <p>Kehadiran</p>
+                                                </label>
+                                                <select id="kehadiran" name="kehadiran" class="form-control">
+
+                                                    <option value="belum konfirmasi">Belum Konfirmasi</option>
+                                                    <option value="hadir">Hadir</option>
+                                                    <option value="tidak hadir" selected>Tidak Hadir</option>
+                                                </select>
+                                            </div>
+                                        </div>
                                         <div class="col-md-12 col-sm-12 col-xs-12">
                                             <div class="form-group">
+                                                <label for="komentar" class="">
+                                                    <p>Ucapan</p>
+                                                </label>
                                                 <textarea name="komentar" id="komentar" class="form-control" rows="5" placeholder="Pesan" required></textarea>
                                             </div>
                                         </div>
+
                                         <div class="col-md-12 col-sm-12 col-xs-12">
                                             <div class="form-group">
                                                 <button type="submit" id="submitKomen" class="btn-loading"
@@ -393,11 +363,12 @@
                                 <div class="layout-komen">
                                     <div class="komen">
                                         <div class="col-12 komen-nama">
-                                            Aninda Safira </div>
+                                            Aninda Safira | </div>
                                         <div class="col-12 komen-isi">
                                             Alhamdulilah, selamat atas pernikahan kalian. Semoga pernikahan kalian
                                             dilimpahi oleh cinta, kebaikan dan kebahagiaan. Jazakallahu khairan
                                             khatira.. </div>
+
                                     </div>
                                     <div class="komen">
                                         <div class="col-12 komen-nama">

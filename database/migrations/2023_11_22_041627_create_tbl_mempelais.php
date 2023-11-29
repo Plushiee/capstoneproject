@@ -15,8 +15,8 @@ class CreateTblMempelais extends Migration
     {
         Schema::create('tbl_mempelais', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('id_acara')->nullable();
-            $table->foreign('id_acara')->references('id')->on('tbl_acaras');
+            $table->unsignedBigInteger('id_pesanan')->nullable();
+            $table->foreign('id_pesanan')->references('id')->on('tbl_pesanans');
             $table->string('foto_sampul')->nullable();
             $table->string('foto_pria')->nullable();
             $table->string('foto_wanita')->nullable();

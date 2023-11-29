@@ -13,7 +13,7 @@ class TblMempelaisModel extends Model
     ];
 
     protected $fillable = [
-        'id_acara',
+        'id_pesanan',
         'nama_ayah_pria',
         'nama_ayah_wanita',
         'nama_ibu_pria',

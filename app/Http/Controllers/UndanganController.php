@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\TblAcarasModel;
 use App\TblBukuTamusModel;
+use App\TblCeritasModel;
 use App\TblMempelaisModel;
 use App\TblPesanansModel;
 use Illuminate\Http\Request;
@@ -53,22 +54,26 @@ class UndanganController extends Controller
         $idnyapesanan = $domainnya->id;
         //
         // $idnyaacara = $acaranya->id;
-        $acaranya = TblAcarasModel::where('id_pesanan', $idnyapesanan)->first();
+        $acaranya = TblAcarasModel::where('id_pesanan', $idnyapesanan)->get();
         // 
-        $idnyaacara = optional($acaranya)->id;
+        // $idnyaacara = optional($acaranya)->id;
+        #
 
-        $mempelainya = TblMempelaisModel::where('id_acara', $idnyaacara)->first();
+        $ceritanya = TblCeritasModel::where('id_pesanan', $idnyapesanan)->first();
+
+        $mempelainya = TblMempelaisModel::where('id_pesanan', $idnyapesanan)->first();
+
         if ($tamu == null) {
 
 
             $tamunya = TblBukuTamusModel::create([
 
-                'id_acara' => $idnyaacara,
+                'id_pesanan' => $domainnya->id,
                 'nama_tamu' => 'tamu undangan',
                 'alamat_tamu' => 'Tempat'
             ]);
         } else {
-            $tamunya = TblBukuTamusModel::where('nama_tamu', $tamu)->where('id_acara', $idnyaacara)->first();
+            $tamunya = TblBukuTamusModel::where('nama_tamu', $tamu)->where('id_pesanan', $idnyapesanan)->first();
         }
 
         if ($domainnya && $tamunya) {
@@ -76,10 +81,11 @@ class UndanganController extends Controller
 
                 return view('undangan.themes.tes' . $domainnya->id_produk, [
                     'tamunya' => $tamunya,
+                    'ceritanya' => $ceritanya,
                     'acaranya' => $acaranya,
                     'mempelainya' => $mempelainya
                 ]);
-                // return ($acaranya . '</br>' . $domainnya . '</br>' . $tamunya);
+                // return ($idnyapesanan . '</br>' . $domainnya . '</br>' . $tamunya);
             }
 
             return ('Konfirmasi bayar dulu');

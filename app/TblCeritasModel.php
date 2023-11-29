@@ -13,7 +13,7 @@ class TblCeritasModel extends Model
     ];
 
     protected $fillable = [
-        'id_acara',
+        'id_pesanan',
         'tanggal_cerita',
         'judul_cerita',
         'isi_cerita',

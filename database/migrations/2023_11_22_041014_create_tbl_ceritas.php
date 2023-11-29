@@ -15,11 +15,11 @@ class CreateTblCeritas extends Migration
     {
         Schema::create('tbl_ceritas', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('id_acara')->nullable();
-            $table->foreign('id_acara')->references('id')->on('tbl_acaras');
+            $table->unsignedBigInteger('id_pesanan')->nullable();
+            $table->foreign('id_pesanan')->references('id')->on('tbl_pesanans');
             $table->date('tanggal_cerita')->nullable();
             $table->string('judul_cerita')->nullable();
-            $table->string('isi_acara')->nullable();
+            $table->string('isi_cerita')->nullable();
             $table->timestamps();
         });
     }

@@ -23,13 +23,9 @@
                     </div>
                     <div class="clear">
                         <h4 class="m-0 text-lg _300"><a href>
-                                {{-- {{ DB::table('tbl_buku_tamus')->where('id_acara', DB::table('tbl_acaras')->where('id_pesanan', DB::table('tbl_pesanans')->where('id_user','1')))->count() }} --}}
                                 {{ DB::table('tbl_buku_tamus')->where(
-                                        'id_acara',
-                                        DB::table('tbl_acaras')->where(
-                                                'id_pesanan',
-                                                DB::table('tbl_pesanans')->where('id_user', Auth::user()->id)->value('id'), // Retrieve the id column value directly
-                                            )->value('id'), // Retrieve the id column value directly
+                                        'id_pesanan',
+                                        DB::table('tbl_pesanans')->where('id_user', Auth::user()->id)->value('id'),
                                     )->count() }}
                                 <span class="text-sm">Tamu</span>
                             </a></h4>
@@ -45,7 +41,11 @@
                         </span>
                     </div>
                     <div class="clear">
-                        <h4 class="m-0 text-lg _300"><a href>125
+                        <h4 class="m-0 text-lg _300"><a
+                                href>{{ DB::table('tbl_buku_tamus')->where(
+                                        'id_pesanan',
+                                        DB::table('tbl_pesanans')->where('id_user', Auth::user()->id)->value('id'),
+                                    )->where('kehadiran', 'hadir')->count() }}
                                 <span class="text-sm">Tamu</span>
                             </a></h4>
                         <small class="text-muted">Akan Hadir</small>
@@ -60,7 +60,11 @@
                         </span>
                     </div>
                     <div class="clear">
-                        <h4 class="m-0 text-lg _300"><a href>125
+                        <h4 class="m-0 text-lg _300"><a href>
+                                {{ DB::table('tbl_buku_tamus')->where(
+                                        'id_pesanan',
+                                        DB::table('tbl_pesanans')->where('id_user', Auth::user()->id)->value('id'),
+                                    )->where('kehadiran', 'tidak hadir')->count() }}
                                 <span class="text-sm">Tamu</span>
                             </a></h4>
                         <small class="text-muted">Tidak Hadir</small>
@@ -75,7 +79,11 @@
                         </span>
                     </div>
                     <div class="clear">
-                        <h4 class="m-0 text-lg _300"><a href>125
+                        <h4 class="m-0 text-lg _300"><a
+                                href>{{ DB::table('tbl_buku_tamus')->where(
+                                        'id_pesanan',
+                                        DB::table('tbl_pesanans')->where('id_user', Auth::user()->id)->value('id'),
+                                    )->where('kehadiran', 'belum konfirmasi')->count() }}
                                 <span class="text-sm">Tamu</span>
                             </a></h4>
                         <small class="text-muted">Belum Konfirmasi</small>

@@ -45,11 +45,9 @@
                     </thead>
                     <tbody>
                         @foreach (DB::table('tbl_buku_tamus')->where(
-                'id_acara',
-                DB::table('tbl_acaras')->where(
-                        'id_pesanan',
-                        DB::table('tbl_pesanans')->where('id_user', Auth::user()->id)->value('id'), // Retrieve the id column value directly
-                    )->value('id'), // Retrieve the id column value directly
+                'id_pesanan',
+                DB::table('tbl_pesanans')->where('id_user', Auth::user()->id)->value('id'), // Retrieve the id column value directly
+                // Retrieve the id column value directly
             )->get() as $tamunya)
                             <tr>
                                 <td> {{ $loop->index + 1 }}</td>

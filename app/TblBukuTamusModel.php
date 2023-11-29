@@ -13,11 +13,11 @@ class TblBukuTamusModel extends Model
     ];
 
     protected $fillable = [
-        'id_acara',
+        'id_pesanan',
         'nama_tamu',
         'alamat_tamu',
         'tanggal',
-        'hadir',
+        'kehadiran',
         'salam',
     ];
 }
