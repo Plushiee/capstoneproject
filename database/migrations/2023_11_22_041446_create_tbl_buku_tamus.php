@@ -19,6 +19,8 @@ class CreateTblBukuTamus extends Migration
             $table->foreign('id_pesanan')->references('id')->on('tbl_pesanans');
             $table->string('nama_tamu')->nullable();
             $table->string('alamat_tamu')->nullable();
+            $table->string('no_wa')->nullable();
+            $table->enum('status', ['belum dikirim', 'terkirim'])->default('belum dikirim');
             $table->date('tanggal')->nullable();
             $table->string('kehadiran')->default('belum konfirmasi');
             $table->string('salam')->nullable();

@@ -577,9 +577,7 @@
     <script src="{{ asset('assets/themes/jellyblack/themes-rsvp/sw-vendor/js/jquery.swipebox.min.js') }}"></script>
     <script src="{{ asset('assets/themes/jellyblack/themes-rsvp/sw-vendor/js/sw-main.js') }}"></script>
     <script src="{{ asset('assets/themes/jellyblack/themes-rsvp/sw-vendor/js/moment-with-locales.js') }}"></script>
-    <script>
-        var base_url = 'https://cepetnikah.my.id';
-    </script>
+
     <script src="{{ asset('assets/themes/jellyblack/themes-rsvp/sw-vendor/js/jquery.classyqr.js') }}"></script>
     <script>
         $(document).ready(function() {

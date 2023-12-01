@@ -51,7 +51,7 @@ class UndanganController extends Controller
     public function tamu($domain, $tamu = null)
     {
         $domainnya = TblPesanansModel::where('domain', $domain)->first();
-        $idnyapesanan = $domainnya->id;
+        $idnyapesanan = optional($domainnya)->id;
         //
         // $idnyaacara = $acaranya->id;
         $acaranya = TblAcarasModel::where('id_pesanan', $idnyapesanan)->get();
@@ -68,7 +68,7 @@ class UndanganController extends Controller
 
             $tamunya = TblBukuTamusModel::create([
 
-                'id_pesanan' => $domainnya->id,
+                'id_pesanan' => $idnyapesanan,
                 'nama_tamu' => 'tamu undangan',
                 'alamat_tamu' => 'Tempat'
             ]);

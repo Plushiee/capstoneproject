@@ -16,6 +16,8 @@ class TblBukuTamusModel extends Model
         'id_pesanan',
         'nama_tamu',
         'alamat_tamu',
+        'no_wa',
+        'status',
         'tanggal',
         'kehadiran',
         'salam',

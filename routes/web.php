@@ -51,7 +51,14 @@ Route::middleware(['auth:users'])->group(function () {
     Route::get('users/mempelai', 'PageUserController@userMempelai')->name('userMempelai');
     Route::get('users/cerita', 'PageUserController@userCerita')->name('userCerita');
     Route::get('users/acara', 'PageUserController@userOrder')->name('userAcara');
+
+    // Tamu Start
     Route::get('users/listtamu', 'PageUserController@userListTamu')->name('userListTamu');
+    Route::post('users/listtamu/tambah', 'PageUserController@tambahTamu')->name('tambahTamu');
+    Route::post('users/listtamu/importexcel', 'PageUserController@importExcel')->name('importExcel');
+    Route::delete('users/listtamu/hapus', 'PageUserController@hapusTamu')->name('hapusTamu');
+    // Tamu End
+
     Route::get('users/galeri', 'PageUserController@userGaleri')->name('userGaleri');
     Route::get('users/ucapan', 'PageUserController@userUcapan')->name('userUcapan');
     Route::post('users/logout', 'LoginController@logout')->name('userLogout');
@@ -60,4 +67,4 @@ Route::middleware(['auth:users'])->group(function () {
 
 //testing undngan
 // Route::get('/{domain}', 'UndanganController@index');
-Route::get('/{domain}/{tamu?}', 'UndanganController@tamu');
+Route::get('/{domain}/{tamu?}', 'UndanganController@tamu')->name('domainUndangan');
