@@ -59,7 +59,7 @@ class UndanganController extends Controller
         // $idnyaacara = optional($acaranya)->id;
         #
 
-        $ceritanya = TblCeritasModel::where('id_pesanan', $idnyapesanan)->first();
+        $ceritanya = TblCeritasModel::where('id_pesanan', $idnyapesanan)->get();
 
         $mempelainya = TblMempelaisModel::where('id_pesanan', $idnyapesanan)->first();
 
@@ -80,6 +80,7 @@ class UndanganController extends Controller
             if (TblPesanansModel::where('status_pembayaran', 'lunas')->where('domain', $domain)->first()) {
 
                 return view('undangan.themes.tes' . $domainnya->id_produk, [
+                    'idpesananya' => $idnyapesanan,
                     'tamunya' => $tamunya,
                     'ceritanya' => $ceritanya,
                     'acaranya' => $acaranya,

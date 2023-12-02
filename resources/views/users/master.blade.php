@@ -90,7 +90,7 @@
     <script src="{{ asset('assets/js/app.js') }}"></script>
 
     <!-- ajax -->
-    <script src="{{ asset('assets/libs/jquery/jquery-pjax/jquery.pjax.js') }}"></script>
+    {{-- <script src="{{ asset('assets/libs/jquery/jquery-pjax/jquery.pjax.js') }}"></script> --}}
     <script src="{{ asset('assets/js/ajax.js') }}"></script>
 
     @yield('addJS')

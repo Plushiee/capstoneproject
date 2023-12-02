@@ -82,7 +82,7 @@
                                         onclick="qrwhatsapp('{{ $tamunya->no_wa }}','{{ $tamunya->nama_tamu }}','{{ route('domainUndangan', ['domain' => DB::table('tbl_pesanans')->where('id_user', Auth::user()->id)->first()->domain,'tamu' => $tamunya->nama_tamu]) }}')">
                                         <i class="fa fa-lg fa-qrcode " title="tampilkan qr untuk kirim wa"></i></button>
 
-                                    <a href="https://wa.me/62{{ $tamunya->no_wa }}?text=aksjdaksd" target="_blank"> <button
+                                    <a href="https://wa.me/62{{ $tamunya->no_wa }}?text=" target="_blank"> <button
                                             class="md-btn md-raised m-b-sm w-xs primary">Kirim</button></a>
 
                                 </td>
@@ -207,24 +207,7 @@
 
 
     {{-- Modal Untuk Menampilkan QR --}}
-    {{-- <div class="modal fade" id="sw-qrcode" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-        data-keyboard="false" data-backdrop="static">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content modal-sm">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    <h4 class="modal-title" id="myModalLabel">QrCode Tamu</h4>
-                </div>
-                <div class="modal-body">
-                    <div class="social-share text-center">
-                        <span id="qrcode"></span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> --}}
+
     <div class="modal fade" id="sw-qrcode" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -252,7 +235,6 @@
     <script>
         // QR Link Wa
         function qrwhatsapp(nowa, nama, urlundangan) {
-            console.log(`${nowa} ${nama} ${urlundangan} + set`)
             var isipesan =
                 `Assalamu'alaikum Wr. Wb%0ABismillahirahmanirrahim.%0A%0AYth. ${ nama }%0A%0ATanpa mengurangi rasa hormat, perkenankan kami mengundang Bapak/Ibu/Saudara/i, teman sekaligus sahabat, untuk menghadiri acara pernikahan kami : %0A%0A *nama mempelai* %0A%0ABerikut link undangan kami untuk info lengkap dari acara bisa kunjungi :%0A%0A *${ urlundangan }* %0A%0AMerupakan suatu kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan untuk hadir dan memberikan doa restu. %0A%0AMohon maaf perihal undangan hanya di bagikan melalui pesan ini. Terima kasih banyak atas perhatiannya. %0A%0AWassalamu'alaikum Wr. Wb. %0ATerima Kasih.`;
             var whatsappUrl = 'https://wa.me/62' + nowa + '?text=' + isipesan;
@@ -265,6 +247,7 @@
             });
 
         }
+        function send
 
 
         $('#sw-qrcode').on('hidden.bs.modal', function() {

@@ -132,16 +132,14 @@
                                 <div class="col-md-12">
                                     <div class="main-timeline">
 
-                                        @foreach ($ceritanya->get() as $cerita)
+                                        @foreach ($ceritanya as $cerita)
                                             @if ($loop->index % 2 == 0)
                                                 <div class="timeline">
                                                     <div class="timeline-icon"></div>
                                                     <div class="timeline-content">
                                                         <span class="date">{{ $cerita->tanggal_cerita }}</span>
                                                         <h4 class="title">{{ $cerita->judul_cerita }}</h4>
-                                                        <p class="description">
-                                                            {{ $cerita->isi_cerita }}
-                                                        </p>
+                                                        <p class="description">{{ $cerita->isi_cerita }}</p>
                                                     </div>
                                                 </div>
                                             @else
@@ -150,9 +148,7 @@
                                                     <div class="timeline-content right">
                                                         <span class="date">{{ $cerita->tanggal_cerita }}</span>
                                                         <h4 class="title">{{ $cerita->judul_cerita }}</h4>
-                                                        <p class="description">
-                                                            {{ $cerita->isi_cerita }}
-                                                        </p>
+                                                        <p class="description">{{ $cerita->isi_cerita }}</p>
                                                     </div>
                                                 </div>
                                             @endif

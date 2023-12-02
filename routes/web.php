@@ -49,7 +49,14 @@ Route::middleware(['auth:users'])->group(function () {
     Route::get('users/dashboard', 'PageUserController@userDashboard')->name('userDashboard');
     Route::get('users/order', 'PageUserController@userOrder')->name('userOrder');
     Route::get('users/mempelai', 'PageUserController@userMempelai')->name('userMempelai');
+
+    // Cerita Start
     Route::get('users/cerita', 'PageUserController@userCerita')->name('userCerita');
+    Route::post('users/cerita/tambah', 'PageUserController@tambahCerita')->name('tambahCerita');
+    Route::post('users/cerita/update', 'PageUserController@updateCerita')->name('updateCerita');
+    Route::post('users/cerita/hapus', 'PageUserController@hapusCerita')->name('hapusCerita');
+    // Cerita End
+
     Route::get('users/acara', 'PageUserController@userOrder')->name('userAcara');
 
     // Tamu Start
