@@ -6,7 +6,6 @@ use App\Imports\ImportTamuExcel;
 use App\TblAcarasModel;
 use App\TblBukuTamusModel;
 use App\TblCeritasModel;
-use App\TblKunjungansModel;
 use App\TblPengunjungModel;
 use App\TblPesanansModel;
 use Carbon\Carbon;
@@ -27,13 +26,13 @@ class PageUserController extends Controller
             ->groupBy('tbl_pesanans.id')
             ->get();
 
-        $banyakPengunjung = TblKunjungansModel::join('tbl_pesanans','tbl_pesanans.id', '=', 'tbl_pengunjungs.id_pesanan')
+        $banyakPengunjung = TblPengunjungModel::join('tbl_pesanans','tbl_pesanans.id', '=', 'tbl_pengunjungs.id_pesanan')
             ->select('id_pesanan', DB::raw('COUNT(*) as total_kunjungan'))
             ->where('id_user', Auth::user()->id)
             ->groupBy('id_pesanan')
             ->get();
 
-        $banyakPengunjungPerHari = TblKunjungansModel::join('tbl_pesanans','tbl_pesanans.id', '=', 'tbl_pengunjungs.id_pesanan')
+        $banyakPengunjungPerHari = TblPengunjungModel::join('tbl_pesanans','tbl_pesanans.id', '=', 'tbl_pengunjungs.id_pesanan')
             ->select(
                 'id_pesanan',
                 DB::raw('COUNT(*) as total_kunjungan'),

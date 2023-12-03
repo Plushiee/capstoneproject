@@ -4,23 +4,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>- Register</title>
+    <title>ManToe.id | Register</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
     <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="assets/css/fontawesome-all.min.css">
     <link rel="stylesheet" type="text/css" href="assets/css/iofrm-style.css">
     <link rel="stylesheet" type="text/css" href="assets/css/iofrm-theme2.css">
+
+    <!-- for ios 7 style, multi-resolution icon of 152x152 -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-barstyle" content="black-translucent">
+    <link rel="apple-touch-icon" href="{{ asset('assets/images/logo-only.png') }}">
+    <meta name="apple-mobile-web-app-title" content="Flatkit">
+    <!-- for Chrome on Android, multi-resolution icon of 196x196 -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="shortcut icon" sizes="196x196" href="{{ asset('assets/images/logo-only.png') }}">
 </head>
 
 <body>
     <div class="form-body">
-        <div class="website-logo">
-            <a href="index">
-                <div class="logo">
-                    <img class="logo-size" src="assets/images/logo-light.svg" alt="">
-                </div>
-            </a>
-        </div>
+        <a href="index">
+            <img class="logo-size" src="{{ asset('assets/images/logo-cp.png') }}" width="100px" alt="logoManToe.png">
+        </a>
         <div class="row">
             <div class="img-holder">
                 <div class="bg"></div>
@@ -31,7 +36,7 @@
             <div class="form-holder">
                 <div class="form-content">
                     <div class="form-items">
-                        <h3>Get more things done with MyCaptsone.</h3>
+                        <h3>Get more things done with ManToe.id</h3>
                         <p>Access to the most powerfull tool in the entire digital wedding design in Indonesia.</p>
                         <div class="page-links">
                             <a href="login">Login</a><a href="register" class="active">Register</a>
@@ -66,7 +71,8 @@
                                     </span>
                                 </div>
                             </div>
-                            <p class="mb-3 mt-2 text-center d-none" id="sama" style="color: white; font-weight: bold">
+                            <p class="mb-3 mt-2 text-center d-none" id="sama"
+                                style="color: white; font-weight: bold">
                                 Password Tidak Sama!</p>
                             <div class="form-button mt-3">
                                 <button id="submitRegister" type="submit" class="ibtn submitRegister">Register</button>

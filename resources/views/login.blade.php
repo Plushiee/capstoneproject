@@ -4,21 +4,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>- Login</title>
+    <title>ManToe.id | Login</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
     <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="assets/css/fontawesome-all.min.css">
     <link rel="stylesheet" type="text/css" href="assets/css/iofrm-style.css">
     <link rel="stylesheet" type="text/css" href="assets/css/iofrm-theme2.css">
+
+    <!-- for ios 7 style, multi-resolution icon of 152x152 -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-barstyle" content="black-translucent">
+    <link rel="apple-touch-icon" href="{{ asset('assets/images/logo-only.png') }}">
+    <meta name="apple-mobile-web-app-title" content="Flatkit">
+    <!-- for Chrome on Android, multi-resolution icon of 196x196 -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="shortcut icon" sizes="196x196" href="{{ asset('assets/images/logo-only.png') }}">
 </head>
 
 <body>
     <div class="form-body">
         <div class="website-logo">
             <a href="index.html">
-                <div class="logo">
-                    <img class="logo-size" src="assets/images/logo-light.svg" alt="">
-                </div>
+                <img class="logo-size" src="{{ asset('assets/images/logo-cp.png') }}" alt="logoManToe.png">
             </a>
         </div>
         <div class="row">
@@ -31,7 +38,7 @@
             <div class="form-holder">
                 <div class="form-content">
                     <div class="form-items">
-                        <h3>Get more things done with MyCaptsone.</h3>
+                        <h3>Get more things done with ManToe.id</h3>
                         <p>Access to the most powerfull tool in the entire digital wedding design in Indonesia.</p>
                         <div class="page-links">
                             <a href="login" class="active">Login</a><a href="register">Register</a>
