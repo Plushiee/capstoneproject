@@ -229,20 +229,20 @@
                             id: idCerita
                         },
                         success: function(response) {
-        
 
-                                Swal.fire({
-                                    icon: 'success',
-                                    toast: true,
-                                    title: 'Berhasil',
-                                    text: response.message,
-                                    position: 'top-end',
-                                    showConfirmButton: false,
-                                    timer: 3000,
-                                }).then((result) => {
-                                    location.reload();
-                                });
-                            
+
+                            Swal.fire({
+                                icon: 'success',
+                                toast: true,
+                                title: 'Berhasil',
+                                text: response.message,
+                                position: 'top-end',
+                                showConfirmButton: false,
+                                timer: 3000,
+                            }).then((result) => {
+                                location.reload();
+                            });
+
                         },
                         error: function(error) {
                             console.log(error);

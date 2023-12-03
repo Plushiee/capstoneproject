@@ -2,7 +2,7 @@
 <html lang="id" class="no-js">
 
 <head>
-    <title>Andra & Amel</title>
+    <title>{{ $mempelainya->nama_panggilan_pria }} & {{ $mempelainya->nama_panggilan_wanita }}</title>
     <!-- REQUIRED META AREA	 -->
     <meta charset="UTF-8">
     <meta name=viewport content="width=device-width, initial-scale=1.0">
@@ -49,7 +49,7 @@
                                     <h3>{{ $mempelainya->nama_panggilan_pria }} &
                                         {{ $mempelainya->nama_panggilan_wanita }}</h3>
                                     <p><span id="tanggal-wedding"></span><input id="tgl_wedding" type="hidden"
-                                            value="2023/12/2"></p>
+                                            value="{{ $acaranya->where('countdown', 1)->first()->waktu_acara }}"></p>
                                     <figure><img class="img-responsive"
                                             src="https://cepetnikah.my.id/assets/themes/jellyblack/themes-rsvp/sw-vendor/jellyblack/img/sw-wedding-invitation.png">
                                     </figure>
@@ -103,12 +103,14 @@
                                 @foreach ($acaranya as $acara)
                                     <div class="sw-akad-resepsi">
                                         <h2>{{ $acara->nama_acara }}</h2>
-                                        <p><span id="{{ 'tanggal_acara' . $acara->id }}"></span><input id="tgl_acara2"
-                                                type="hidden" value="2022/12/14">
-                                            <br> Jam 09:00 - 10:00 <br> Kediaman Mempelai Wanita<br>Jl. Medan Merdeka
-                                            Utara No.3 RT.02/RW.03. Gambir, Jakarta Pusat.
+                                        <p><span id="{{ 'tanggal_acara' . $acara->id }}">
+                                                {{ \Carbon\Carbon::parse($acara->waktu_acara)->format('d F Y') }}</span>
+                                            <br>
+                                            Jam:
+                                            {{ \Carbon\Carbon::parse($acara->waktu_acara)->format('H:i') }} WIB <br>
+                                            {{ $acara->tempat_acara }}<br>{{ $acara->alamat_acara }}
                                         </p>
-                                        @if ($acara->lat_acara != null)
+                                        @if ($acara->google_map != null)
                                             <a href="#" data-toggle="modal" data-target="#sw-maps"
                                                 title="Lokasi">Buka
                                                 di google map</a>
@@ -137,7 +139,8 @@
                                                 <div class="timeline">
                                                     <div class="timeline-icon"></div>
                                                     <div class="timeline-content">
-                                                        <span class="date">{{ $cerita->tanggal_cerita }}</span>
+                                                        <span
+                                                            class="date">{{ \Carbon\Carbon::parse($cerita->tanggal_cerita)->format('d F Y') }}</span>
                                                         <h4 class="title">{{ $cerita->judul_cerita }}</h4>
                                                         <p class="description">{{ $cerita->isi_cerita }}</p>
                                                     </div>
@@ -146,7 +149,8 @@
                                                 <div class="timeline">
                                                     <div class="timeline-icon"></div>
                                                     <div class="timeline-content right">
-                                                        <span class="date">{{ $cerita->tanggal_cerita }}</span>
+                                                        <span
+                                                            class="date">{{ \Carbon\Carbon::parse($cerita->tanggal_cerita)->format('d F Y') }}</span>
                                                         <h4 class="title">{{ $cerita->judul_cerita }}</h4>
                                                         <p class="description">{{ $cerita->isi_cerita }}</p>
                                                     </div>
@@ -521,9 +525,13 @@
                     <div class="social-share text-center">
                         <div class="maps">
                             <iframe
-                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.705836876672!2d106.82198811476884!3d-6.170129095532956!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69f5d6aa94d477%3A0xebf3b9d252c86a26!2sMerdeka%20Palace!5e0!3m2!1sen!2sid!4v1595773648767!5m2!1sen!2sid"
+                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d31673.71275825069!2d109.9343848761109!3d-7.101167651839949!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e7013497f504245%3A0x2ab97b5012ad2a6b!2sAlun%20Alun%20Kota%20Bawang!5e0!3m2!1sid!2sid!4v1701507384746!5m2!1sid!2sid"
+                                width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"
+                                referrerpolicy="no-referrer-when-downgrade"></iframe>
+                            {{-- <iframe
+                                src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d4024135.763309077!2d108.8688439734123!3d-9.94892291858544!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sid!2sid!4v1701507089467!5m2!1sid!2sid"
                                 width="600" height="450" frameborder="0" style="border:0;" allowfullscreen=""
-                                aria-hidden="false" tabindex="0"></iframe>
+                                aria-hidden="false" tabindex="0"></iframe> --}}
                         </div>
                     </div>
                 </div>
@@ -646,7 +654,7 @@
                 document.getElementById('normalscreen').style.display = 'none';
             }
         }
-        $('#clock').countdown('2023/12/1 10:00', function(event) {
+        $('#clock').countdown("{{ $acaranya->where('countdown', 1)->first()->waktu_acara }}", function(event) {
             $(this).html(event.strftime('%D:%H:%M:%S'));
         });
         $(document).ready(function() {

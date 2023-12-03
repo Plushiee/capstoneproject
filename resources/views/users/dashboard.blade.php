@@ -117,11 +117,44 @@
                 </div>
             </div>
         </div>
+        <div class="row">
+            <canvas id="myChart"></canvas>
+        </div>
     </div>
 @endsection
 
 @section('addJS')
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        var ctx = document.getElementById('myChart').getContext('2d');
+        var visitorsData = @json($visitorsData);
+
+        var dates = Object.keys(visitorsData);
+        var counts = Object.values(visitorsData);
+
+        var myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: dates,
+                datasets: [{
+                    label: 'Number of Visitors',
+                    data: counts,
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+        console.log(visitorsData);
+    </script>
 
     @if (session('user'))
         <script>

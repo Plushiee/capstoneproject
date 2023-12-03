@@ -6,6 +6,7 @@ use App\TblAcarasModel;
 use App\TblBukuTamusModel;
 use App\TblCeritasModel;
 use App\TblMempelaisModel;
+use App\TblPengunjungModel;
 use App\TblPesanansModel;
 use Illuminate\Http\Request;
 
@@ -26,28 +27,26 @@ class UndanganController extends Controller
         abort(404, 'User Not  found');
         // return ($domainnya);
     }
-    // public function tamu($domain, $tamu)
-    // {
-    //     $domainnya = TblPesanansModel::where('domain', $domain)->first();
 
-    //     if ($tamu == null) {
-    //         $tamunya = TblBukuTamusModel::add('nama_tamu', 'tamu undangan');
-    //     } else {
-    //         $tamunya = TblBukuTamusModel::where('nama_tamu', $tamu)->first();
-    //     }
+    private function counterPengunjung($id_pesanan, $namapengunjung, $ipAddress)
+    {
+        $visitor = TblPengunjungModel::where('id_pesanan', $id_pesanan)
+            ->where('nama_pengunjung', $namapengunjung)
+            ->where('alamat_ip', $ipAddress)
+            ->first();
+
+        if ($visitor) {
+            $visitor->increment('jumlah_kunjungan');
+        } else {
+            TblPengunjungModel::create([
+                'id_pesanan' => $id_pesanan,
+                'nama_pengunjung' => $namapengunjung,
+                'alamat_ip' => $ipAddress,
+            ]);
+        }
+    }
 
 
-    //     if ($domainnya && $tamunya) {
-    //         if (TblPesanansModel::where('status_pembayaran', 'lunas')->where('domain', $domain)->first()) {
-
-    //             return view('undangan.themes.tes' . $domainnya->id_produk, ['tamunya' => $tamunya]);
-    //             // return ('sukses');
-    //         }
-    //         return ('Belum Dibayar gais');
-    //     }
-    //     abort(404, 'User Not  found');
-    //     // return ($domainnya);
-    // }
     public function tamu($domain, $tamu = null)
     {
         $domainnya = TblPesanansModel::where('domain', $domain)->first();
@@ -76,8 +75,12 @@ class UndanganController extends Controller
             $tamunya = TblBukuTamusModel::where('nama_tamu', $tamu)->where('id_pesanan', $idnyapesanan)->first();
         }
 
+        $ipAddress = request()->ip();
+
         if ($domainnya && $tamunya) {
             if (TblPesanansModel::where('status_pembayaran', 'lunas')->where('domain', $domain)->first()) {
+                $ipAddress = request()->ip();
+                $this->counterPengunjung($idnyapesanan, $tamunya->nama_tamu, $ipAddress);
 
                 return view('undangan.themes.tes' . $domainnya->id_produk, [
                     'idpesananya' => $idnyapesanan,
@@ -86,7 +89,7 @@ class UndanganController extends Controller
                     'acaranya' => $acaranya,
                     'mempelainya' => $mempelainya
                 ]);
-                // return ($idnyapesanan . '</br>' . $domainnya . '</br>' . $tamunya);
+                // return ($idnyapesanan . '</br>' . $tamunya . '</br>' . $ipAddress);
             }
 
             return ('Konfirmasi bayar dulu');

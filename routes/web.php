@@ -57,7 +57,14 @@ Route::middleware(['auth:users'])->group(function () {
     Route::post('users/cerita/hapus', 'PageUserController@hapusCerita')->name('hapusCerita');
     // Cerita End
 
-    Route::get('users/acara', 'PageUserController@userOrder')->name('userAcara');
+    // Acara Start
+    Route::get('users/acara', 'PageUserController@userAcara')->name('userAcara');
+    Route::post('users/acara/tambah', 'PageUserController@tambahAcara')->name('tambahAcara');
+    Route::post('users/acara/updateCountdown', 'PageUserController@updateCountdown')->name('updateCountdown');
+    Route::post('users/acara/update', 'PageUserController@updateAcara')->name('updateAcara');
+    Route::post('users/acara/hapus', 'PageUserController@hapusAcara')->name('hapusAcara');
+
+    // Acara End
 
     // Tamu Start
     Route::get('users/listtamu', 'PageUserController@userListTamu')->name('userListTamu');

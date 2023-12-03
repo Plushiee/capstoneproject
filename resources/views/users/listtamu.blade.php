@@ -37,6 +37,7 @@
                     </div>
                 </div>
             </div>
+
             <div class="table-responsive">
                 <table class="table table-bordered" ui-jp="footable" data-filter="#filter" data-page-size="5">
                     <thead class="thead">
@@ -53,10 +54,11 @@
                     </thead>
 
                     <tbody>
-                        @foreach (DB::table('tbl_buku_tamus')->where(
-                'id_pesanan',
-                DB::table('tbl_pesanans')->where('id_user', Auth::user()->id)->value('id'),
-            )->get() as $tamunya)
+                        {{-- @foreach (DB::table('tbl_buku_tamus')->where(
+            'id_pesanan',
+            DB::table('tbl_pesanans')->where('id_user', Auth::user()->id)->value('id'),
+        )->get() as $tamunya) --}}
+                        @foreach ($tamu as $tamunya)
                             <tr>
                                 <td><input type="checkbox" class="centangTamu" name="idTamu[]" value="{{ $tamunya->id }}">
                                 </td>
@@ -64,7 +66,7 @@
                                 <td> {{ $tamunya->nama_tamu }}</td>
                                 <td> {{ $tamunya->no_wa }}</td>
                                 <td> {{ $tamunya->alamat_tamu }} </td>
-                                <td> <a href="{{ route('domainUndangan', ['domain' => DB::table('tbl_pesanans')->where('id_user', Auth::user()->id)->first()->domain,'tamu' => $tamunya->nama_tamu]) }}"
+                                <td> <a href="{{ route('domainUndangan', ['domain' => $tamunya->domain, 'tamu' => $tamunya->nama_tamu]) }}"
                                         target="_BLANK">Buka Undangan</a>
                                 </td>
                                 <td>
@@ -79,11 +81,11 @@
                                 {{-- <td><span class="label success">Terkirim</span></td> --}}
                                 <td class="w-sm no-wrap">
                                     <button class="md-btn  md-raised w-xxs m-2" data-toggle="modal" data-target="#sw-qrcode"
-                                        onclick="qrwhatsapp('{{ $tamunya->no_wa }}','{{ $tamunya->nama_tamu }}','{{ route('domainUndangan', ['domain' => DB::table('tbl_pesanans')->where('id_user', Auth::user()->id)->first()->domain,'tamu' => $tamunya->nama_tamu]) }}')">
+                                        onclick="qrwhatsapp('{{ $tamunya->no_wa }}','{{ $tamunya->nama_tamu }}','{{ route('domainUndangan', ['domain' => $tamunya->domain, 'tamu' => $tamunya->nama_tamu]) }}','{{ $tamunya->nama_panggilan_pria }} dan {{ $tamunya->nama_panggilan_wanita }}')">
                                         <i class="fa fa-lg fa-qrcode " title="tampilkan qr untuk kirim wa"></i></button>
 
-                                    <a href="https://wa.me/62{{ $tamunya->no_wa }}?text=" target="_blank"> <button
-                                            class="md-btn md-raised m-b-sm w-xs primary">Kirim</button></a>
+                                    <button class="md-btn md-raised m-b-sm w-xs primary"
+                                        onclick="kirimwa('{{ $tamunya->no_wa }}','{{ $tamunya->nama_tamu }}','{{ route('domainUndangan', ['domain' => $tamunya->domain, 'tamu' => $tamunya->nama_tamu]) }}','{{ $tamunya->nama_panggilan_pria }} dan {{ $tamunya->nama_panggilan_wanita }}')">Kirim</button>
 
                                 </td>
                             </tr>
@@ -234,21 +236,26 @@
 
     <script>
         // QR Link Wa
-        function qrwhatsapp(nowa, nama, urlundangan) {
+        function qrwhatsapp(nowa, nama, urlundangan, namamempelai) {
             var isipesan =
-                `Assalamu'alaikum Wr. Wb%0ABismillahirahmanirrahim.%0A%0AYth. ${ nama }%0A%0ATanpa mengurangi rasa hormat, perkenankan kami mengundang Bapak/Ibu/Saudara/i, teman sekaligus sahabat, untuk menghadiri acara pernikahan kami : %0A%0A *nama mempelai* %0A%0ABerikut link undangan kami untuk info lengkap dari acara bisa kunjungi :%0A%0A *${ urlundangan }* %0A%0AMerupakan suatu kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan untuk hadir dan memberikan doa restu. %0A%0AMohon maaf perihal undangan hanya di bagikan melalui pesan ini. Terima kasih banyak atas perhatiannya. %0A%0AWassalamu'alaikum Wr. Wb. %0ATerima Kasih.`;
+                `Assalamu'alaikum Wr. Wb%0ABismillahirahmanirrahim.%0A%0AYth. ${ nama }%0A%0ATanpa mengurangi rasa hormat, perkenankan kami mengundang Bapak/Ibu/Saudara/i, teman sekaligus sahabat, untuk menghadiri acara pernikahan kami : %0A%0A *${namamempelai}* %0A%0ABerikut link undangan kami untuk info lengkap dari acara bisa kunjungi :%0A%0A *${ urlundangan }* %0A%0AMerupakan suatu kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan untuk hadir dan memberikan doa restu. %0A%0AMohon maaf perihal undangan hanya di bagikan melalui pesan ini. Terima kasih banyak atas perhatiannya. %0A%0AWassalamu'alaikum Wr. Wb. %0ATerima Kasih.`;
             var whatsappUrl = 'https://wa.me/62' + nowa + '?text=' + isipesan;
 
             $('#qrcode').ClassyQR({
                 create: true,
-                type: 'text',
-                text: whatsappUrl
+                type: 'url',
+                url: whatsappUrl
 
             });
+        }
+
+        function kirimwa(nowa, nama, urlundangan, namamempelai) {
+            var isipesan =
+                `Assalamu'alaikum Wr. Wb%0ABismillahirahmanirrahim.%0A%0AYth. ${ nama }%0A%0ATanpa mengurangi rasa hormat, perkenankan kami mengundang Bapak/Ibu/Saudara/i, teman sekaligus sahabat, untuk menghadiri acara pernikahan kami : %0A%0A *${namamempelai}* %0A%0ABerikut link undangan kami untuk info lengkap dari acara bisa kunjungi :%0A%0A *${ urlundangan }* %0A%0AMerupakan suatu kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan untuk hadir dan memberikan doa restu. %0A%0AMohon maaf perihal undangan hanya di bagikan melalui pesan ini. Terima kasih banyak atas perhatiannya. %0A%0AWassalamu'alaikum Wr. Wb. %0ATerima Kasih.`;
+            var whatsappUrl = 'https://wa.me/62' + nowa + '?text=' + isipesan;
+            window.open(whatsappUrl, '_blank');
 
         }
-        function send
-
 
         $('#sw-qrcode').on('hidden.bs.modal', function() {
             // Reset the QR code content when the modal is closed

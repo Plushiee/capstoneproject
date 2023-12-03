@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Imports\ImportTamuExcel;
+use App\TblAcarasModel;
 use App\TblBukuTamusModel;
 use App\TblCeritasModel;
+use App\TblPengunjungModel;
 use App\TblPesanansModel;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
@@ -16,9 +19,28 @@ class PageUserController extends Controller
     // User Dashboard 
     public function userDashboard()
     {
-        return view('users.dashboard');
+        $startDate = Carbon::now()->subMonth()->startOfMonth();
+        $endDate = Carbon::now()->subMonth()->endOfMonth();
+
+        // Fetch visitors data for the last month
+        $visitorsData = TblPengunjungModel::whereBetween('created_at', [$startDate, $endDate])
+            ->get()
+            ->groupBy(function ($date) {
+                return Carbon::parse($date->created_at)->format('Y-m-d');
+            })
+            ->map(function ($item, $date) {
+                return [
+                    'date' => Carbon::parse($date)->format('F d, Y'),
+                    'count' => $item->count(),
+                ];
+            });
+        return view('users.dashboard', compact('visitorsData'));
     }
 
+    public function userOrder()
+    {
+        return view('users.order');
+    }
     public function userMempelai()
     {
         return view('users.mempelai');
@@ -27,18 +49,83 @@ class PageUserController extends Controller
     public function userCerita()
     {
         $cerita = TblCeritasModel::where('id_pesanan', TblPesanansModel::where('id_user', Auth::user()->id)->value('id'))->get();
-        // dd($cerita);
         return view('users.cerita', ['cerita' => $cerita]);
     }
 
-    public function userOrder()
+    // 
+    public function userAcara()
     {
-        return view('users.order');
+        $acara = TblAcarasModel::where('id_pesanan', TblPesanansModel::where('id_user', Auth::user()->id)->value('id'))->get();
+
+        return view('users.acara', ['acara' => $acara]);
+    }
+    public function tambahAcara(Request $request)
+    {
+        $validatedData = $request->validate([
+            'id_pesanan' => 'required',
+            'saveFormNama' => 'required',
+            'saveFormWaktu' => 'required',
+            'saveFormTempat' => 'required',
+            'saveFormAlamat' => 'required',
+            'saveFormMaps' => '',
+        ]);
+        $acara = new TblAcarasModel();
+        $acara->id_pesanan = $validatedData['id_pesanan'];
+        $acara->nama_acara = $validatedData['saveFormNama'];
+        $acara->waktu_acara = $validatedData['saveFormWaktu'];
+        $acara->tempat_acara = $validatedData['saveFormTempat'];
+        $acara->alamat_acara = $validatedData['saveFormAlamat'];
+        $acara->google_map = $validatedData['saveFormMaps'];
+        $acara->save();
+
+        return response()->json(['message' => 'Data Berhasil Ditambah']);
+    }
+    public function updateAcara(Request $request)
+    {
+        $id = $request->input('idAcara');
+        $nama = $request->input('editFormNamaBaru');
+        $waktu = $request->input('editFormWaktuBaru');
+        $tempat = $request->input('editFormTempatBaru');
+        $alamat = $request->input('editFormAlamatBaru');
+        $maps = $request->input('editFormMapsBaru');
+
+        try {
+            $acara = TblAcarasModel::find($id);
+            if (!$acara) {
+                return response()->json(['success' => false, 'message' => 'Acara not found.']);
+            }
+            $acara->id = $id;
+            $acara->nama_acara = $nama;
+            $acara->waktu_acara = $waktu;
+            $acara->tempat_acara = $tempat;
+            $acara->alamat_acara = $alamat;
+            $acara->google_map = $maps;
+            $acara->save();
+
+            return response()->json(['success' => true, 'message' => 'Berhasil Diupdate.']);
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'message' => 'Error Updating Acara.']);
+        }
+    }
+    public function updateCountdown(Request $request)
+    {
+        $id = $request->input('id');
+        if (!$id) {
+            return response()->json(['error' => 'Harap Pilih Salah Satu Acara Untuk Countdown']);
+        }
+        TblAcarasModel::where('id', $id)->update(['countdown' => '1']);
+        TblAcarasModel::where('id', '!=', $id)->update(['countdown' => '0']);
+        return response()->json(['message' => 'Berhasil Diset Sebagai Countdown']);
     }
 
+
+
     public function userListTamu()
+
     {
-        return view('users.listtamu');
+        $pesanan = TblPesanansModel::where('id_user', Auth::user()->id)->pluck('id');
+        $tamu = TblPesanansModel::join('tbl_buku_tamus', 'tbl_buku_tamus.id_pesanan', '=', 'tbl_pesanans.id')->join('tbl_mempelais', 'tbl_mempelais.id_pesanan', '=', 'tbl_pesanans.id')->where('tbl_pesanans.id', $pesanan)->get();
+        return view('users.listtamu', ['tamu' => $tamu]);
     }
     public function userGaleri()
     {
@@ -101,7 +188,7 @@ class PageUserController extends Controller
         $cerita->id_pesanan = $validatedData['id_pesanan'];
         $cerita->save();
 
-        return response()->json(['message' => 'Data berhasil disimpan']);
+        return response()->json(['message' => 'Data berhasil Ditambahkan']);
     }
 
     public function updateCerita(Request $request)
@@ -135,17 +222,13 @@ class PageUserController extends Controller
     public function hapusCerita(Request $request)
     {
         $ceritaId = $request->input('id');
-
-        // Logic to delete the story with the given ID
-        // You can use Eloquent or any other method to delete the record from the database
-
-        // For example:
         TblCeritasModel::destroy($ceritaId);
-
-        // Respond with a success message (you can customize the response as needed)
         return response()->json(['message' => 'Cerita deleted successfully']);
-        // TblCeritasModel::destroy($id);
-
-        // return redirect()->back()->with('success', 'Cerita deleted successfully.');
+    }
+    public function hapusAcara(Request $request)
+    {
+        $acaraId = $request->input('id');
+        TblAcarasModel::destroy($acaraId);
+        return response()->json(['message' => 'Cerita deleted successfully']);
     }
 }

@@ -18,10 +18,11 @@ class CreateTblAcaras extends Migration
             $table->unsignedBigInteger('id_pesanan')->nullable();
             $table->foreign('id_pesanan')->references('id')->on('tbl_pesanans');
             $table->string('nama_acara')->nullable();
-            $table->dateTime('tanggal_acara')->nullable();
-            $table->dateTime('jam_acara')->nullable();
+            $table->dateTime('waktu_acara')->nullable();
+            $table->string('tempat_acara')->nullable();
             $table->string('alamat_acara')->nullable();
-            $table->string('lat_acara')->nullable();
+            $table->enum('countdown', [1, 0])->default(0);
+            $table->string('google_map')->nullable();
             $table->string('long_acara')->nullable();
 
             $table->timestamps();
