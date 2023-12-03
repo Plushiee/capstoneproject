@@ -97,4 +97,14 @@ class UndanganController extends Controller
 
         abort(404, 'User Not found');
     }
+    public function updateKehadiran(Request $request)
+    {
+        $newAttendance = $request->input('new_attendance');
+        $id = $request->input('id');
+
+        // Update the attendance in the database
+        TblBukuTamusModel::where('id', $id)->update(['kehadiran' => $newAttendance]);
+
+        return response()->json(['success' => true, 'message' => 'Attendance updated successfully']);
+    }
 }

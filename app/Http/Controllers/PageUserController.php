@@ -26,38 +26,21 @@ class PageUserController extends Controller
             ->groupBy('tbl_pesanans.id')
             ->get();
 
-        $banyakPengunjung = TblPengunjungModel::join('tbl_pesanans','tbl_pesanans.id', '=', 'tbl_pengunjungs.id_pesanan')
+        $banyakPengunjung = TblPengunjungModel::join('tbl_pesanans', 'tbl_pesanans.id', '=', 'tbl_pengunjungs.id_pesanan')
             ->select('id_pesanan', DB::raw('COUNT(*) as total_kunjungan'))
             ->where('id_user', Auth::user()->id)
             ->groupBy('id_pesanan')
             ->get();
 
-        $banyakPengunjungPerHari = TblPengunjungModel::join('tbl_pesanans','tbl_pesanans.id', '=', 'tbl_pengunjungs.id_pesanan')
+        $banyakPengunjungPerHari = TblPengunjungModel::join('tbl_pesanans', 'tbl_pesanans.id', '=', 'tbl_pengunjungs.id_pesanan')
             ->select(
                 'id_pesanan',
-                DB::raw('COUNT(*) as total_kunjungan'),
+                DB::raw('sum(jumlah_kunjungan) as total_kunjungan'),
                 DB::raw('DATE(tbl_pengunjungs.created_at) as tanggal')
-                )
+            )
             ->where('id_user', Auth::user()->id)
             ->groupBy('id_pesanan', 'tanggal')
             ->get();
-
-        // $startDate = Carbon::now()->subMonth()->startOfMonth();
-        // $endDate = Carbon::now()->subMonth()->endOfMonth();
-
-        // Fetch visitors data for the last month
-        // $visitorsData = TblPengunjungModel::whereBetween('created_at', [$startDate, $endDate])
-        //     ->get()
-        //     ->groupBy(function ($date) {
-        //         return Carbon::parse($date->created_at)->format('Y-m-d');
-        //     })
-        //     ->map(function ($item, $date) {
-        //         return [
-        //             'date' => Carbon::parse($date)->format('F d, Y'),
-        //             'count' => $item->count(),
-        //         ];
-        //     });
-        // return view('users.dashboard', compact('visitorsData'));
         return view('users.dashboard', [
             'tanggalAkhir' => $tanggalAkhir,
             'banyakPengunjung' => $banyakPengunjung,

@@ -330,12 +330,30 @@
                                                 <label for="kehadiran" class="">
                                                     <p>Kehadiran</p>
                                                 </label>
-                                                <select id="kehadiran" name="kehadiran" class="form-control">
+                                                <select id="kehadiran" data-id="{{ $tamunya->id }}"
+                                                    class="form-control">
+
+                                                    <option value="belum konfirmasi"
+                                                        {{ $tamunya->kehadiran === 'belum konfirmasi' ? 'selected' : '' }}>
+                                                        belum konfirmasi</option>
+                                                    <option value="hadir"
+                                                        {{ $tamunya->kehadiran === 'hadir' ? 'selected' : '' }}>Hadir
+                                                    </option>
+                                                    <option value="tidak hadir"
+                                                        {{ $tamunya->kehadiran === 'tidak_hadir' ? 'selected' : '' }}>
+                                                        Tidak Hadir</option>
+                                                    <!-- Add more options as needed -->
+
+
+
+                                                    <!-- Add more options as needed -->
+                                                </select>
+                                                {{-- <select id="kehadiran" name="kehadiran" class="form-control">
 
                                                     <option value="belum konfirmasi">Belum Konfirmasi</option>
                                                     <option value="hadir">Hadir</option>
                                                     <option value="tidak hadir" selected>Tidak Hadir</option>
-                                                </select>
+                                                </select> --}}
                                             </div>
                                         </div>
                                         <div class="col-md-12 col-sm-12 col-xs-12">
@@ -363,7 +381,7 @@
                                 <div class="layout-komen">
                                     <div class="komen">
                                         <div class="col-12 komen-nama">
-                                            Aninda Safira | </div>
+                                            Aninda Safira </div>
                                         <div class="col-12 komen-isi">
                                             Alhamdulilah, selamat atas pernikahan kalian. Semoga pernikahan kalian
                                             dilimpahi oleh cinta, kebaikan dan kebahagiaan. Jazakallahu khairan
@@ -585,6 +603,32 @@
     <script src="{{ asset('assets/themes/jellyblack/themes-rsvp/sw-vendor/js/jquery.classyqr.js') }}"></script>
     <script>
         $(document).ready(function() {
+
+            $('#kehadiran').change(function() {
+                var selectedAttendance = $(this).val();
+                var id = $(this).data('id');
+
+                // Make an Ajax request to update the attendance
+                $.ajax({
+                    type: 'PATCH',
+                    url: "{{ route('updateKehadiran') }}",
+                    data: {
+                        new_attendance: selectedAttendance,
+                        id: id,
+                        _token: '{{ csrf_token() }}'
+                    },
+                    success: function(response) {
+                        console.log(response);
+                        // Handle success if needed
+                    },
+                    error: function(error) {
+                        console.error('Error:', error);
+                        // Handle error if needed
+                    }
+                });
+            });
+
+
             var kode = "Tidak Ada Qrcode";
             $('#qrcode').ClassyQR({
                 create: true,
