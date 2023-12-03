@@ -58,9 +58,11 @@
             'id_pesanan',
             DB::table('tbl_pesanans')->where('id_user', Auth::user()->id)->value('id'),
         )->get() as $tamunya) --}}
+
                         @foreach ($tamu as $tamunya)
                             <tr>
-                                <td><input type="checkbox" class="centangTamu" name="idTamu[]" value="{{ $tamunya->id }}">
+                                <td><input type="checkbox" class="centangTamu" name="idTamu[]"
+                                        value="{{ $tamunya->idtamu }}">
                                 </td>
                                 <td> {{ $loop->index + 1 }}</td>
                                 <td> {{ $tamunya->nama_tamu }}</td>
@@ -103,9 +105,9 @@
                                         title="Hapus data yang dipilih">
                                         <i class="material-icons text-danger">delete</i>
                                     </button>
-                                    <button id="editSelected" class="md-btn md-raised mx-2" data-toggle="tooltip"
-                                        data-placement="top" title="Edit Selected">
-                                        <i class="material-icons text-warn">edit</i>
+                                    <button id="updateKirim" class="md-btn md-raised mx-2" data-toggle="tooltip"
+                                        data-placement="top" title="Tandai Terkirim">
+                                        <i class="material-icons text-success">done</i>
                                     </button>
                                 </div>
                             </td>
@@ -136,8 +138,7 @@
                 <div class="modal-body">
                     <div class="col mt-2">
                         <label>Nama Tamu Undangan</label>
-                        <input id="id_pesanan" type="hidden" class="form-control"
-                            value="{{ DB::table('tbl_pesanans')->where('id_user', Auth::user()->id)->first()->id }}">
+                        <input id="id_pesanan" type="hidden" class="form-control" value="{{ $tamu->first()->idpesanan }}">
                         <input id="nama_tamu" type="text" class="form-control" placeholder="Contoh : Agus Sukamto"
                             style='text-transform:capitalize' required>
                     </div>
@@ -288,7 +289,16 @@
 
 
                 if (jml_data.length === 0) {
-                    alert('No records selected for deletion.');
+                    // alert('No records selected for deletion.');
+                    Swal.fire({
+                        icon: 'warning',
+                        toast: true,
+                        title: 'Perhatian',
+                        text: 'Harap Pilih data Yang Mau Dihapus',
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 3000,
+                    });
                     return;
                 }
                 const swalWithBootstrapButtons = Swal.mixin({
@@ -357,6 +367,90 @@
 
             });
             // Akhir Hapus Data
+
+            $('#updateKirim').click(function() {
+                var jml_data = $('input[name="idTamu[]"]:checked').map(function() {
+                    return $(this).val();
+                }).get();
+
+
+                if (jml_data.length === 0) {
+                    Swal.fire({
+                        icon: 'warning',
+                        toast: true,
+                        title: 'Perhatian',
+                        text: 'Harap Pilih data Yang Ditandai Terkirim',
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 3000,
+                    })
+                    return;
+                }
+                const swalWithBootstrapButtons = Swal.mixin({
+                    customClass: {
+                        confirmButton: "btn btn-success",
+                        cancelButton: "btn btn-danger"
+                    },
+
+                });
+                swalWithBootstrapButtons.fire({
+                    title: "Apakah Anda Yakin?",
+                    text: `Tandai ${jml_data.length} Data Sebagai Terkirim`,
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonText: "Ya, Saya sudah kirim!",
+                    cancelButtonText: "Tidak, Ora Sido!",
+                    reverseButtons: true
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajaxSetup({
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            }
+                        });
+
+                        $.ajax({
+                            type: 'POST',
+                            url: "{{ route('updateKirim') }}",
+                            data: {
+                                id: jml_data
+                            },
+                            dataType: 'json',
+                            success: function(response) {
+                                if (response.success) {
+
+                                    Swal.fire({
+                                        icon: 'success',
+                                        toast: true,
+                                        title: 'Berhasil',
+                                        text: response.message,
+                                        position: 'top-end',
+                                        showConfirmButton: false,
+                                        timer: 3000,
+                                    }).then((result) => {
+                                        location.reload();
+                                    });
+
+                                } else {
+                                    alert(response.message);
+                                }
+                            },
+                            error: function(xhr, status, error) {
+                                console.error(xhr.responseText);
+                            }
+                        });
+                    } else if (
+                        result.dismiss === Swal.DismissReason.cancel
+                    ) {
+                        swalWithBootstrapButtons.fire({
+                            title: "Dibatalkan",
+                            text: "Datanya Tidak Jadi Diubah Gais :)",
+                            icon: "error"
+                        });
+                    }
+                });
+
+            })
 
 
 

@@ -124,7 +124,7 @@ class PageUserController extends Controller
 
     {
         $pesanan = TblPesanansModel::where('id_user', Auth::user()->id)->pluck('id');
-        $tamu = TblPesanansModel::join('tbl_buku_tamus', 'tbl_buku_tamus.id_pesanan', '=', 'tbl_pesanans.id')->join('tbl_mempelais', 'tbl_mempelais.id_pesanan', '=', 'tbl_pesanans.id')->where('tbl_pesanans.id', $pesanan)->get();
+        $tamu = TblPesanansModel::select('tbl_buku_tamus.id as idtamu', 'nama_tamu', 'no_wa', 'alamat_tamu', 'domain', 'status', 'nama_panggilan_pria', 'nama_panggilan_wanita', 'tbl_pesanans.id as idpesanan')->join('tbl_buku_tamus', 'tbl_buku_tamus.id_pesanan', '=', 'tbl_pesanans.id')->join('tbl_mempelais', 'tbl_mempelais.id_pesanan', '=', 'tbl_pesanans.id')->where('tbl_pesanans.id', $pesanan)->get();
         return view('users.listtamu', ['tamu' => $tamu]);
     }
     public function userGaleri()
@@ -230,5 +230,19 @@ class PageUserController extends Controller
         $acaraId = $request->input('id');
         TblAcarasModel::destroy($acaraId);
         return response()->json(['message' => 'Cerita deleted successfully']);
+    }
+
+
+    public function updateKirim(Request $request)
+    {
+        $idtamu = $request->input('id', []);
+        // return ($idtamu);
+        if (empty($idtamu)) {
+            return response()->json(['success' => false, 'message' => 'Tidak Ada Data Yang Diganti']);
+        }
+
+
+        TblBukuTamusModel::whereIn('id', $idtamu)->update(['status' => 'terkirim']);
+        return response()->json(['success' => true, 'message' => 'Data Berhasil Diupdate']);
     }
 }

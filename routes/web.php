@@ -70,6 +70,7 @@ Route::middleware(['auth:users'])->group(function () {
     Route::get('users/listtamu', 'PageUserController@userListTamu')->name('userListTamu');
     Route::post('users/listtamu/tambah', 'PageUserController@tambahTamu')->name('tambahTamu');
     Route::post('users/listtamu/importexcel', 'PageUserController@importExcel')->name('importExcel');
+    Route::post('users/listtamu/updatekirim', 'PageUserController@updateKirim')->name('updateKirim');
     Route::delete('users/listtamu/hapus', 'PageUserController@hapusTamu')->name('hapusTamu');
     // Tamu End
 
