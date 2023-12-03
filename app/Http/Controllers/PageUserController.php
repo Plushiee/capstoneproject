@@ -6,35 +6,64 @@ use App\Imports\ImportTamuExcel;
 use App\TblAcarasModel;
 use App\TblBukuTamusModel;
 use App\TblCeritasModel;
+use App\TblKunjungansModel;
 use App\TblPengunjungModel;
 use App\TblPesanansModel;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\DB;
 use SebastianBergmann\Environment\Console;
 
 class PageUserController extends Controller
 {
-    // User Dashboard 
+    // User Dashboard
     public function userDashboard()
     {
-        $startDate = Carbon::now()->subMonth()->startOfMonth();
-        $endDate = Carbon::now()->subMonth()->endOfMonth();
+        $tanggalAkhir = TblPesanansModel::join('tbl_acaras', 'tbl_pesanans.id', '=', 'tbl_acaras.id_pesanan')
+            ->select('tbl_pesanans.id', DB::raw('MAX(tbl_acaras.waktu_acara) as tanggal_terakhir'))
+            ->where('id_user', Auth::user()->id)
+            ->groupBy('tbl_pesanans.id')
+            ->get();
+
+        $banyakPengunjung = TblKunjungansModel::join('tbl_pesanans','tbl_pesanans.id', '=', 'tbl_pengunjungs.id_pesanan')
+            ->select('id_pesanan', DB::raw('COUNT(*) as total_kunjungan'))
+            ->where('id_user', Auth::user()->id)
+            ->groupBy('id_pesanan')
+            ->get();
+
+        $banyakPengunjungPerHari = TblKunjungansModel::join('tbl_pesanans','tbl_pesanans.id', '=', 'tbl_pengunjungs.id_pesanan')
+            ->select(
+                'id_pesanan',
+                DB::raw('COUNT(*) as total_kunjungan'),
+                DB::raw('DATE(tbl_pengunjungs.created_at) as tanggal')
+                )
+            ->where('id_user', Auth::user()->id)
+            ->groupBy('id_pesanan', 'tanggal')
+            ->get();
+
+        // $startDate = Carbon::now()->subMonth()->startOfMonth();
+        // $endDate = Carbon::now()->subMonth()->endOfMonth();
 
         // Fetch visitors data for the last month
-        $visitorsData = TblPengunjungModel::whereBetween('created_at', [$startDate, $endDate])
-            ->get()
-            ->groupBy(function ($date) {
-                return Carbon::parse($date->created_at)->format('Y-m-d');
-            })
-            ->map(function ($item, $date) {
-                return [
-                    'date' => Carbon::parse($date)->format('F d, Y'),
-                    'count' => $item->count(),
-                ];
-            });
-        return view('users.dashboard', compact('visitorsData'));
+        // $visitorsData = TblPengunjungModel::whereBetween('created_at', [$startDate, $endDate])
+        //     ->get()
+        //     ->groupBy(function ($date) {
+        //         return Carbon::parse($date->created_at)->format('Y-m-d');
+        //     })
+        //     ->map(function ($item, $date) {
+        //         return [
+        //             'date' => Carbon::parse($date)->format('F d, Y'),
+        //             'count' => $item->count(),
+        //         ];
+        //     });
+        // return view('users.dashboard', compact('visitorsData'));
+        return view('users.dashboard', [
+            'tanggalAkhir' => $tanggalAkhir,
+            'banyakPengunjung' => $banyakPengunjung,
+            'banyakPengunjungPerHari' => $banyakPengunjungPerHari,
+        ]);
     }
 
     public function userOrder()
@@ -52,7 +81,7 @@ class PageUserController extends Controller
         return view('users.cerita', ['cerita' => $cerita]);
     }
 
-    // 
+    //
     public function userAcara()
     {
         $acara = TblAcarasModel::where('id_pesanan', TblPesanansModel::where('id_user', Auth::user()->id)->value('id'))->get();
@@ -121,7 +150,6 @@ class PageUserController extends Controller
 
 
     public function userListTamu()
-
     {
         $pesanan = TblPesanansModel::where('id_user', Auth::user()->id)->pluck('id');
         $tamu = TblPesanansModel::select('tbl_buku_tamus.id as idtamu', 'nama_tamu', 'no_wa', 'alamat_tamu', 'domain', 'status', 'nama_panggilan_pria', 'nama_panggilan_wanita', 'tbl_pesanans.id as idpesanan')->join('tbl_buku_tamus', 'tbl_buku_tamus.id_pesanan', '=', 'tbl_pesanans.id')->join('tbl_mempelais', 'tbl_mempelais.id_pesanan', '=', 'tbl_pesanans.id')->where('tbl_pesanans.id', $pesanan)->get();
