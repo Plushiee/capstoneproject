@@ -14,14 +14,13 @@ class CreateTblPengunjungs extends Migration
     public function up()
     {
         Schema::create('tbl_pengunjungs', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');
             $table->unsignedBigInteger('id_pesanan');
+            $table->foreign('id_pesanan')->references('id')->on('tbl_pesanans')->onDelete('cascade');
             $table->string('nama_pengunjung');
             $table->integer('jumlah_kunjungan')->default(1);
-            $table->ipAddress('alamat_ip');
+            $table->string('alamat_ip');
             $table->timestamps();
-
-            $table->foreign('id_pesanan')->references('id')->on('tbl_pesanans')->onDelete('cascade');
         });
     }
 
