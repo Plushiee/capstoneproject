@@ -12,7 +12,7 @@
 
         </div>
     </div>
-    {{ $banyakPengunjungPerHari }}
+
     <div class="padding">
         <div class="row">
             <div class="col-xs-12 col-sm-4">
@@ -24,10 +24,7 @@
                     </div>
                     <div class="clear">
                         <h4 class="m-0 text-lg _300"><a href>
-                                {{ DB::table('tbl_buku_tamus')->where(
-                                        'id_pesanan',
-                                        DB::table('tbl_pesanans')->where('id_user', Auth::user()->id)->value('id'),
-                                    )->count() }}
+                                {{ $tamu->count() }}
                                 <span class="text-sm">Tamu</span>
                             </a></h4>
                         <small class="text-muted">Diundang</small>
@@ -37,16 +34,12 @@
             <div class="col-xs-12 col-sm-4">
                 <div class="box p-a">
                     <div class="pull-left m-r">
-                        <span class="w-48 rounded  accent">
-                            <i class="material-icons">&#xe151;</i>
+                        <span class="w-48 rounded  success">
+                            <i class="material-icons">&#xe877;</i>
                         </span>
                     </div>
                     <div class="clear">
-                        <h4 class="m-0 text-lg _300"><a
-                                href>{{ DB::table('tbl_buku_tamus')->where(
-                                        'id_pesanan',
-                                        DB::table('tbl_pesanans')->where('id_user', Auth::user()->id)->value('id'),
-                                    )->where('kehadiran', 'hadir')->count() }}
+                        <h4 class="m-0 text-lg _300"><a href>{{ $tamu->where('kehadiran', 'hadir')->count() }}
                                 <span class="text-sm">Tamu</span>
                             </a></h4>
                         <small class="text-muted">Akan Hadir</small>
@@ -56,16 +49,13 @@
             <div class="col-xs-12 col-sm-4">
                 <div class="box p-a">
                     <div class="pull-left m-r">
-                        <span class="w-48 rounded  accent">
-                            <i class="material-icons">&#xe151;</i>
+                        <span class="w-48 rounded danger">
+                            <i class="material-icons">&#xe5c9;</i>
                         </span>
                     </div>
                     <div class="clear">
                         <h4 class="m-0 text-lg _300"><a href>
-                                {{ DB::table('tbl_buku_tamus')->where(
-                                        'id_pesanan',
-                                        DB::table('tbl_pesanans')->where('id_user', Auth::user()->id)->value('id'),
-                                    )->where('kehadiran', 'tidak hadir')->count() }}
+                                {{ $tamu->where('kehadiran', 'tidak hadir')->count() }}
                                 <span class="text-sm">Tamu</span>
                             </a></h4>
                         <small class="text-muted">Tidak Hadir</small>
@@ -75,16 +65,12 @@
             <div class="col-xs-12 col-sm-4">
                 <div class="box p-a">
                     <div class="pull-left m-r">
-                        <span class="w-48 rounded  accent">
-                            <i class="material-icons">&#xe151;</i>
+                        <span class="w-48 rounded warn">
+                            <i class="material-icons">&#xe8b5;</i>
                         </span>
                     </div>
                     <div class="clear">
-                        <h4 class="m-0 text-lg _300"><a
-                                href>{{ DB::table('tbl_buku_tamus')->where(
-                                        'id_pesanan',
-                                        DB::table('tbl_pesanans')->where('id_user', Auth::user()->id)->value('id'),
-                                    )->where('kehadiran', 'belum konfirmasi')->count() }}
+                        <h4 class="m-0 text-lg _300"><a href>{{ $tamu->where('kehadiran', 'belum konfirmasi')->count() }}
                                 <span class="text-sm">Tamu</span>
                             </a></h4>
                         <small class="text-muted">Belum Konfirmasi</small>
@@ -95,7 +81,7 @@
                 <div class="box p-a">
                     <div class="pull-left m-r">
                         <span class="w-48 rounded primary">
-                            <i class="material-icons">&#xe54f;</i>
+                            <i class="material-icons">&#xe0b9;</i>
                         </span>
                     </div>
                     <div class="clear">
@@ -107,8 +93,8 @@
             <div class="col-xs-6 col-sm-4">
                 <div class="box p-a">
                     <div class="pull-left m-r">
-                        <span class="w-48 rounded warn">
-                            <i class="material-icons">&#xe8d3;</i>
+                        <span class="w-48 rounded pink-500">
+                            <i class="material-icons">&#xe8f6;</i>
                         </span>
                     </div>
                     <div class="clear">
@@ -118,6 +104,7 @@
                 </div>
             </div>
         </div>
+
         <div class="row">
             <div class="col-12 col-md-6">
                 <div class="card">
@@ -127,7 +114,16 @@
                     </div>
                 </div>
             </div>
-            <div class="col-12 col-md-6 pt-2 pt-md-0">
+            <div class="col-12 col-md-6">
+                <div class="card">
+                    <div class="card-body my-3 text-center">
+                        <h5 class="card-title">Persentase Kehadiran Tamu</h5>
+                        <canvas id="chartkehadiran" style="max-height: 300px"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-6 pt-4">
                 <div class="card">
                     <div class="card-body my-3 mx-3 text-center">
                         <h5 class="card-title">Grafik Tamu Pengunjung Undangan Harian</h5>
@@ -144,36 +140,6 @@
         <!-- Chart JS Script Start-->
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <!-- Chart JS Script End-->
-
-        {{-- <script>
-        var ctx = document.getElementById('myChart').getContext('2d');
-        var visitorsData = @json($visitorsData);
-
-        var dates = Object.keys(visitorsData);
-        var counts = Object.values(visitorsData);
-
-        var myChart = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: dates,
-                datasets: [{
-                    label: 'Number of Visitors',
-                    data: counts,
-                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                    borderColor: 'rgba(75, 192, 192, 1)',
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                }
-            }
-        });
-        console.log(visitorsData);
-    </script> --}}
 
         <script>
             $(document).ready(function() {
@@ -235,6 +201,15 @@
                         }],
                     },
                     options: {
+                        animations: {
+                            tension: {
+                                duration: 1000,
+                                easing: 'linear',
+                                from: 1,
+                                to: 0,
+                                loop: true
+                            }
+                        },
                         responsive: true,
                         maintainAspectRatio: false,
                         scales: {
@@ -248,6 +223,38 @@
                         }
                     },
                 });
+
+                function createAttendanceChart(data) {
+                    var ctx = document.getElementById('chartkehadiran').getContext('2d');
+
+                    var myChart = new Chart(ctx, {
+                        type: 'doughnut',
+                        data: {
+                            labels: ['Hadir', 'Tidak Hadir',
+                                'belum Konfirmasi'
+                            ],
+                            datasets: [{
+                                data: data,
+                                backgroundColor: ['#6cc788', '#f44455', '#fcc100'],
+                            }],
+                        },
+                        options: {
+                            responsive: true,
+                            plugins: {
+                                legend: {
+                                    // position: 'right',
+                                    display: false,
+                                },
+                            },
+                        },
+                    });
+                }
+                const attendanceData = ["{{ $tamu->where('kehadiran', 'hadir')->count() }}",
+                    "{{ $tamu->where('kehadiran', 'tidak hadir')->count() }}",
+                    "{{ $tamu->where('kehadiran', 'belum konfirmasi')->count() }}"
+                ];
+                createAttendanceChart(attendanceData);
+
             });
         </script>
 

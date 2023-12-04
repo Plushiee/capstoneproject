@@ -41,10 +41,12 @@ class PageUserController extends Controller
             ->where('id_user', Auth::user()->id)
             ->groupBy('id_pesanan', 'tanggal')
             ->get();
+        $tamunya = TblBukuTamusModel::where('id_pesanan', TblPesanansModel::where('id_user', Auth::user()->id)->value('id'))->get();
         return view('users.dashboard', [
             'tanggalAkhir' => $tanggalAkhir,
             'banyakPengunjung' => $banyakPengunjung,
             'banyakPengunjungPerHari' => $banyakPengunjungPerHari,
+            'tamu' => $tamunya
         ]);
     }
 
