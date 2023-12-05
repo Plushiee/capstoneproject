@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Imports\ImportTamuExcel;
 use App\TblAcarasModel;
+use App\TblAlbumsModel;
 use App\TblBukuTamusModel;
 use App\TblCeritasModel;
+use App\TblMempelaisModel;
 use App\TblPengunjungModel;
 use App\TblPesanansModel;
 use Carbon\Carbon;
@@ -54,9 +56,117 @@ class PageUserController extends Controller
     {
         return view('users.order');
     }
+
     public function userMempelai()
     {
-        return view('users.mempelai');
+        $mempelai = TblMempelaisModel::where('id_pesanan', TblPesanansModel::where('id_user', Auth::user()->id)->value('id'))->first();
+        $formattanggal = Carbon::parse($mempelai->created_at)->format('YmdHis');
+
+        $basePath = public_path('assets/file-upload/image/dir_' . $mempelai->id . $mempelai->id_pesanan . '_' . $formattanggal);
+
+        $dir = [
+            'fotopria' => $basePath . '/mempelaipria.jpg',
+            'fotowanita' =>  $basePath . '/mempelaiwanita.jpg',
+            'fotosampul' => $basePath . '/sampul.jpg',
+        ];
+        if (!file_exists($dir['fotopria'])) {
+            $dir['fotopria'] = asset('assets/file-upload/image/camera.jpg');
+        } else {
+            $dir['fotopria'] = asset('assets/file-upload/image/dir_' . $mempelai->id . $mempelai->id_pesanan . '_' . $formattanggal);
+        }
+        if (!file_exists($dir['fotowanita'])) {
+            $dir['fotowanita'] = asset('assets/file-upload/image/camera.jpg');
+        } else {
+            $dir['fotowanita'] = asset('assets/file-upload/image/dir_' . $mempelai->id . $mempelai->id_pesanan . '_' . $formattanggal . '/mempelaiwanita.jpg');
+        }
+        if (!file_exists($dir['fotosampul'])) {
+            $dir['fotosampul'] = asset('assets/file-upload/image/camera.jpg');
+        } else {
+            $dir['fotosampul'] = asset('assets/file-upload/image/dir_' . $mempelai->id . $mempelai->id_pesanan . '_' . $formattanggal . '/sampul.jpg');
+        }
+        return view('users.mempelai', ['mempelai' => $mempelai, 'direktori' => "dir_{$mempelai->id}{$mempelai->id_pesanan}_{$formattanggal}", 'dir' => $dir]);
+    }
+    public function uploadFotoMempelai(Request $request)
+    {
+        $fotopria = $request->file('foto_mempelaipria');
+        $fotowanita = $request->file('foto_mempelaiwanita');
+        $fotosampul = $request->file('foto_sampul');
+        $direktori = $request->input('direktori');
+        $basePath = public_path('assets/file-upload/image/');
+        $path = $basePath . $direktori;
+        // return ($path);
+        if (!file_exists($path)) {
+
+            mkdir($path, 0777, true);
+        }
+        if ($fotopria != '') {
+            $avatar = $fotopria;
+            $pathName = $path . 'mempelaipria.jpg';
+            if (file_exists($pathName)) {
+                unlink($pathName);
+            }
+            $avatar->move($path, 'mempelaipria.jpg');
+            return response()->json(['success' => true, 'pesan' => 'foto mempelai pria berhasil disimpan']);
+        } elseif ($fotowanita != '') {
+            $avatar = $fotowanita;
+            $pathName = $path . 'mempelaiwanita.jpg';
+            if (file_exists($pathName)) {
+                unlink($pathName);
+            }
+            $avatar->move($path, 'mempelaiwanita.jpg');
+
+            return response()->json(['success' => true, 'pesan' => 'foto mempelai wanita berhasil disimpan']);
+        } else {
+            $avatar = $fotosampul;
+            $pathName = $path . 'sampul.jpg';
+            if (file_exists($pathName)) {
+                unlink($pathName);
+            }
+            $avatar->move($path, 'sampul.jpg');
+
+            return response()->json(['success' => true, 'pesan' => 'foto sampul berhasil disimpan']);
+        }
+        // $fotopria->move($path, 'mempelaipria.jpg');
+        // $fotowanita->move($path, 'mempelaiwanita.jpg');
+        // $fotosampul->move($path, 'sampul.jpg');
+
+        // return response()->json(['success' => true, 'path' => $path]);
+    }
+    public function updateMempelai(Request $request)
+    {
+
+        $id = $request->input('idMempelai');
+        $namaLengkapPria = $request->input('editNamaLengkapPria');
+        $namaLengkapWanita = $request->input('editNamaLengkapWanita');
+        $namaPanggilanPria = $request->input('editNamaPanggilanPria');
+        $namaPanggilanWanita = $request->input('editNamaPanggilanWanita');
+        $namaAyahPria = $request->input('editNamaAyahPria');
+        $namaAyahWanita = $request->input('editNamaAyahWanita');
+        $namaIbuPria = $request->input('editNamaIbuPria');
+        $namaIbuWanita = $request->input('editNamaIbuWanita');
+
+
+
+        try {
+            $mempelai = TblMempelaisModel::find($id);
+            if (!$mempelai) {
+                return response()->json(['success' => false, 'message' => 'Mempelai not found.']);
+            }
+            $mempelai->id = $id;
+            $mempelai->nama_pria = $namaLengkapPria;
+            $mempelai->nama_wanita = $namaLengkapWanita;
+            $mempelai->nama_panggilan_pria = $namaPanggilanPria;
+            $mempelai->nama_panggilan_wanita = $namaPanggilanWanita;
+            $mempelai->nama_ayah_pria = $namaAyahPria;
+            $mempelai->nama_ayah_wanita = $namaAyahWanita;
+            $mempelai->nama_ibu_pria = $namaIbuPria;
+            $mempelai->nama_ibu_wanita = $namaIbuWanita;
+            $mempelai->save();
+
+            return response()->json(['success' => true, 'message' => 'Berhasil Diupdate.']);
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'message' => 'Error Updating Acara.']);
+        }
     }
 
     public function userCerita()
@@ -141,8 +251,12 @@ class PageUserController extends Controller
     }
     public function userGaleri()
     {
-        return view('users.galeri');
+        $galeri = TblAlbumsModel::where('id_pesanan', TblPesanansModel::where('id_user', Auth::user()->id)->value('id'))->get();
+
+        return view('users.galeri', ['galeri' => $galeri]);
     }
+
+
     public function userUcapan()
     {
         return view('users.ucapan');

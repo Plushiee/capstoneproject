@@ -39,7 +39,8 @@
             </div>
 
             <div class="table-responsive">
-                <table class="table table-bordered" ui-jp="footable" data-filter="#filter" data-page-size="5">
+                <table class="table table-bordered" ui-jp="footable" data-filter="#filter" data-page-size="10"
+                    id="datatamu">
                     <thead class="thead">
                         <tr class="b-b-warn b-b-4x blue-grey-400">
                             <td></td>
@@ -54,11 +55,6 @@
                     </thead>
 
                     <tbody>
-                        {{-- @foreach (DB::table('tbl_buku_tamus')->where(
-            'id_pesanan',
-            DB::table('tbl_pesanans')->where('id_user', Auth::user()->id)->value('id'),
-        )->get() as $tamunya) --}}
-
                         @foreach ($tamu as $tamunya)
                             <tr>
                                 <td><input type="checkbox" class="centangTamu" name="idTamu[]"
@@ -80,7 +76,6 @@
                                         <span>{{ $tamunya->status }}</span>
                                     @endif
                                 </td>
-                                {{-- <td><span class="label success">Terkirim</span></td> --}}
                                 <td class="w-sm no-wrap">
                                     <button class="md-btn  md-raised w-xxs m-2" data-toggle="modal" data-target="#sw-qrcode"
                                         onclick="qrwhatsapp('{{ $tamunya->no_wa }}','{{ $tamunya->nama_tamu }}','{{ route('domainUndangan', ['domain' => $tamunya->domain, 'tamu' => $tamunya->nama_tamu]) }}','{{ $tamunya->nama_panggilan_pria }} dan {{ $tamunya->nama_panggilan_wanita }}')">
@@ -153,13 +148,6 @@
                         <input id="no_wa" type="text" placeholder="Contoh : 628xxxxx" class="form-control"
                             required>
                     </div>
-
-                    {{-- <div class="col mt-2">
-                        <label>Tanggal </label>
-                        <input name="datepicker" type="text" class="form-control" placeholder="Tanggal" id="datepicker"
-                            readonly="readonly" style="cursor:pointer; background-color: #FFFFFF" required>
-                        <input type="hidden" id="tgl_kirim">
-                    </div> --}}
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -333,6 +321,11 @@
                             dataType: 'json',
                             success: function(response) {
                                 if (response.success) {
+                                    $('td input[name="idTamu[]"]:checked')
+                                        .closest('tr').fadeOut(300,
+                                            function() {
+                                                $(this).remove();
+                                            });
 
                                     Swal.fire({
                                         icon: 'success',
@@ -341,9 +334,14 @@
                                         text: response.message,
                                         position: 'top-end',
                                         showConfirmButton: false,
-                                        timer: 3000,
+                                        timer: 2000,
                                     }).then((result) => {
                                         location.reload();
+                                        // $('#daftartamu').Datatable({}).ajax
+                                        //     .reload();
+                                        // $("#daftartamu").load("#dafartamu");
+                                        refreshTable();
+
                                     });
 
                                 } else {

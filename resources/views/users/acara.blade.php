@@ -51,7 +51,7 @@
                     </div>
                 </div>
 
-            </div>
+            </div >
             @foreach ($acara as $acara)
                 <div class="col-6 my-3">
                     <div class="card">
@@ -112,8 +112,8 @@
                             <div class="row align-items-center mt-3">
                                 <div class="col">
                                     <label>iframe google maps</label>
-                                    <textarea id="editFormMaps{{ $loop->index + 1 }}" name="isi_acara" type="text" class="form-control"
-                                        placeholder="Maximal 500 Karakter" maxlength="500" rows="4" required disabled>{{ $acara->google_map }} </textarea>
+                                    <textarea id="editFormMaps{{ $loop->index + 1 }}" name="" type="text" class="form-control"
+                                        placeholder="Contoh: <iframe src='https://www.google.com/maps/></iframe>" rows="4" required disabled>{{ $acara->google_map }}</textarea>
                                 </div>
                             </div>
                         </div>
@@ -163,7 +163,7 @@
                         <label>Google Maps Acara (opsional)</label>
                         <textarea id="googlemap_acara" type="text" class="form-control"
                             placeholder="Contoh : https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d31673.71275825069!2d109.9343848761109!3d-7.101167651839949!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e7013497f504245%3A0x2ab97b5012ad2a6b!2sAlun%20Alun%20Kota%20Bawang!5e0!3m2!1sid!2sid!4v1701507384746!5m2!1sid!2sid"
-                            maxlength="1000" rows="4"></textarea>
+                            rows="4"></textarea>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -230,7 +230,7 @@
                     }).then((result) => {
 
 
-                        location.reload();
+                        // location.reload();
 
                     });
                 },

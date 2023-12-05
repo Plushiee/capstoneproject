@@ -111,8 +111,8 @@
                                             {{ $acara->tempat_acara }}<br>{{ $acara->alamat_acara }}
                                         </p>
                                         @if ($acara->google_map != null)
-                                            <a href="#" data-toggle="modal" data-target="#sw-maps"
-                                                title="Lokasi">Buka
+                                            <a href="#" onclick="mapsmodal('{{ $acara->google_map }}')"
+                                                data-toggle="modal" data-target="#sw-maps" title="Lokasi">Buka
                                                 di google map</a>
                                         @endif
 
@@ -541,11 +541,11 @@
                 </div>
                 <div class="modal-body">
                     <div class="social-share text-center">
-                        <div class="maps">
-                            <iframe
+                        <div class="modalmaps">
+                            {{-- <iframe
                                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d31673.71275825069!2d109.9343848761109!3d-7.101167651839949!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e7013497f504245%3A0x2ab97b5012ad2a6b!2sAlun%20Alun%20Kota%20Bawang!5e0!3m2!1sid!2sid!4v1701507384746!5m2!1sid!2sid"
                                 width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"
-                                referrerpolicy="no-referrer-when-downgrade"></iframe>
+                                referrerpolicy="no-referrer-when-downgrade"></iframe> --}}
                             {{-- <iframe
                                 src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d4024135.763309077!2d108.8688439734123!3d-9.94892291858544!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sid!2sid!4v1701507089467!5m2!1sid!2sid"
                                 width="600" height="450" frameborder="0" style="border:0;" allowfullscreen=""
@@ -602,6 +602,13 @@
 
     <script src="{{ asset('assets/themes/jellyblack/themes-rsvp/sw-vendor/js/jquery.classyqr.js') }}"></script>
     <script>
+        function mapsmodal(url) {
+            var iframe = `<iframe src=${url} width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"
+                                referrerpolicy="no-referrer-when-downgrade"></iframe>`;
+            $('.modalmaps').html(iframe);
+        }
+
+
         $(document).ready(function() {
 
             $('#kehadiran').change(function() {
