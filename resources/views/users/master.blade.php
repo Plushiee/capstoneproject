@@ -29,6 +29,7 @@
     <link rel="stylesheet" href="{{ asset('assets/styles/app.css') }}" type="text/css" />
     <!-- endbuild -->
     <link rel="stylesheet" href="{{ asset('assets/styles/font.css') }}" type="text/css" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     @yield('addCSS')
 </head>
 

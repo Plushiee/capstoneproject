@@ -81,6 +81,10 @@ Route::middleware(['auth:users'])->group(function () {
     // Tamu End
 
     Route::get('users/galeri', 'PageUserController@userGaleri')->name('userGaleri');
+    Route::post('users/uploadgaleri', 'PageUserController@uploadGaleri')->name('uploadGaleri');
+    Route::post('users/hapusgaleri', 'PageUserController@hapusGaleri')->name('hapusGaleri');
+    Route::get('users/getgaleri', 'PageUserController@getGaleri')->name('getGaleri');
+
     Route::get('users/ucapan', 'PageUserController@userUcapan')->name('userUcapan');
     Route::post('users/logout', 'LoginController@logout')->name('userLogout');
 });

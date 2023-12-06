@@ -187,7 +187,7 @@
     </div>
 @endsection
 @section('addJS')
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+   
     <script src="{{ asset('assets/themes/jellyblack/themes-rsvp/sw-vendor/js/jquery.classyqr.js') }}"></script>
 
     <script>

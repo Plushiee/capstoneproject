@@ -9,6 +9,8 @@ use App\TblMempelaisModel;
 use App\TblPengunjungModel;
 use App\TblPesanansModel;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\File;
 
 class UndanganController extends Controller
 {
@@ -75,6 +77,39 @@ class UndanganController extends Controller
             $tamunya = TblBukuTamusModel::where('nama_tamu', $tamu)->where('id_pesanan', $idnyapesanan)->first();
         }
 
+
+        $mempelai = $mempelainya;
+
+        // $formattanggal = Carbon::parse($mempelainya->created_at)->format('YmdHis');
+        $formattanggal = Carbon::parse(optional($mempelainya)->created_at)->format('YmdHis');
+
+        $basePath = public_path('assets/file-upload/image/dir_' . optional($mempelainya)->id . optional($mempelainya)->id_pesanan . '_' . $formattanggal);
+        $imagePath = asset('assets/file-upload/image/dir_' . optional($mempelainya)->id . optional($mempelainya)->id_pesanan . '_' . $formattanggal . '/album\/');
+        $imageFiles = File::files($basePath . '/album\/');
+
+
+
+        $dir = [
+            'fotopria' => $basePath . '/mempelaipria.jpg',
+            'fotowanita' =>  $basePath . '/mempelaiwanita.jpg',
+            'fotosampul' => $basePath . '/sampul.jpg',
+        ];
+        if (!file_exists($dir['fotopria'])) {
+            $dir['fotopria'] = asset('assets/file-upload/image/camera.jpg');
+        } else {
+            $dir['fotopria'] = asset('assets/file-upload/image/dir_' . $mempelai->id . $mempelai->id_pesanan . '_' . $formattanggal . '/mempelaipria.jpg');
+        }
+        if (!file_exists($dir['fotowanita'])) {
+            $dir['fotowanita'] = asset('assets/file-upload/image/camera.jpg');
+        } else {
+            $dir['fotowanita'] = asset('assets/file-upload/image/dir_' . $mempelai->id . $mempelai->id_pesanan . '_' . $formattanggal . '/mempelaiwanita.jpg');
+        }
+        if (!file_exists($dir['fotosampul'])) {
+            $dir['fotosampul'] = asset('assets/file-upload/image/camera.jpg');
+        } else {
+            $dir['fotosampul'] = asset('assets/file-upload/image/dir_' . $mempelai->id . $mempelai->id_pesanan . '_' . $formattanggal . '/sampul.jpg');
+        }
+
         $ipAddress = request()->ip();
 
         if ($domainnya && $tamunya) {
@@ -82,12 +117,21 @@ class UndanganController extends Controller
                 $ipAddress = request()->ip();
                 $this->counterPengunjung($idnyapesanan, $tamunya->nama_tamu, $ipAddress);
 
+
+
+
+
+
                 return view('undangan.themes.tes' . $domainnya->id_produk, [
                     'idpesananya' => $idnyapesanan,
                     'tamunya' => $tamunya,
                     'ceritanya' => $ceritanya,
                     'acaranya' => $acaranya,
-                    'mempelainya' => $mempelainya
+                    'mempelainya' => $mempelainya,
+                    'dir' => $dir,
+                    'album' => $imageFiles,
+                    'imagepath' => $imagePath,
+
                 ]);
                 // return ($idnyapesanan . '</br>' . $tamunya . '</br>' . $ipAddress);
             }

@@ -11,10 +11,12 @@ use App\TblMempelaisModel;
 use App\TblPengunjungModel;
 use App\TblPesanansModel;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\File;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use SebastianBergmann\Environment\Console;
 
 class PageUserController extends Controller
@@ -72,7 +74,7 @@ class PageUserController extends Controller
         if (!file_exists($dir['fotopria'])) {
             $dir['fotopria'] = asset('assets/file-upload/image/camera.jpg');
         } else {
-            $dir['fotopria'] = asset('assets/file-upload/image/dir_' . $mempelai->id . $mempelai->id_pesanan . '_' . $formattanggal);
+            $dir['fotopria'] = asset('assets/file-upload/image/dir_' . $mempelai->id . $mempelai->id_pesanan . '_' . $formattanggal . '/mempelaipria.jpg');
         }
         if (!file_exists($dir['fotowanita'])) {
             $dir['fotowanita'] = asset('assets/file-upload/image/camera.jpg');
@@ -86,6 +88,78 @@ class PageUserController extends Controller
         }
         return view('users.mempelai', ['mempelai' => $mempelai, 'direktori' => "dir_{$mempelai->id}{$mempelai->id_pesanan}_{$formattanggal}", 'dir' => $dir]);
     }
+    public function uploadGaleri(Request $request)
+    {
+
+        $mempelai = TblMempelaisModel::where('id_pesanan', TblPesanansModel::where('id_user', Auth::user()->id)->value('id'))->first();
+        $formattanggal = Carbon::parse($mempelai->created_at)->format('YmdHis');
+        $basePath = public_path('assets/file-upload/image/dir_' . $mempelai->id . $mempelai->id_pesanan . '_' . $formattanggal);
+
+        $filecount = count(glob($basePath . '/album/*'));
+
+        if ($filecount >= 10) {
+            return response()->json(['success' => false, 'message' => 'Maximal file album 10 foto']);
+        }
+        $file = $request->file('file');
+        $fileName = $this->generateFileName($file->getClientOriginalExtension());
+        $file->move($basePath . '/album', $fileName);
+
+        return response()->json(['success' => true, 'message' => 'Berhasil Dipload']);
+    }
+    private function generateFileName($extension)
+    {
+        // Generate a unique name based on the current time
+        $namaalbum = 'album' . time();
+
+        // Append the file extension
+        return $namaalbum . '.' . $extension;
+    }
+    public function getGaleri()
+
+    {
+        $mempelai = TblMempelaisModel::where('id_pesanan', TblPesanansModel::where('id_user', Auth::user()->id)->value('id'))->first();
+        $formattanggal = Carbon::parse($mempelai->created_at)->format('YmdHis');
+        $basePath = public_path('assets/file-upload/image/dir_' . $mempelai->id . $mempelai->id_pesanan . '_' . $formattanggal);
+        $assetPath = asset('assets/file-upload/image/dir_' . $mempelai->id . $mempelai->id_pesanan . '_' . $formattanggal);
+
+        if (File::isDirectory($basePath . '/album')) {
+            // Get the list of files in the 'uploads' directory
+            $files = File::files($basePath . '/album');
+
+            // Create an array to store file information
+            $fileList = [];
+
+            // Populate the array with file details
+            foreach ($files as $file) {
+                $fileList[] = [
+                    'name' => pathinfo($file, PATHINFO_BASENAME),
+                    'size' => File::size($file),
+                    'path' => $assetPath . '/album\/' . basename($file),
+                ];
+            }
+
+            return response()->json($fileList);
+        }
+
+        // If the directory doesn't exist, return an empty array
+        return response()->json([]);
+    }
+    public function hapusGaleri(Request $request)
+    {
+        $file_path = $request->get('file_path');
+
+        $mempelai = TblMempelaisModel::where('id_pesanan', TblPesanansModel::where('id_user', Auth::user()->id)->value('id'))->first();
+        $formattanggal = Carbon::parse($mempelai->created_at)->format('YmdHis');
+        $basePath = public_path('assets/file-upload/image/dir_' . $mempelai->id . $mempelai->id_pesanan . '_' . $formattanggal . '/album\/' . $file_path);
+
+        if (File::exists($basePath)) {
+            File::delete($basePath);
+            return response()->json(['success' => true, 'message' => 'file berhasil di hapus']);
+        } else {
+            return response()->json(['success' => false, 'message' => 'File not found']);
+        }
+    }
+
     public function uploadFotoMempelai(Request $request)
     {
         $fotopria = $request->file('foto_mempelaipria');

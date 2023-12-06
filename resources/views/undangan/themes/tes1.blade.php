@@ -39,19 +39,23 @@
         src="https://cepetnikah.my.id/assets/users/mIjh78y8ge13b89d99c1a29132e57d2ca/musik.mp3"></audio>
     <section>
         <div class="sw-custom-wrapper row" id="sw_fullscreen">
-            <div id="clock" class="sw-timer"></div>
+            <div id="clock" class="sw-timer" style="min-width: 25%"></div>
             <div id="sw-bookblock" class="sw-bookblock">
                 <section class="sw-item">
                     <div class="sw-content">
                         <div class="sw-content-inner sw-content-flex">
                             <div class="col-md-12">
                                 <div class="sw-invitation-home text-center  wow bounceInUp">
+
+
+
                                     <h3>{{ $mempelainya->nama_panggilan_pria }} &
                                         {{ $mempelainya->nama_panggilan_wanita }}</h3>
-                                    <p><span id="tanggal-wedding"></span><input id="tgl_wedding" type="hidden"
+                                    <p class="mb-auto"><span id="tanggal-wedding"></span><input id="tgl_wedding"
+                                            type="hidden"
                                             value="{{ $acaranya->where('countdown', 1)->first()->waktu_acara }}"></p>
-                                    <figure><img class="img-responsive"
-                                            src="https://cepetnikah.my.id/assets/themes/jellyblack/themes-rsvp/sw-vendor/jellyblack/img/sw-wedding-invitation.png">
+                                    <figure><img class="img-responsive" style="padding-top: 25px"
+                                            src="{{ $dir['fotosampul'] }}">
                                     </figure>
                                     <p>Kepada Yang Terhormat</p>
                                     <h3>{{ $tamunya->nama_tamu }}</h3>
@@ -65,15 +69,14 @@
                         <div class="sw-content-inner sw-content-flex">
 
                             <div class="sw-ceremony"><img class="sw-el-top"
-                                    src="https://cepetnikah.my.id/assets/themes/jellyblack/themes-rsvp/sw-vendor/jellyblack/img/sw-element-top.png">
+                                    src="{{ asset('assets/themes/jellyblack/themes-rsvp/sw-vendor/jellyblack/img/sw-element-top.png') }}">
                                 <p class="sw-opening"> السَّلاَمُ عَلَيْكُمْ وَرَحْمَةُ اللهِ وَبَرَكَاتُهُ<br />
                                     <br />
                                     Dengan memohon Rahmat dan Ridho Allah SWT, Kami akan menyelenggarakan resepsi
                                     pernikahan Putra-Putri kami :
                                 </p>
                                 <figure>
-                                    <img
-                                        src="https://cepetnikah.my.id/assets/users/mIjh78y8ge13b89d99c1a29132e57d2ca/groom.png">
+                                    <img src="{{ $dir['fotopria'] }}">
                                 </figure>
                                 <h2>{{ $mempelainya->nama_pria }}</h2>
                                 <p class="sw-binti">Putra Bapak {{ $mempelainya->nama_ayah_pria }} dan Ibu
@@ -81,14 +84,13 @@
                                 </p>
                                 <p class="sw-or">dengan</p>
                                 <figure>
-                                    <img
-                                        src="https://cepetnikah.my.id/assets/users/mIjh78y8ge13b89d99c1a29132e57d2ca/bride.png">
+                                    <img src="{{ $dir['fotowanita'] }}">
                                 </figure>
                                 <h2>{{ $mempelainya->nama_wanita }}</h2>
                                 <p class="sw-binti"> Putri Bapak{{ $mempelainya->nama_ayah_wanita }} dan Ibu
                                     {{ $mempelainya->nama_ibu_wanita }}</p>
                                 <img class="sw-el-bottom"
-                                    src="https://cepetnikah.my.id/assets/themes/jellyblack/themes-rsvp/sw-vendor/jellyblack/img/sw-element-bottom.png">
+                                    src="{{ asset('assets/themes/jellyblack/themes-rsvp/sw-vendor/jellyblack/img/sw-element-bottom.png') }}">
                             </div>
 
                         </div>
@@ -169,126 +171,20 @@
                             <div class="sw-block">
                                 <h2>Galeri Prewedding</h2>
                                 <div class="sw-content-gallery">
-                                    <div class="col-xs-6 col-sm-3 col-md-3 col-lg-3">
-                                        <div class="sw-gallery">
-                                            <a href="https://cepetnikah.my.id/assets/users/mIjh78y8ge13b89d99c1a29132e57d2ca/album1.png"
-                                                class="swipebox"><img
-                                                    src="https://cepetnikah.my.id/assets/users/mIjh78y8ge13b89d99c1a29132e57d2ca/album1.png"
-                                                    class="img-responsive" />
-                                                <div class="sw-gallery-overlay">
-                                                    <i class="fa fa-search-plus"></i>
-                                                </div>
-                                            </a>
+                                    @foreach ($album as $album)
+                                        <div class="col-xs-6 col-sm-3 col-md-3 col-lg-3">
+                                            <div class="sw-gallery">
+                                                <a href="{{ asset($imagepath . basename($album)) }}"
+                                                    class="swipebox"><img
+                                                        src="{{ asset($imagepath . basename($album)) }}"
+                                                        class="img-responsive" />
+                                                    <div class="sw-gallery-overlay">
+                                                        <i class="fa fa-search-plus"></i>
+                                                    </div>
+                                                </a>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="col-xs-6 col-sm-3 col-md-3 col-lg-3">
-                                        <div class="sw-gallery">
-                                            <a href="https://cepetnikah.my.id/assets/users/mIjh78y8ge13b89d99c1a29132e57d2ca/album2.png"
-                                                class="swipebox"><img
-                                                    src="https://cepetnikah.my.id/assets/users/mIjh78y8ge13b89d99c1a29132e57d2ca/album2.png"
-                                                    class="img-responsive" />
-                                                <div class="sw-gallery-overlay">
-                                                    <i class="fa fa-search-plus"></i>
-                                                </div>
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-6 col-sm-3 col-md-3 col-lg-3">
-                                        <div class="sw-gallery">
-                                            <a href="https://cepetnikah.my.id/assets/users/mIjh78y8ge13b89d99c1a29132e57d2ca/album3.png"
-                                                class="swipebox"><img
-                                                    src="https://cepetnikah.my.id/assets/users/mIjh78y8ge13b89d99c1a29132e57d2ca/album3.png"
-                                                    class="img-responsive" />
-                                                <div class="sw-gallery-overlay">
-                                                    <i class="fa fa-search-plus"></i>
-                                                </div>
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-6 col-sm-3 col-md-3 col-lg-3">
-                                        <div class="sw-gallery">
-                                            <a href="https://cepetnikah.my.id/assets/users/mIjh78y8ge13b89d99c1a29132e57d2ca/album4.png"
-                                                class="swipebox"><img
-                                                    src="https://cepetnikah.my.id/assets/users/mIjh78y8ge13b89d99c1a29132e57d2ca/album4.png"
-                                                    class="img-responsive" />
-                                                <div class="sw-gallery-overlay">
-                                                    <i class="fa fa-search-plus"></i>
-                                                </div>
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-6 col-sm-3 col-md-3 col-lg-3">
-                                        <div class="sw-gallery">
-                                            <a href="https://cepetnikah.my.id/assets/users/mIjh78y8ge13b89d99c1a29132e57d2ca/album5.png"
-                                                class="swipebox"><img
-                                                    src="https://cepetnikah.my.id/assets/users/mIjh78y8ge13b89d99c1a29132e57d2ca/album5.png"
-                                                    class="img-responsive" />
-                                                <div class="sw-gallery-overlay">
-                                                    <i class="fa fa-search-plus"></i>
-                                                </div>
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-6 col-sm-3 col-md-3 col-lg-3">
-                                        <div class="sw-gallery">
-                                            <a href="https://cepetnikah.my.id/assets/users/mIjh78y8ge13b89d99c1a29132e57d2ca/album6.png"
-                                                class="swipebox"><img
-                                                    src="https://cepetnikah.my.id/assets/users/mIjh78y8ge13b89d99c1a29132e57d2ca/album6.png"
-                                                    class="img-responsive" />
-                                                <div class="sw-gallery-overlay">
-                                                    <i class="fa fa-search-plus"></i>
-                                                </div>
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-6 col-sm-3 col-md-3 col-lg-3">
-                                        <div class="sw-gallery">
-                                            <a href="https://cepetnikah.my.id/assets/users/mIjh78y8ge13b89d99c1a29132e57d2ca/album7.png"
-                                                class="swipebox"><img
-                                                    src="https://cepetnikah.my.id/assets/users/mIjh78y8ge13b89d99c1a29132e57d2ca/album7.png"
-                                                    class="img-responsive" />
-                                                <div class="sw-gallery-overlay">
-                                                    <i class="fa fa-search-plus"></i>
-                                                </div>
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-6 col-sm-3 col-md-3 col-lg-3">
-                                        <div class="sw-gallery">
-                                            <a href="https://cepetnikah.my.id/assets/users/mIjh78y8ge13b89d99c1a29132e57d2ca/album8.png"
-                                                class="swipebox"><img
-                                                    src="https://cepetnikah.my.id/assets/users/mIjh78y8ge13b89d99c1a29132e57d2ca/album8.png"
-                                                    class="img-responsive" />
-                                                <div class="sw-gallery-overlay">
-                                                    <i class="fa fa-search-plus"></i>
-                                                </div>
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-6 col-sm-3 col-md-3 col-lg-3">
-                                        <div class="sw-gallery">
-                                            <a href="https://cepetnikah.my.id/assets/users/mIjh78y8ge13b89d99c1a29132e57d2ca/album9.png"
-                                                class="swipebox"><img
-                                                    src="https://cepetnikah.my.id/assets/users/mIjh78y8ge13b89d99c1a29132e57d2ca/album9.png"
-                                                    class="img-responsive" />
-                                                <div class="sw-gallery-overlay">
-                                                    <i class="fa fa-search-plus"></i>
-                                                </div>
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-6 col-sm-3 col-md-3 col-lg-3">
-                                        <div class="sw-gallery">
-                                            <a href="https://cepetnikah.my.id/assets/users/mIjh78y8ge13b89d99c1a29132e57d2ca/album10.png"
-                                                class="swipebox"><img
-                                                    src="https://cepetnikah.my.id/assets/users/mIjh78y8ge13b89d99c1a29132e57d2ca/album10.png"
-                                                    class="img-responsive" />
-                                                <div class="sw-gallery-overlay">
-                                                    <i class="fa fa-search-plus"></i>
-                                                </div>
-                                            </a>
-                                        </div>
-                                    </div>
+                                    @endforeach
 
                                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                         <div class="youtube">
@@ -706,7 +602,7 @@
             }
         }
         $('#clock').countdown("{{ $acaranya->where('countdown', 1)->first()->waktu_acara }}", function(event) {
-            $(this).html(event.strftime('%D:%H:%M:%S'));
+            $(this).html(event.strftime('%DH:%HJ:%MM:%S:D'));
         });
         $(document).ready(function() {
             $("#over-lay-welcome").click(function() {
