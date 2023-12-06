@@ -54,39 +54,8 @@
                         </tr>
                     </thead>
 
-                    <tbody>
-                        @foreach ($tamu as $tamunya)
-                            <tr>
-                                <td><input type="checkbox" class="centangTamu" name="idTamu[]"
-                                        value="{{ $tamunya->idtamu }}">
-                                </td>
-                                <td> {{ $loop->index + 1 }}</td>
-                                <td> {{ $tamunya->nama_tamu }}</td>
-                                <td> {{ $tamunya->no_wa }}</td>
-                                <td> {{ $tamunya->alamat_tamu }} </td>
-                                <td> <a href="{{ route('domainUndangan', ['domain' => $tamunya->domain, 'tamu' => $tamunya->nama_tamu]) }}"
-                                        target="_BLANK">Buka Undangan</a>
-                                </td>
-                                <td>
-                                    @if ($tamunya->status == 'terkirim')
-                                        <span class="label success">{{ $tamunya->status }}</span>
-                                    @elseif($tamunya->status == 'belum dikirim')
-                                        <span class="label warning">{{ $tamunya->status }}</span>
-                                    @else
-                                        <span>{{ $tamunya->status }}</span>
-                                    @endif
-                                </td>
-                                <td class="w-sm no-wrap">
-                                    <button class="md-btn  md-raised w-xxs m-2" data-toggle="modal" data-target="#sw-qrcode"
-                                        onclick="qrwhatsapp('{{ $tamunya->no_wa }}','{{ $tamunya->nama_tamu }}','{{ route('domainUndangan', ['domain' => $tamunya->domain, 'tamu' => $tamunya->nama_tamu]) }}','{{ $tamunya->nama_panggilan_pria }} dan {{ $tamunya->nama_panggilan_wanita }}')">
-                                        <i class="fa fa-lg fa-qrcode " title="tampilkan qr untuk kirim wa"></i></button>
+                    <tbody id=tbodytamu>
 
-                                    <button class="md-btn md-raised m-b-sm w-xs primary"
-                                        onclick="kirimwa('{{ $tamunya->no_wa }}','{{ $tamunya->nama_tamu }}','{{ route('domainUndangan', ['domain' => $tamunya->domain, 'tamu' => $tamunya->nama_tamu]) }}','{{ $tamunya->nama_panggilan_pria }} dan {{ $tamunya->nama_panggilan_wanita }}')">Kirim</button>
-
-                                </td>
-                            </tr>
-                        @endforeach
                     </tbody>
                     <tfoot>
                         <tr>
@@ -145,8 +114,7 @@
 
                     <div class="col mt-2">
                         <label>No Whatsapp</label>
-                        <input id="no_wa" type="text" placeholder="Contoh : 628xxxxx" class="form-control"
-                            required>
+                        <input id="no_wa" type="text" placeholder="Contoh : 628xxxxx" class="form-control" required>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -181,7 +149,7 @@
                                 accept=".xls, .xlsx" />
                         </div>
                         <label class="form-check-label ">
-                            <a href="{{ asset('assets/file-upload/tamu.xlsx') }}" target="_blank"
+                            <a href="{{ asset('assets/file-upload/tamunya.xlsx') }}" target="_blank"
                                 style="margin-top: 105px;color: #2c3e50;position: relative;top:3px;color:#17a2b8;"><i
                                     class="fa fa-question-circle" style="color:#17a2b8;"></i>&nbsp Susunan Data Untuk File
                                 Data Tamu (Excel)</a>
@@ -222,7 +190,67 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="{{ asset('assets/themes/jellyblack/themes-rsvp/sw-vendor/js/jquery.classyqr.js') }}"></script>
 
+    <script>
+        $(document).ready(function() {
+            loadData();
+        });
 
+        function loadData() {
+
+            $.ajax({
+                url: '{{ route('getListTamu') }}',
+                type: 'GET',
+                dataType: 'json',
+                success: function(data) {
+                    populateTable(data);
+                },
+                error: function(error) {
+                    console.log('Error:', error);
+                }
+            });
+        }
+
+        function populateTable(data) {
+            var tbody = $('#tbodytamu');
+            tbody.empty();
+
+            $.each(data.tamuData, function(index, tamunya) {
+
+                var row = `
+      <tr>
+        <td><input type="checkbox" class="centangTamu" name="idTamu[]" value="${tamunya.idtamu}"></td>
+        <td>${index + 1}</td>
+        <td>${tamunya.nama_tamu}</td>
+        <td>${tamunya.no_wa || ''}</td>
+        <td>${tamunya.alamat_tamu}</td>
+        <td><a href="{{ url('/${tamunya.domain}/${tamunya.nama_tamu}') }}" target="_BLANK">Buka Undangan</a></td>
+        <td>${getStatusLabel(tamunya.status)}</td>
+        <td class="w-sm no-wrap">
+          <button class="md-btn md-raised w-xxs m-2" data-toggle="modal" data-target="#sw-qrcode" onclick="qrwhatsapp('${tamunya.no_wa}','${tamunya.nama_tamu}', '{{ url('/${tamunya.domain}/${tamunya.nama_tamu}') }}', '${tamunya.nama_panggilan_pria} dan ${tamunya.nama_panggilan_wanita}')">
+            <i class="fa fa-lg fa-qrcode" title="tampilkan qr untuk kirim wa"></i>
+          </button>
+          <button class="md-btn md-raised m-b-sm w-xs primary" onclick="kirimwa('${tamunya.no_wa}','${tamunya.nama_tamu}', '{{ url('/${tamunya.domain}/${tamunya.nama_tamu}') }}', '${tamunya.nama_panggilan_pria} dan ${tamunya.nama_panggilan_wanita}')">
+            Kirim
+          </button>
+        </td>
+      </tr>
+    `;
+
+                tbody.append(row);
+            });
+        }
+
+
+        function getStatusLabel(status) {
+            if (status === 'terkirim') {
+                return '<span class="label success">terkirim</span>';
+            } else if (status === 'belum dikirim') {
+                return '<span class="label warning">belum dikirim</span>';
+            } else {
+                return `<span>${status}</span>`;
+            }
+        }
+    </script>
     <script>
         // QR Link Wa
         function qrwhatsapp(nowa, nama, urlundangan, namamempelai) {
@@ -321,11 +349,7 @@
                             dataType: 'json',
                             success: function(response) {
                                 if (response.success) {
-                                    $('td input[name="idTamu[]"]:checked')
-                                        .closest('tr').fadeOut(300,
-                                            function() {
-                                                $(this).remove();
-                                            });
+
 
                                     Swal.fire({
                                         icon: 'success',
@@ -339,8 +363,8 @@
                                         location.reload();
                                         // $('#daftartamu').Datatable({}).ajax
                                         //     .reload();
-                                        // $("#daftartamu").load("#dafartamu");
-                                        refreshTable();
+                                        // $("#dataTamu").load(populateTable());
+
 
                                     });
 

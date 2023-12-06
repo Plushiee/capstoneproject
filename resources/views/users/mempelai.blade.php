@@ -359,17 +359,15 @@
 
         function saveEdit(mempelai) {
             idMempelai = $('#nama_lengkap_pria').data('idmempelai');
-            editNamaLengkapPria = $(`#nama_lengkap_${mempelai}`).val();
-            editNamaLengkapWanita = $(`#nama_lengkap_${mempelai}`).val();
-            editNamaPanggilanPria = $(`#nama_panggilan_${mempelai}`).val();
-            editNamaPanggilanWanita = $(`#nama_panggilan_${mempelai}`).val();
-            editNamaAyahPria = $(`#nama_ayah_${mempelai}`).val();
-            editNamaAyahWanita = $(`#nama_ayah_${mempelai}`).val();
-            editNamaIbuPria = $(`#nama_ibu_${mempelai}`).val();
-            editNamaIbuWanita = $(`#nama_ibu_${mempelai}`).val();
-            console.log(
-                `1${idMempelai} 2${editNamaLengkapPria} 3${editNamaLengkapWanita} 4${editNamaPanggilanPria} 5${editNamaPanggilanWanita} 6${editNamaAyahPria} 7${editNamaAyahWanita} 8${editNamaIbuPria} 9${editNamaIbuWanita}`
-            )
+            editNamaLengkapPria = $(`#nama_lengkap_pria`).val();
+            editNamaLengkapWanita = $(`#nama_lengkap_wanita`).val();
+            editNamaPanggilanPria = $(`#nama_panggilan_pria`).val();
+            editNamaPanggilanWanita = $(`#nama_panggilan_wanita`).val();
+            editNamaAyahPria = $(`#nama_ayah_pria`).val();
+            editNamaAyahWanita = $(`#nama_ayah_wanita`).val();
+            editNamaIbuPria = $(`#nama_ibu_pria`).val();
+            editNamaIbuWanita = $(`#nama_ibu_wanita`).val();
+
 
             $.ajaxSetup({
                 headers: {
@@ -381,14 +379,14 @@
                 url: "{{ route('updateMempelai') }}",
                 data: {
                     idMempelai: $('#nama_lengkap_pria').data('idmempelai'),
-                    editNamaLengkapPria: $(`#nama_lengkap_${mempelai}`).val(),
-                    editNamaLengkapWanita: $(`#nama_lengkap_${mempelai}`).val(),
-                    editNamaPanggilanPria: $(`#nama_panggilan_${mempelai}`).val(),
-                    editNamaPanggilanWanita: $(`#nama_panggilan_${mempelai}`).val(),
-                    editNamaAyahPria: $(`#nama_ayah_${mempelai}`).val(),
-                    editNamaAyahWanita: $(`#nama_ayah_${mempelai}`).val(),
-                    editNamaIbuPria: $(`#nama_ibu_${mempelai}`).val(),
-                    editNamaIbuWanita: $(`#nama_ibu_${mempelai}`).val(),
+                    editNamaLengkapPria: $(`#nama_lengkap_pria`).val(),
+                    editNamaLengkapWanita: $(`#nama_lengkap_wanita`).val(),
+                    editNamaPanggilanPria: $(`#nama_panggilan_pria`).val(),
+                    editNamaPanggilanWanita: $(`#nama_panggilan_wanita`).val(),
+                    editNamaAyahPria: $(`#nama_ayah_pria`).val(),
+                    editNamaAyahWanita: $(`#nama_ayah_wanita`).val(),
+                    editNamaIbuPria: $(`#nama_ibu_pria`).val(),
+                    editNamaIbuWanita: $(`#nama_ibu_wanita`).val(),
                 },
                 success: function(response) {
                     if (response.success) {
