@@ -86,6 +86,7 @@ Route::middleware(['auth:users'])->group(function () {
     Route::get('users/getgaleri', 'PageUserController@getGaleri')->name('getGaleri');
 
     Route::get('users/ucapan', 'PageUserController@userUcapan')->name('userUcapan');
+    Route::get('users/getucapan', 'PageUserController@getUcapan')->name('getUcapan');
     Route::post('users/logout', 'LoginController@logout')->name('userLogout');
 });
 // Users End
@@ -93,4 +94,7 @@ Route::middleware(['auth:users'])->group(function () {
 //testing undngan
 // Route::get('/{domain}', 'UndanganController@index');
 Route::get('/{domain}/{tamu?}', 'UndanganController@tamu')->name('domainUndangan');
-Route::patch('/kehadiran}', 'UndanganController@updateKehadiran')->name('updateKehadiran');
+Route::patch('/kehadiran', 'UndanganController@updateKehadiran')->name('updateKehadiran');
+
+Route::post('/savesalam', 'UndanganController@saveSalam')->name('saveSalam');
+Route::post('/likesalam', 'UndanganController@likeSalam')->name('likeSalam');

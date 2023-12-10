@@ -15,11 +15,10 @@ class CreateTblSalams extends Migration
     {
         Schema::create('tbl_salams', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('id_acara')->nullable();
-            $table->foreign('id_acara')->references('id')->on('tbl_acaras');
-            $table->date('tanggal_salam')->nullable();
-            $table->string('nama_pengirim')->nullable();
+            $table->unsignedBigInteger('id_tamu')->nullable();
+            $table->foreign('id_tamu')->references('id')->on('tbl_buku_tamus');
             $table->string('isi_salam')->nullable();
+            $table->json('like_by')->nullable();
             $table->timestamps();
         });
     }

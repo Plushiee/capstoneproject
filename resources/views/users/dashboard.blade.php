@@ -23,7 +23,7 @@
                         </span>
                     </div>
                     <div class="clear">
-                        <h4 class="m-0 text-lg _300"><a href>
+                        <h4 class="m-0 text-lg _300"><a href="{{ route('userListTamu') }}">
                                 {{ $tamu->count() }}
                                 <span class="text-sm">Tamu</span>
                             </a></h4>
@@ -39,7 +39,8 @@
                         </span>
                     </div>
                     <div class="clear">
-                        <h4 class="m-0 text-lg _300"><a href>{{ $tamu->where('kehadiran', 'hadir')->count() }}
+                        <h4 class="m-0 text-lg _300"><a
+                                href="{{ route('userListTamu') }}">{{ $tamu->where('kehadiran', 'hadir')->count() }}
                                 <span class="text-sm">Tamu</span>
                             </a></h4>
                         <small class="text-muted">Akan Hadir</small>
@@ -54,7 +55,7 @@
                         </span>
                     </div>
                     <div class="clear">
-                        <h4 class="m-0 text-lg _300"><a href>
+                        <h4 class="m-0 text-lg _300"><a href="{{ route('userListTamu') }}">
                                 {{ $tamu->where('kehadiran', 'tidak hadir')->count() }}
                                 <span class="text-sm">Tamu</span>
                             </a></h4>
@@ -70,7 +71,8 @@
                         </span>
                     </div>
                     <div class="clear">
-                        <h4 class="m-0 text-lg _300"><a href>{{ $tamu->where('kehadiran', 'belum konfirmasi')->count() }}
+                        <h4 class="m-0 text-lg _300"><a
+                                href="{{ route('userListTamu') }}">{{ $tamu->where('kehadiran', 'belum konfirmasi')->count() }}
                                 <span class="text-sm">Tamu</span>
                             </a></h4>
                         <small class="text-muted">Belum Konfirmasi</small>
@@ -85,8 +87,10 @@
                         </span>
                     </div>
                     <div class="clear">
-                        <h4 class="m-0 text-lg _300"><a href>40 <span class="text-sm">Tamu</span></a></h4>
-                        <small class="text-muted">Memberikan Ucapan</small>
+                        <h4 class="m-0 text-lg _300"><a href="{{ route('userUcapan') }}">{{ $ucapan->count() }} <span
+                                    class="text-sm">Ucapan</span></a>
+                        </h4>
+                        <small class="text-muted">Telah ditampilkan </small>
                     </div>
                 </div>
             </div>
@@ -131,6 +135,32 @@
                     </div>
                 </div>
             </div>
+            <div class="col-12 col-md-6 pt-4 ">
+                <div class="card activities">
+                    <div class="card-body my-3 mx-3 text-center">
+                        <h5 class="card-title">Pengunjung Terbaru</h5>
+
+                    </div>
+                    <div class="body container" style="max-height: 300px; overflow-y: scroll">
+                        <div class="streamline b-l b-accent">
+
+                            @foreach ($pengunjung as $pengunjung)
+                                <div class="sl-item b-info">
+                                    <div class="sl-content">
+                                        <div class="text-muted-dk">Diperbarui pada:
+                                            {{ \Carbon\Carbon::parse($pengunjung->update)->format('H:i') }}</div>
+                                        <p> <strong> {{ $pengunjung->nama }}</strong> mengunjungi undangan pada tanggal
+                                            {{ \Carbon\Carbon::parse($pengunjung->create)->format('d M Y') }} sebanyak
+
+                                            {{ $pengunjung->jumlah }} kali</p>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
 
     @endsection

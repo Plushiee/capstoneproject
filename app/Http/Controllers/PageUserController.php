@@ -10,6 +10,7 @@ use App\TblCeritasModel;
 use App\TblMempelaisModel;
 use App\TblPengunjungModel;
 use App\TblPesanansModel;
+use App\TblSalamsModel;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\File;
 use Illuminate\Http\Request;
@@ -24,6 +25,7 @@ class PageUserController extends Controller
     // User Dashboard
     public function userDashboard()
     {
+        $salam = TblSalamsModel::select('tbl_salams.id', 'nama_tamu', 'isi_salam', 'kehadiran', 'tbl_salams.created_at as tanggal_post', 'like_by')->join('tbl_buku_tamus', 'tbl_salams.id_tamu', '=', 'tbl_buku_tamus.id')->orderBy('tbl_salams.created_at', 'asc')->get();
         $tanggalAkhir = TblPesanansModel::join('tbl_acaras', 'tbl_pesanans.id', '=', 'tbl_acaras.id_pesanan')
             ->select('tbl_pesanans.id', DB::raw('MAX(tbl_acaras.waktu_acara) as tanggal_terakhir'))
             ->where('id_user', Auth::user()->id)
@@ -45,12 +47,20 @@ class PageUserController extends Controller
             ->where('id_user', Auth::user()->id)
             ->groupBy('id_pesanan', 'tanggal')
             ->get();
+        $pengunjungAll = TblPengunjungModel::join('tbl_pesanans', 'tbl_pesanans.id', '=', 'tbl_pengunjungs.id_pesanan')
+            ->select('tbl_pengunjungs.updated_at as update', 'tbl_pengunjungs.created_at as create', 'tbl_pengunjungs.nama_pengunjung as nama', 'tbl_pengunjungs.jumlah_kunjungan as jumlah')
+            ->where('id_user', Auth::user()->id)
+            ->orderBy('create', 'desc')
+            ->get();
+
         $tamunya = TblBukuTamusModel::where('id_pesanan', TblPesanansModel::where('id_user', Auth::user()->id)->value('id'))->get();
         return view('users.dashboard', [
             'tanggalAkhir' => $tanggalAkhir,
             'banyakPengunjung' => $banyakPengunjung,
             'banyakPengunjungPerHari' => $banyakPengunjungPerHari,
-            'tamu' => $tamunya
+            'tamu' => $tamunya,
+            'ucapan' => $salam,
+            'pengunjung' => $pengunjungAll
         ]);
     }
 
@@ -337,8 +347,15 @@ class PageUserController extends Controller
     }
 
 
+    public function getUcapan()
+    {
+        $salam = TblSalamsModel::select('tbl_salams.id', 'nama_tamu', 'isi_salam', 'kehadiran', 'tbl_salams.created_at as tanggal_post', 'like_by')->join('tbl_buku_tamus', 'tbl_salams.id_tamu', '=', 'tbl_buku_tamus.id')->orderBy('tbl_salams.created_at', 'asc')->get();
+        return response()->json(['salamData' => $salam]);
+    }
     public function userUcapan()
     {
+
+
         return view('users.ucapan');
     }
 

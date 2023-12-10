@@ -47,7 +47,7 @@
                             <div class="col-md-12">
                                 <div class="sw-invitation-home text-center  wow bounceInUp">
 
-
+                                    {{-- {{ $salam }} --}}
 
                                     <h3>{{ $mempelainya->nama_panggilan_pria }} &
                                         {{ $mempelainya->nama_panggilan_wanita }}</h3>
@@ -219,6 +219,7 @@
                                                 <input type="text" name="nama" id="nama"
                                                     class="form-control" value="{{ $tamunya->nama_tamu }}"
                                                     placeholder="Nama" required>
+
                                             </div>
                                         </div>
                                         <div class="col-md-6 col-sm-12 col-xs-12">
@@ -238,18 +239,8 @@
                                                     <option value="tidak hadir"
                                                         {{ $tamunya->kehadiran === 'tidak_hadir' ? 'selected' : '' }}>
                                                         Tidak Hadir</option>
-                                                    <!-- Add more options as needed -->
 
-
-
-                                                    <!-- Add more options as needed -->
                                                 </select>
-                                                {{-- <select id="kehadiran" name="kehadiran" class="form-control">
-
-                                                    <option value="belum konfirmasi">Belum Konfirmasi</option>
-                                                    <option value="hadir">Hadir</option>
-                                                    <option value="tidak hadir" selected>Tidak Hadir</option>
-                                                </select> --}}
                                             </div>
                                         </div>
                                         <div class="col-md-12 col-sm-12 col-xs-12">
@@ -275,61 +266,49 @@
                             <div class="komen-netizen">
 
                                 <div class="layout-komen">
-                                    <div class="komen">
-                                        <div class="col-12 komen-nama">
-                                            Aninda Safira </div>
-                                        <div class="col-12 komen-isi">
-                                            Alhamdulilah, selamat atas pernikahan kalian. Semoga pernikahan kalian
-                                            dilimpahi oleh cinta, kebaikan dan kebahagiaan. Jazakallahu khairan
-                                            khatira.. </div>
 
-                                    </div>
-                                    <div class="komen">
-                                        <div class="col-12 komen-nama">
-                                            Raisa Andriana </div>
-                                        <div class="col-12 komen-isi">
-                                            Selamat menikah sahabatku, ‘Barakallahu lakum wa baraka alaikum’ </div>
-                                    </div>
-                                    <div class="komen">
-                                        <div class="col-12 komen-nama">
-                                            Anisa Rahma </div>
-                                        <div class="col-12 komen-isi">
-                                            Alhamdulillah.. Selamat ya. Semoga Allah Swt selalu melimpahkan rahmatNya
-                                            untuk pernikahan kalian. </div>
-                                    </div>
-                                    <div class="komen">
-                                        <div class="col-12 komen-nama">
-                                            Maudy Ayunda </div>
-                                        <div class="col-12 komen-isi">
-                                            MasyaAllah.. Selamat buat kalian berdua. Barakallah </div>
-                                    </div>
-                                    <div class="komen">
-                                        <div class="col-12 komen-nama">
-                                            Citra Kirana </div>
-                                        <div class="col-12 komen-isi">
-                                            Baarakallahu laka wa baaraka ‘alaika wa jama’a bainakumaa fii khaiir.
+                                    @foreach ($salam as $salam)
+                                        <div class="komen text-left">
+                                            <div class="col-12 komen-nama">
+                                                {{ $salam->nama_tamu }} @if ($salam->kehadiran == 'hadir')
+                                                    <span class="label label-success">{{ $salam->kehadiran }}</span>
+                                                @elseif($salam->kehadiran == 'tidak hadir')
+                                                    <span class="label label-danger">{{ $salam->kehadiran }}</span>
+                                                @else
+                                                    <span class="label label-warning">{{ $salam->kehadiran }}</span>
+                                                @endif
 
-                                            Semoga Allah memberikan keberkahan untukmu dan atasmu, serta semoga Dia
-                                            mengumpulkan di antara kalian berdua dalam kebaikan. </div>
-                                    </div>
-                                    <div class="komen">
-                                        <div class="col-12 komen-nama">
-                                            Nissya Sabyan </div>
-                                        <div class="col-12 komen-isi">
-                                            Semoga pernikahan kalian langgeng dan selalu dinaungi petunjuk Allah dalam
-                                            setiap langkah.. Aamiin </div>
-                                    </div>
-                                    <div class="komen">
-                                        <div class="col-12 komen-nama">
-                                            Tes </div>
-                                        <div class="col-12 komen-isi">
-                                            tesss </div>
-                                    </div>
+                                                <div class="pull-right">
+
+                                                </div>
+                                            </div>
+                                            <div class="col-12 komen-isi">
+                                                {{ $salam->isi_salam }}
+                                            </div>
+                                            <div class="col-12 clearfix"
+                                                style="padding-top: 10px; color: #A9A9A9; font-size: 12px">
+                                                <div class="pull-left">
+                                                    Pada:
+                                                    {{ \Carbon\Carbon::parse($salam->tanggal_post)->format('d M y H:i') }}
+                                                </div>
+                                                <div class="pull-right">
+                                                    <span class="like-count">{{ count($salam->like_by) }}</span> Like
+                                                    <button style="border: none" class="btn-xs like-button "
+                                                        data-salam-id="{{ $salam->id }}">
+                                                        <span
+                                                            class="glyphicon glyphicon-heart {{ in_array($tamunya->id, $salam->like_by) ? 'active' : '' }}"></span>
+                                                    </button>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @endforeach
 
                                 </div>
 
                                 <a href="#" id="loadMore" class="btn btn-primary btn-block"
-                                    role="button">Lebih Banyak.</a>
+                                    role="button">Lebih
+                                    Banyak.</a>
                             </div>
                         </div>
                     </div>
@@ -438,14 +417,6 @@
                 <div class="modal-body">
                     <div class="social-share text-center">
                         <div class="modalmaps">
-                            {{-- <iframe
-                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d31673.71275825069!2d109.9343848761109!3d-7.101167651839949!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e7013497f504245%3A0x2ab97b5012ad2a6b!2sAlun%20Alun%20Kota%20Bawang!5e0!3m2!1sid!2sid!4v1701507384746!5m2!1sid!2sid"
-                                width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"
-                                referrerpolicy="no-referrer-when-downgrade"></iframe> --}}
-                            {{-- <iframe
-                                src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d4024135.763309077!2d108.8688439734123!3d-9.94892291858544!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sid!2sid!4v1701507089467!5m2!1sid!2sid"
-                                width="600" height="450" frameborder="0" style="border:0;" allowfullscreen=""
-                                aria-hidden="false" tabindex="0"></iframe> --}}
                         </div>
                     </div>
                 </div>
@@ -507,26 +478,60 @@
 
         $(document).ready(function() {
 
+
             $('#kehadiran').change(function() {
                 var selectedAttendance = $(this).val();
                 var id = $(this).data('id');
 
-                // Make an Ajax request to update the attendance
                 $.ajax({
                     type: 'PATCH',
                     url: "{{ route('updateKehadiran') }}",
                     data: {
+                        _token: '{{ csrf_token() }}',
                         new_attendance: selectedAttendance,
                         id: id,
-                        _token: '{{ csrf_token() }}'
                     },
                     success: function(response) {
                         console.log(response);
-                        // Handle success if needed
                     },
                     error: function(error) {
                         console.error('Error:', error);
-                        // Handle error if needed
+
+                    }
+                });
+
+            });
+            $('.like-button').on('click', function() {
+                var salamId = $(this).data('salam-id');
+                var tamuId = $('#kehadiran').data('id');
+                var likeCountSpan = $(this).siblings('.like-count');
+                console.log(`${salamId} ${tamuId}`);
+
+                // Send AJAX request to toggle like
+                $.ajax({
+
+                    type: 'post',
+                    url: "{{ route('likeSalam') }}",
+
+                    data: {
+                        _token: '{{ csrf_token() }}',
+                        id: salamId,
+                        tamuId: tamuId
+
+                    },
+                    success: function(data) {
+
+                        // console.log(data);
+                        likeCountSpan.text(data.likes_count);
+                        var heartIcon = $('.like-button[data-salam-id="' + salamId +
+                            '"] span.glyphicon-heart');
+                        heartIcon.toggleClass('active');
+
+
+
+                    },
+                    error: function(xhr, status, error) {
+                        console.error(xhr.responseText);
                     }
                 });
             });
@@ -636,13 +641,16 @@
          ADD KOMENTAR
         ======================= */
         $('#submitKomen').on('click', function(event) {
+            var id = $('#kehadiran').data('id');
             var nama = $('#nama').val();
             var komentar = $('#komentar').val();
 
             $.ajax({
-                url: base_url + '/add_komentar',
+                url: "{{ route('saveSalam') }}",
                 method: "POST",
                 data: {
+                    _token: '{{ csrf_token() }}',
+                    id: id,
                     nama: nama,
                     komentar: komentar
                 },
@@ -653,20 +661,50 @@
                     var status = json.status;
                     var nama = json.nama;
                     var komentar = json.komentar;
-                    console.log(json);
+                    var newData = json.dataakhir;
+                    console.log(newData);
 
                     if (status == 'sukses') {
 
-                        $('.layout-komen').append(
-                            "<div class='komen' style='display:block'><div class='col-12 komen-nama'>" +
-                            nama + "</div><div class='col-12 komen-isi'>" + komentar +
-                            "</div></div>");
+                        $('.layout-komen').prepend(
+                            ` <div class="komen text-left">
+                                            <div class="col-12 komen-nama">
+                                                ${ newData.nama_tamu } ${newData.kehadiran === 'hadir' ? '<span class="label label-success">hadir</span>' : newData.kehadiran === 'tidak hadir' ? '<span class="label label-danger">tidak hadir</span>' : '<span class="label label-warning">belum konfirmasi</span>'}
 
-                        $(".komen:hidden").slice(0, 100).slideDown();
+                                                <div class="pull-right">
+
+                                                </div>
+                                            </div>
+                                            <div class="col-12 komen-isi">
+                                                ${ newData.isi_salam }
+                                            </div>
+                                            <div class="col-12 clearfix"
+                                                style="padding-top: 10px; color: #A9A9A9; font-size: 12px">
+                                                <div class="pull-left">
+                                                    Baru Saja
+                                                </div>
+                                                <div class="pull-right">
+                                                    <span class="like-count">${ newData.like_by.length} </span> Like
+                                                    <button style="border: none" class="btn-xs like-button "
+                                                        data-salam-id="${ newData.id }">
+                                                        <span class="glyphicon glyphicon-heart ${newData.like_by.includes(newData.id_tamu) ? 'active' : ''}"></span>
+                                                    </button>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                
+                                `
+
+
+                        );
+
+                        $(".komen:hidden").slice(0, 1).slideDown();
+
                         $("html, body").animate({
                             scrollTop: $(document).height()
                         }, 1000);
-                        $("#loadMore").fadeOut('slow');
+
 
                     }
 
