@@ -1,0 +1,368 @@
+
+hr{
+    margin-top: 10px;
+    width: 100%;
+    margin: auto;
+    border-color: black;
+
+}
+#mainav .clear .login{
+    background-color: #00ca70;
+    padding: 10px 20px;
+    border-radius: 7px;
+    margin-left: 70px;
+}
+#mainav .clear .login:hover{
+    background-color: #04d376;
+}
+#mainav .clear .login:hover{
+    color: white;
+}
+#mainav .clear .login i{
+   margin-right: 5px;
+}
+
+/* background */
+.background footer .btn{
+    border: 2px solid #97bdab;
+    padding: 10px 30px;
+    color: white;
+}
+.background footer .btn:hover{
+    background-color: #97bdab;
+}
+/* /background */
+
+
+/* tema */
+.tema{
+	width: 100%;
+	padding-top: 50px;
+	padding-bottom: 50px;
+/*    background-color: white;*/
+}
+.tema h1{
+/*    margin-bottom: 50px;*/
+/*color: white;*/
+}
+
+.border-tema{
+    width: 90%;
+    margin: auto;
+    padding: 0;
+    position: relative;
+    z-index: 3;
+/*    background-color: #ffffff;*/
+}
+
+.content-tema{
+    width: 90%;
+     margin: auto;
+     display: flex;
+     justify-content: center;
+     align-items: center;
+     flex-wrap: wrap;
+     gap: 20px;
+}
+.card-tema{
+    border: none;
+    box-shadow: 0 0 5px silver;
+}
+.card-tema:hover{
+    box-shadow: 0 0 11px silver;
+}
+.card{
+	margin-bottom: 20px;
+}
+.card-body .btn{
+	margin-left: 40px;
+	border-color: #fc8f00;
+}
+.card-body .card-link{
+	color: #666464;
+}
+.card-body .card-link:hover{
+	color: #32adff;
+}
+
+.card-body .red{
+	text-decoration: line-through;
+	color: red;
+}
+.isi-tema p{
+	line-height: 5px;
+}
+.isi-tema .card-link{
+    text-decoration: underline;
+    color: #0061ff;
+}
+.isi-tema .button{
+    margin-left: 99px;
+    color: #0061ff;
+    text-decoration: underline;
+    border: none;
+}
+.isi-tema .button:hover{
+    color: #32adff;
+}
+.isi-tema .button .preview{
+    margin-left: 3px;
+    font-size: 17px;
+}
+.card-body h5{
+	margin-bottom: 20px;
+    text-align: center;
+}
+.card-body p{
+    text-align: center;
+}
+.foto-tema{
+	padding: 5px;
+	border-radius: 10px;
+}
+.tema-item{
+	border-radius: 10px;
+}
+/* /tema wedding */
+
+
+/* harga */
+
+#harga{
+	padding-top: 70px;
+
+}
+.harga{
+    margin: auto;
+    width: 95%;
+}
+.card-harga{
+    background-color: #97a9bd;
+}
+.content-harga{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 30px;
+}
+.harga-item h2{
+    color: black;
+}
+.harga-item h4{
+    text-decoration: line-through;
+    color: red;
+}
+.harga .card-harga{
+    width: 500px;
+    padding-bottom: 30px;
+    box-shadow: 0 0 4px silver;
+}
+.harga .card-harga:hover{
+    box-shadow: 0 0 10px silver;
+}
+
+/* /harga */
+
+/* data */
+.data{
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    padding-top: 20px;
+    padding-bottom: 50px;
+    flex-wrap: wrap;
+
+}
+.data .data-item h1{
+    font-size: 100px;
+    color: #212529;
+    }
+.data .data-item{
+    min-width: 20%;
+    margin: 50px;
+}
+
+/* /data */
+
+
+
+
+
+/*footer*/
+.pg-footer{
+    margin: 0;
+    padding: 0;
+}
+a {
+  color: #fff;
+  text-decoration: none;
+}
+.pg-footer {
+  font-family: 'Roboto', sans-serif;
+}
+.footer {
+/*    background-color: #332f2f;*/
+    color: #fff;
+    margin: auto;
+}
+.footer-wave-svg {
+    background-color: transparent;
+    display: block;
+    height: 30px;
+    position: relative;
+    top: -1px;
+    width: 100%;
+}
+.footer-wave-path {
+    fill: #fffff2;
+}
+
+.footer-content {
+    margin: auto;
+    padding: 50px 0;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    column-gap: 30px ;
+}
+.footer-item{
+    width: 300px;
+    padding: 15px;
+}
+
+.footer-item h2{
+    font-size: 18px;
+    font-weight: bold;
+}
+.footer-item .ManToe{
+    font-size: 20px;
+}
+.footer-item .pengertian{
+    line-height: 18px;
+}
+.footer-item p{
+    font-size: 14px;
+    line-height: 15px;
+}
+.copyright{
+    font-size: 14px;
+}
+
+
+
+
+
+
+/*========================*/
+
+
+
+.bubble-1 {
+  left: 300px;
+  animation-delay: 1.3s;
+}
+.bubble-1 .bubble-animation-y{
+  animation-delay: 0.7s;
+}
+
+.bubble-2 {
+  left: 33px;
+  animation-delay: 2s;
+}
+.bubble-2 .bubble-animation-y{
+  animation-delay: 2.1s;
+}
+
+.bubble-3 {
+  left: 225px;
+  animation-delay: 4.7s;
+}
+.bubble-3 .bubble-animation-y{
+  animation-delay: 3.8s;
+}
+
+.bubble-4 {
+  left: 285px;
+  animation-delay: 0s;
+}
+.bubble-4 .bubble-animation-y{
+  animation-delay: 6s;
+}
+
+.bubble-5 {
+  left: 115px;
+  animation-delay: 1.5s;
+}
+.bubble-5 .bubble-animation-y{
+  animation-delay: 5s;
+}
+
+.bubble-container {
+  position: absolute;
+  width: 25px;
+  height: 0px;
+  bottom: 0;
+}
+
+.bubble {
+  background-color: #ff00ff;
+  opacity: 0;
+  border-radius: 100%;
+  width: 25px;
+  height: 25px;
+  box-shadow: 0 20px 30px rgba(0, 0, 0, 0.2), inset 0px 10px 30px 5px rgba(255, 255, 255, 1);
+}
+
+.bubble-animation-x {
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+  animation-name: bubbleXAnimFrames;
+  animation-timing-function: ease;
+  animation-direction: alternate;
+}
+
+.bubble-animation-y {
+  animation-duration: 6s;
+  animation-iteration-count: infinite;
+  animation-name: bubbleYAnimFrames;
+  animation-timing-function: linear;
+}
+
+@keyframes bubbleXAnimFrames {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(50px);
+  }
+}
+
+@keyframes bubbleYAnimFrames {
+  0% {
+    transform: translateY(0);
+    opacity: 0;
+  }
+  10% {
+    transform: translateY(0);
+    opacity: 0.5;
+  }
+  95% {
+    transform: translateY(-280px);
+    opacity: 0.5;
+  }
+  100% {
+    transform: translateY(-300px);
+    opacity: 0;
+  }
+}
+
+
+
+
+/*==============*/
+
+
+
+
+

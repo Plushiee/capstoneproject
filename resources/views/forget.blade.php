@@ -41,23 +41,14 @@
                     <div class="form-items">
                         <h3>Password Reset</h3>
                         <p>To reset your password, enter the email address you use to sign in to ManToe.id</p>
-                        <form>
-                            <input class="form-control" type="text" name="username" placeholder="E-mail Address"
+                        <form action="{{route('forget-post')}}" method="post">
+                            @csrf
+                            <input class="form-control" type="email" name="email" placeholder="E-mail Address"
                                 required>
                             <div class="form-button full-width">
                                 <button id="submit" type="submit" class="ibtn btn-forget">Send Reset Link</button>
                             </div>
                         </form>
-                    </div>
-                    <div class="form-sent">
-                        <div class="tick-holder">
-                            <div class="tick-icon"></div>
-                        </div>
-                        <h3>Password link sent</h3>
-                        <p>Please check your inbox iofrm@iofrmtemplate.io</p>
-                        <div class="info-holder">
-                            <span>Unsure if that email address was correct?</span> <a href="#">We can help</a>.
-                        </div>
                     </div>
                 </div>
             </div>
@@ -67,6 +58,57 @@
     <script src="assets/js/popper.min.js"></script>
     <script src="assets/js/bootstrap.min.js"></script>
     <script src="assets/js/main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    @if (session('message'))
+        <script>
+            $(document).ready(function() {
+                // Alert
+                var toastMixin = Swal.mixin({
+                    toast: true,
+                    icon: 'success',
+                    title: 'General Title',
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                        toast.addEventListener('mouseenter', Swal.stopTimer)
+                        toast.addEventListener('mouseleave', Swal.resumeTimer)
+                    }
+                });
+
+                toastMixin.fire({
+                    animation: true,
+                    title: 'Kita sudah mengirimkan Link untuk mereset password email Anda!'
+                });
+            });
+        </script>
+    @endif
+    @if (session('errorMessage'))
+    <script>
+        $(document).ready(function() {
+            // Alert
+            var toastMixin = Swal.mixin({
+                toast: true,
+                icon: 'error',
+                title: 'General Title',
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            });
+
+            toastMixin.fire({
+                animation: true,
+                title: 'Email tidak dapat ditemukan!'
+            });
+        });
+    </script>
+@endif
 </body>
 
 </html>

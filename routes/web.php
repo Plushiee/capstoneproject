@@ -11,9 +11,9 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
 // Admin Start
 Route::get('admin/dashboard', 'PageController@adminDashboard')->name('adminDashboard');
@@ -41,6 +41,9 @@ Route::middleware(['guest:users', 'guest:admin'])->group(function () {
     Route::get('register', 'PageController@register')->name('register');
     Route::post('register', 'RegisterController@register')->name('registerSave');
     Route::get('forget', 'PageController@forget')->name('forget');
+    Route::post('forget', 'PasswordResetsController@submitForgetPasswordForm')->name('forget-post');
+    Route::get('reset-password/{token}', 'PasswordResetsController@showResetPasswordForm')->name('reset');
+    Route::post('reset-password', 'PasswordResetsController@submitResetPasswordForm')->name('reset-post');
 });
 
 // Users Start
