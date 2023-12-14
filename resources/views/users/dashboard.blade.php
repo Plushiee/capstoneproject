@@ -149,7 +149,9 @@
                                     <div class="sl-content">
                                         <div class="text-muted-dk">Diperbarui pada:
                                             {{ \Carbon\Carbon::parse($pengunjung->update)->format('H:i') }}</div>
-                                        <p> <strong> {{ $pengunjung->nama }}</strong> mengunjungi undangan pada tanggal
+                                        <p> <strong class="text-info"> {{ $pengunjung->nama }}</strong> mengunjungi
+                                            undangan
+                                            pada tanggal
                                             {{ \Carbon\Carbon::parse($pengunjung->create)->format('d M Y') }} sebanyak
 
                                             {{ $pengunjung->jumlah }} kali</p>

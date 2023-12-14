@@ -10,6 +10,7 @@ use App\TblCeritasModel;
 use App\TblMempelaisModel;
 use App\TblPengunjungModel;
 use App\TblPesanansModel;
+use App\TblProduksModel;
 use App\TblSalamsModel;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\File;
@@ -66,8 +67,15 @@ class PageUserController extends Controller
 
     public function userOrder()
     {
-        return view('users.order');
+        // $pesanan = TblProduksModel::join('tbl_pesanans', 'tbl_pesanans.id_produk', '=', 'tbl_produks.id')->join('tbl_users', 'tbl_pesanans.id_user', '=', 'tbl_users.id')->where('id_user', Auth::user()->id)->first();
+        $pesanan = TblPesanansModel::join('tbl_users', 'tbl_pesanans.id_user', '=', 'tbl_users.id')
+            ->join('tbl_produks', 'tbl_pesanans.id_produk', '=', 'tbl_produks.id')
+            ->where('tbl_pesanans.id_user', Auth::user()->id)
+            ->select('tbl_pesanans.*', 'tbl_users.*', 'tbl_produks.*', 'tbl_pesanans.created_at as pesanan_created_at')
+            ->first();
+        return view('users.order', ['pesanan' => $pesanan]);
     }
+
 
     public function userMempelai()
     {
