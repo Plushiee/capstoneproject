@@ -27,6 +27,7 @@ class PageUserController extends Controller
     public function userDashboard()
     {
         $salam = TblSalamsModel::select('tbl_salams.id', 'nama_tamu', 'isi_salam', 'kehadiran', 'tbl_salams.created_at as tanggal_post', 'like_by')->join('tbl_buku_tamus', 'tbl_salams.id_tamu', '=', 'tbl_buku_tamus.id')->orderBy('tbl_salams.created_at', 'asc')->get();
+        $pesanan = TblPesanansModel::where('id_user', Auth::user()->id)->count();
         $tanggalAkhir = TblPesanansModel::join('tbl_acaras', 'tbl_pesanans.id', '=', 'tbl_acaras.id_pesanan')
             ->select('tbl_pesanans.id', DB::raw('MAX(tbl_acaras.waktu_acara) as tanggal_terakhir'))
             ->where('id_user', Auth::user()->id)
@@ -55,14 +56,18 @@ class PageUserController extends Controller
             ->get();
 
         $tamunya = TblBukuTamusModel::where('id_pesanan', TblPesanansModel::where('id_user', Auth::user()->id)->value('id'))->get();
-        return view('users.dashboard', [
-            'tanggalAkhir' => $tanggalAkhir,
-            'banyakPengunjung' => $banyakPengunjung,
-            'banyakPengunjungPerHari' => $banyakPengunjungPerHari,
-            'tamu' => $tamunya,
-            'ucapan' => $salam,
-            'pengunjung' => $pengunjungAll
-        ]);
+        if (!$pesanan) {
+            return back()->with('alert', 'Harap Melakukan Order Terlebih Dahulu');
+        } else {
+            return view('users.dashboard', [
+                'tanggalAkhir' => $tanggalAkhir,
+                'banyakPengunjung' => $banyakPengunjung,
+                'banyakPengunjungPerHari' => $banyakPengunjungPerHari,
+                'tamu' => $tamunya,
+                'ucapan' => $salam,
+                'pengunjung' => $pengunjungAll
+            ]);
+        }
     }
 
     public function userOrder()

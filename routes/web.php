@@ -11,9 +11,7 @@
 |
 */
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
+Route::get('/', 'LandingPageController@index')->name('landingPage');
 
 // Admin Start
 Route::get('admin/dashboard', 'PageController@adminDashboard')->name('adminDashboard');
@@ -90,7 +88,7 @@ Route::middleware(['auth:users'])->group(function () {
 
     Route::get('users/ucapan', 'PageUserController@userUcapan')->name('userUcapan');
     Route::get('users/getucapan', 'PageUserController@getUcapan')->name('getUcapan');
-    Route::post('users/logout', 'LoginController@logout')->name('userLogout');
+    Route::get('logout', 'LoginController@logout')->name('userLogout');
 });
 // Users End
 

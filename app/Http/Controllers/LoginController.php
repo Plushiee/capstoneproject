@@ -27,7 +27,7 @@ class LoginController extends Controller
 
                 if ($isUser) {
                     Auth::guard('users')->login($users, $remember);
-                    return redirect('/users/dashboard')->with("user", "User Ini Adalah User");
+                    return redirect()->route('landingPage')->with("user", "selamat datang ");
                 }
                 if ($isAdmin) {
                     Auth::guard('admin')->login($users, $remember);
@@ -50,7 +50,7 @@ class LoginController extends Controller
         $tipeAkun = $request->tipeAkun;
         if (Auth::guard($tipeAkun)->check()) {
             Auth::guard($tipeAkun)->logout();
-            return redirect('/login');
+            return redirect()->route('landingPage')->with('alert', 'Anda telah logout, Ditunggu kedatanganya lagi ya');
         }
 
         return 'gagal';
