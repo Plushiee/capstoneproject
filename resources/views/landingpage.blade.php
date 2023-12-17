@@ -583,52 +583,6 @@
             class="bi bi-arrow-up-short"></i></a>
     <div id="preloader"></div>
 
-
-
-
-    <!-- Modal -->
-    {{-- <div class="modal fade" id="modalOrder" tabindex="-1" aria-labelledby="modalOrderLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="modalOrderLabel">Order Detail</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <!-- Your wizard content goes here -->
-                    <!-- You can access the data attributes using jQuery -->
-                    <input type="hidden" id="produkId" value="">
-                    <input type="hidden" id="produkNama" value="">
-                    <input type="hidden" id="produkBiaya" value="">
-                    <!-- Step 1 -->
-                    <div id="step1" class="step">
-                        <h5>Step 1: Product Information</h5>
-                        <p>Product ID: <span id="showProdukId"></span></p>
-                        <p>Product Name: <span id="showProdukNama"></span></p>
-                        <p>Product Biaya: <span id="showProdukBiaya"></span></p>
-                    </div>
-                    <!-- Step 2 -->
-                    <div id="step2" class="step">
-                        <h5>Step 2: Additional Details</h5>
-                        <!-- Add input fields for additional details -->
-                        <div class="form-group">
-                            <label for="additionalInfo">Additional Information:</label>
-                            <input type="text" class="form-control" id="additionalInfo">
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" onclick="prevStep()">Previous</button>
-                    <button type="button" class="btn btn-primary" onclick="nextStep()">Next</button>
-                    <button type="button" class="btn btn-success" onclick="submitOrder()">Submit Order</button>
-                </div>
-            </div>
-        </div>
-    </div> --}}
-
-
-
-
     <div class="modal fade" id="modalOrder" tabindex="-1" role="dialog" aria-labelledby="modalOrderLabel"
         aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
@@ -699,21 +653,42 @@
                                                 <div class="input-group-text">{{ url('/') }}/</div>
                                             </div>
                                             <input type="text" class="form-control" id="domain"
-                                                placeholder="url" required>
+                                                placeholder="url" required value="">
                                             <input type="hidden" class="form-control" id="domaincek">
                                             <div class="valid-feedback" id="domainAvailabilityStatus">
-                                                nahh gituuuu!
+                                                OK
                                             </div>
-                                            <div class="invalid-feedback">
-                                                Form Wajib Diisi
-                                            </div>
-                                            {{-- <div id="domainAvailabilityStatus"></div> --}}
+
                                         </div>
                                     </div>
                                 </form>
                             </div>
                             <div id="step-2" class="tab-pane" role="tabpanel" aria-labelledby="step-2">
-                                Step content
+                                <form id="form-2"class="row row-cols-1 ms-5 me-5 needs-validation" novalidate>
+                                    <div class="col">
+                                        <label for="namaPria" class="form-label">Nama Pria</label>
+                                        <input type="text" class="form-control" id="namaPria" value=""
+                                            required>
+                                        <div class="valid-feedback">
+                                            Looks good!
+                                        </div>
+                                        <div class="invalid-feedback">
+                                            Please provide first name.
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <label for="namaLengkapPria" class="form-label">Nama Lengkap Pria</label>
+                                        <input type="text" class="form-control" id="namaLengkapPria"
+                                            value="" required>
+                                        <div class="valid-feedback">
+                                            Looks good!
+                                        </div>
+                                        <div class="invalid-feedback">
+                                            Please provide first name.
+                                        </div>
+                                    </div>
+
+                                </form>
                             </div>
                             <div id="step-3" class="tab-pane" role="tabpanel" aria-labelledby="step-3">
                                 Step content
@@ -804,7 +779,7 @@
     <script src="{{ asset('landingpage/assets/vendor/glightbox/js/glightbox.min.js') }}"></script>
     <script src="{{ asset('landingpage/assets/vendor/isotope-layout/isotope.pkgd.min.js') }}"></script>
     <script src="{{ asset('landingpage/assets/vendor/swiper/swiper-bundle.min.js') }}"></script>
-    {{-- <script src="{{ asset('landingpage/assets/vendor/php-email-form/validate.js') }}"></script> --}}
+    <script src="{{ asset('landingpage/assets/vendor/php-email-form/validate.js') }}"></script>
     {{-- <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script> --}}
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> --}}
@@ -820,22 +795,26 @@
     @endif
     <script>
         $(document).ready(function() {
+
             // Instansiasi awal untuk mencegah user submit saat load pertama kali
             $('#domain').addClass('is-invalid').removeClass('is-valid');
             $('#domaincek').prop('checked', true);
-            $('.invalid-feedback').text('Domain still empty!');
+            $('#domainAvailabilityStatus').text('Domain still empty!');
             $('.btn.sw-btn-next.sw-btn').addClass('disabled').prop(
                 'disabled', true);
 
 
             $('#domain').on('input', function() {
                 var domainInput = $(this).val();
+                console.log(domainInput);
 
                 // Cek lagi untuk cegah user submit saat domain kosong
                 if (domainInput == '') {
                     $('#domain').addClass('is-invalid').removeClass('is-valid');
                     $('#domaincek').prop('checked', true);
-                    $('.invalid-feedback').text('Domain still empty!');
+                    $('#domainAvailabilityStatus').text('Domain tidak boleh kosong').addClass(
+                        'd-block text-danger');
+
                     $('.btn.sw-btn-next.sw-btn').addClass('disabled').prop(
                         'disabled', true);
                 } else {
@@ -852,21 +831,24 @@
                         },
                         success: function(response) {
                             $('#domaincek').val(response.available);
-                            console.log($('.was-validate.form-control'));
+
                             if (response.available) {
                                 $('#domain').addClass('is-valid').removeClass('is-invalid');
                                 $('#domaincek').prop('checked', false);
 
-                                $('#domainAvailabilityStatus').text(
-                                    'Domain is available!');
                                 $('.btn.sw-btn-next.sw-btn').removeClass('disabled').prop(
                                     'disabled', false);
+                                $('#domainAvailabilityStatus').text('Domain is available!')
+                                    .removeClass('text-danger').addClass('text-success');
                             } else {
                                 $('#domain').addClass('is-invalid').removeClass('is-valid');
                                 $('#domaincek').prop('checked', true);
-                                $('.invalid-feedback').text('Domain is not available!');
+                                $('#domainAvailabilityStatus').text('Domain is not available!')
+                                    .addClass('text-danger').removeClass(
+                                        'text-success');
                                 $('.btn.sw-btn-next.sw-btn').addClass('disabled').prop(
                                     'disabled', true);
+
                             }
                         }
                     });
