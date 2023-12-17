@@ -94,6 +94,7 @@ Route::middleware(['auth:users'])->group(function () {
 
 //testing undngan
 // Route::get('/{domain}', 'UndanganController@index');
+Route::post('/check-domain', 'LandingPageController@checkDomain')->name('checkDomain');;
 Route::get('/{domain}/{tamu?}', 'UndanganController@tamu')->name('domainUndangan');
 Route::patch('/kehadiran', 'UndanganController@updateKehadiran')->name('updateKehadiran');
 
