@@ -25,10 +25,10 @@ class LoginController extends Controller
             } else {
                 return back()->with("errorWrong", "Password atau Email anda salah");
             }
-        } elseif($admin) {
+        } elseif ($admin) {
             if (password_verify($password, $admin->password)) {
-                Auth::guard('users')->login($admin, $remember);
-                return redirect()->route('landingPage')->with("admin", "selamat datang ");
+                Auth::guard('admin')->login($admin, $remember);
+                return redirect()->route('adminDashboard')->with("admin", "selamat datang ");
             } else {
                 return back()->with("errorWrong", "Password atau Email anda salah");
             }
@@ -37,14 +37,19 @@ class LoginController extends Controller
         }
     }
 
-    public function logout(Request $request)
+    public function logout()
     {
-        $tipeAkun = $request->tipeAkun;
-        if (Auth::guard($tipeAkun)->check()) {
-            Auth::guard($tipeAkun)->logout();
-            return redirect()->route('landingPage')->with('alert', 'Anda telah logout, Ditunggu kedatanganya lagi ya');
-        }
+        $userTypes = ['users', 'admin'];
 
-        return 'gagal';
+        foreach ($userTypes as $userType) {
+            if (Auth::guard($userType)->check()) {
+                Auth::guard($userType)->logout();
+                if ($userType == 'users') {
+                    return redirect()->route('landingPage')->with('alert', 'Anda telah logout, Ditunggu kedatanganya lagi ya');
+                } else {
+                    return redirect()->route('landingPage')->with('alert', 'Anda telah logout');
+                }
+            }
+        }
     }
 }

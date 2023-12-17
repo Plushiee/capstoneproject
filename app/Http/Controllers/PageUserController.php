@@ -12,6 +12,7 @@ use App\TblPengunjungModel;
 use App\TblPesanansModel;
 use App\TblProduksModel;
 use App\TblSalamsModel;
+use App\TblUsersModel;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\File;
 use Illuminate\Http\Request;
@@ -23,7 +24,7 @@ use SebastianBergmann\Environment\Console;
 
 class PageUserController extends Controller
 {
-    // User Dashboard
+    // User Mulai
     public function userDashboard()
     {
         $salam = TblSalamsModel::select('tbl_salams.id', 'nama_tamu', 'isi_salam', 'kehadiran', 'tbl_salams.created_at as tanggal_post', 'like_by')->join('tbl_buku_tamus', 'tbl_salams.id_tamu', '=', 'tbl_buku_tamus.id')->orderBy('tbl_salams.created_at', 'asc')->get();
@@ -91,7 +92,7 @@ class PageUserController extends Controller
 
         $dir = [
             'fotopria' => $basePath . '/mempelaipria.jpg',
-            'fotowanita' =>  $basePath . '/mempelaiwanita.jpg',
+            'fotowanita' => $basePath . '/mempelaiwanita.jpg',
             'fotosampul' => $basePath . '/sampul.jpg',
         ];
         if (!file_exists($dir['fotopria'])) {
@@ -138,7 +139,6 @@ class PageUserController extends Controller
         return $namaalbum . '.' . $extension;
     }
     public function getGaleri()
-
     {
         $mempelai = TblMempelaisModel::where('id_pesanan', TblPesanansModel::where('id_user', Auth::user()->id)->value('id'))->first();
         $formattanggal = Carbon::parse($mempelai->created_at)->format('YmdHis');
@@ -481,4 +481,72 @@ class PageUserController extends Controller
         TblBukuTamusModel::whereIn('id', $idtamu)->update(['status' => 'terkirim']);
         return response()->json(['success' => true, 'message' => 'Data Berhasil Diupdate']);
     }
+    // User Selesai
+
+    // Admin Mulai
+    public function adminDashboard()
+    {
+        $now = Carbon::now();
+
+        $banyakPesanan = TblPesanansModel::whereMonth('created_at', $now->month)
+            ->whereYear('created_at', $now->year)
+            ->count();
+        $banyakPelanggan = TblUsersModel::whereYear('created_at', $now->year)
+            ->count();
+        $banyakPengunjung = TblPengunjungModel::join('tbl_pesanans', 'tbl_pesanans.id', '=', 'tbl_pengunjungs.id_pesanan')
+            ->select(
+                DB::raw('sum(jumlah_kunjungan) as total_kunjungan'),
+            )
+            ->whereYear('tbl_pengunjungs.created_at', $now->year)
+            ->get();
+        ;
+        $banyakPengunjungPerHari = TblPengunjungModel::join('tbl_pesanans', 'tbl_pesanans.id', '=', 'tbl_pengunjungs.id_pesanan')
+            ->select(
+                'id_pesanan',
+                DB::raw('sum(jumlah_kunjungan) as total_kunjungan'),
+                DB::raw('DATE(tbl_pengunjungs.created_at) as tanggal')
+            )
+            ->groupBy('id_pesanan', 'tanggal')
+            ->whereYear('tbl_pengunjungs.created_at', $now->year)
+            ->get();
+
+        $banyakAkunBaruPerHari = TblUsersModel::select(
+            'id',
+            DB::raw('count(id) as total_akun'),
+            DB::raw('DATE(created_at) as tanggal')
+        )
+            ->groupBy('id', 'tanggal')
+            ->whereYear('created_at', $now->year)
+            ->get();
+
+        return view('admins.dashboard', [
+            'banyakPesanan' => $banyakPesanan,
+            'banyakPelanggan' => $banyakPelanggan,
+            'banyakPengunjung' => $banyakPengunjung,
+            'banyakPengunjungPerHari' => $banyakPengunjungPerHari,
+            'banyakAkunBaruPerHari' => $banyakAkunBaruPerHari,
+        ]);
+    }
+
+    public function adminPesanan()
+    {
+        $pesanan = TblPesanansModel::leftJoin('tbl_users', 'tbl_users.id', '=', 'tbl_pesanans.id_user')
+            ->leftJoin('tbl_produks', 'tbl_produks.id', '=', 'tbl_pesanans.id_produk')
+            ->select('tbl_pesanans.*', 'tbl_produks.nama_produk', 'tbl_users.nama')
+            ->get();
+
+        return view('admins.pesanan', [
+            'pesanans' => $pesanan,
+        ]);
+
+    }
+
+    public function lunas(Request $request) {
+        $idPesanan = $request->id;
+        $pesanan = TblPesanansModel::find($idPesanan);
+        $pesanan->status_pembayaran = 'lunas';
+        $pesanan->save();
+        return back()->with('lunas' , 'Pesanan dengan ID'. $idPesanan . ' sudah lunas!');
+    }
+    // Admin Selesai
 }

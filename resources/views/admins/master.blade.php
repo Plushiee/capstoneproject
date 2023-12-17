@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8" />
-    <title>Member | @yield('title')</title>
+    <title>Admin | @yield('title')</title>
     <meta name="description" content="Admin, Dashboard, Bootstrap, Bootstrap 4, Angular, AngularJS" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimal-ui" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -18,6 +18,7 @@
     <link rel="shortcut icon" sizes="196x196" href="{{ asset('assets/images/logo-only.png') }}">
 
     <!-- style -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="{{ asset('assets/animate.css/animate.min.css') }}" type="text/css" />
     <link rel="stylesheet" href="{{ asset('assets/glyphicons/glyphicons.css') }}" type="text/css" />
     <link rel="stylesheet" href="{{ asset('assets/font-awesome/css/font-awesome.min.css') }}" type="text/css" />
@@ -25,7 +26,6 @@
         type="text/css" />
 
     <link rel="stylesheet" href="{{ asset('assets/bootstrap/dist/css/bootstrap.min.css') }}" type="text/css" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
     <!-- build:css ../assets/styles/app.min.css -->
     <link rel="stylesheet" href="{{ asset('assets/styles/app.css') }}" type="text/css" />
     <!-- endbuild -->
@@ -38,13 +38,13 @@
 
     <div class="app" id="app">
 
-        @include('users.layouts.sidebar')
+        @include('admins.layouts.sidebar')
 
         <div id="content" class="app-content box-shadow-z0" role="main">
 
-            @include('users.layouts.navbar')
+            @include('admins.layouts.navbar')
 
-            @include('users.layouts.footer')
+            @include('admins.layouts.footer')
 
             <div ui-view class="app-body" id="view">
 
@@ -91,10 +91,6 @@
 
     <script src="{{ asset('assets/js/app.js') }}"></script>
 
-    <!-- ajax -->
-    {{-- <script src="{{ asset('assets/libs/jquery/jquery-pjax/jquery.pjax.js') }}"></script> --}}
-    <script src="{{ asset('assets/js/ajax.js') }}"></script>
-
     <script>
         $(document).ready(function() {
             $('.dropdown-toggles').on('click', function() {
@@ -103,6 +99,10 @@
             });
         });
     </script>
+
+    <!-- ajax -->
+    {{-- <script src="{{ asset('assets/libs/jquery/jquery-pjax/jquery.pjax.js') }}"></script> --}}
+    <script src="{{ asset('assets/js/ajax.js') }}"></script>
 
     @yield('addJS')
 
