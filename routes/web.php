@@ -88,9 +88,19 @@ Route::middleware(['auth:users'])->group(function () {
 
     Route::get('users/ucapan', 'PageUserController@userUcapan')->name('userUcapan');
     Route::get('users/getucapan', 'PageUserController@getUcapan')->name('getUcapan');
-    Route::get('logout', 'LoginController@logout')->name('userLogout');
+    Route::get('users/logout', 'LoginController@logout')->name('userLogout');
 });
 // Users End
+
+// Admin Starts
+Route::middleware(['auth:admin'])->group(function () {
+    Route::permanentRedirect('/home', 'admin/dashboard');
+    Route::get('admin/dashboard', 'PageUserController@adminDashboard')->name('adminDashboard');
+    Route::get('admin/pesanan', 'PageUserController@adminPesanan')->name('adminPesanan');
+    Route::post('admin/pesanan/lunas', 'PageUserController@lunas')->name('adminPesananLunas');
+    Route::get('admin/logout', 'LoginController@logout')->name('adminLogout');
+});
+// Admin End
 
 //testing undngan
 // Route::get('/{domain}', 'UndanganController@index');

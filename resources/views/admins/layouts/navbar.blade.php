@@ -22,7 +22,7 @@
                     </span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-overlay pull-right">
-                    <a href="{{ route('userLogout') }}"><button type="submit" class="dropdown-item">Sign out</button></a>
+                    <a href="{{ route('adminLogout') }}"><button type="submit" class="dropdown-item">Sign out</button></a>
                 </div>
             </li>
             <li class="nav-item hidden-md-up">

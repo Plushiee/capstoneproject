@@ -77,8 +77,8 @@
     <!-- ======= Hero Section ======= -->
     <section id="hero" class="d-flex align-items-center">
         <div class="container position-relative" data-aos="fade-up" data-aos-delay="500">
-            <h1>Selamat Datang Di ManToe</h1>
-            <h2>Kami menyediakan berbagai tamplate Undangan Digital yang menarik yang bisa segera Anda gunakan.</h2>
+            <h1 style="color: white;">Selamat Datang Di ManToe</h1>
+            <h2 style="color: white;">Kami menyediakan berbagai tamplate Undangan Digital yang menarik yang bisa segera Anda gunakan.</h2>
             <a href="#tema" class="btn-get-started scrollto">Pesan Sekarang</a>
 
         </div>
