@@ -719,7 +719,7 @@
                                 Step content
                             </div>
                             <div id="step-4" class="tab-pane" role="tabpanel" aria-labelledby="step-4">
-                                {{-- 
+                                {{--
                                 <form id="form-4" class="row row-cols-1 ms-5 me-5 needs-validation" novalidate>
                                     <div class="col">
                                         <div class="mb-3 text-muted">Please confirm your order details</div>
@@ -820,38 +820,57 @@
     @endif
     <script>
         $(document).ready(function() {
+            // Instansiasi awal untuk mencegah user submit saat load pertama kali
+            $('#domain').addClass('is-invalid').removeClass('is-valid');
+            $('#domaincek').prop('checked', true);
+            $('.invalid-feedback').text('Domain still empty!');
+            $('.btn.sw-btn-next.sw-btn').addClass('disabled').prop(
+                'disabled', true);
+
+
             $('#domain').on('input', function() {
                 var domainInput = $(this).val();
 
+                // Cek lagi untuk cegah user submit saat domain kosong
+                if (domainInput == '') {
+                    $('#domain').addClass('is-invalid').removeClass('is-valid');
+                    $('#domaincek').prop('checked', true);
+                    $('.invalid-feedback').text('Domain still empty!');
+                    $('.btn.sw-btn-next.sw-btn').addClass('disabled').prop(
+                        'disabled', true);
+                } else {
+                    $('#domainAvailabilityStatus').html('');
 
-                $('#domainAvailabilityStatus').html('');
+                    $.ajax({
+                        type: 'POST',
+                        url: "{{ route('checkDomain') }}", // Replace with your Laravel route
+                        data: {
+                            domain: domainInput
+                        },
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        success: function(response) {
+                            $('#domaincek').val(response.available);
+                            console.log($('.was-validate.form-control'));
+                            if (response.available) {
+                                $('#domain').addClass('is-valid').removeClass('is-invalid');
+                                $('#domaincek').prop('checked', false);
 
-                $.ajax({
-                    type: 'POST',
-                    url: "{{ route('checkDomain') }}", // Replace with your Laravel route
-                    data: {
-                        domain: domainInput
-                    },
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    success: function(response) {
-                        $('#domaincek').val(response.available);
-                        console.log($('.was-validate.form-control'));
-                        if (response.available && domainInput != '') {
-                            $('#domain').addClass('is-valid').removeClass('is-invalid');
-                            $('#domaincek').prop('checked', false);
-
-                            $('#domainAvailabilityStatus').text(
-                                'Domain is available!');
-
-                        } else {
-                            $('#domain').addClass('is-invalid').removeClass('is-valid');
-                            $('#domaincek').prop('checked', true);
-                            $('.invalid-feedback').text('Domain is not available!');
+                                $('#domainAvailabilityStatus').text(
+                                    'Domain is available!');
+                                $('.btn.sw-btn-next.sw-btn').removeClass('disabled').prop(
+                                    'disabled', false);
+                            } else {
+                                $('#domain').addClass('is-invalid').removeClass('is-valid');
+                                $('#domaincek').prop('checked', true);
+                                $('.invalid-feedback').text('Domain is not available!');
+                                $('.btn.sw-btn-next.sw-btn').addClass('disabled').prop(
+                                    'disabled', true);
+                            }
                         }
-                    }
-                });
+                    });
+                }
             });
         });
 
@@ -909,7 +928,7 @@
             // Leave step event is used for validating the forms
             $("#smartwizard").on("leaveStep", function(e, anchorObject, currentStepIdx, nextStepIdx,
                 stepDirection) {
-                // Validate only on forward movement  
+                // Validate only on forward movement
                 if (stepDirection == 'forward') {
                     var form = document.getElementById('form-' + (currentStepIdx + 1));
                     var domcek = $('#domaincek').prop('checked');
@@ -944,7 +963,7 @@
                     animation: 'fade'
                 },
                 anchor: {
-                    enableNavigation: true, // Enable/Disable anchor navigation 
+                    enableNavigation: true, // Enable/Disable anchor navigation
                     enableNavigationAlways: false, // Activates all anchors clickable always
                     enableDoneState: true, // Add done state on visited steps
                     markPreviousStepsAsDone: true, // When a step selected by url hash, all previous steps are marked done

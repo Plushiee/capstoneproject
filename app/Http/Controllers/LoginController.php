@@ -16,27 +16,19 @@ class LoginController extends Controller
         $remember = $request->has('remember');
 
         $users = TblUsersModel::where('email', $email)->first();
+        $admin = TblAdminsModel::where('email', $email)->first();
 
         if ($users) {
             if (password_verify($password, $users->password)) {
-
-                $isUser = TblUsersModel::where('email', $email)->exists();
-                $isAdmin = TblAdminsModel::where('email', $email)->exists();
-                $isSuperAdmin = TblAdminsModel::where('email', $email)
-                    ->where('super_admin', true)->exists();
-
-                if ($isUser) {
-                    Auth::guard('users')->login($users, $remember);
-                    return redirect()->route('landingPage')->with("user", "selamat datang ");
-                }
-                if ($isAdmin) {
-                    Auth::guard('admin')->login($users, $remember);
-                    return redirect('/pilih-akun')->with("admin", "User Ini Adalah Admin");
-                }
-                if ($isSuperAdmin) {
-                    Auth::guard('admin')->login($users, $remember);
-                    return redirect('/pilih-akun')->with("super_admin", "User Ini Adalah Super Admin");
-                }
+                Auth::guard('users')->login($users, $remember);
+                return redirect()->route('landingPage')->with("user", "selamat datang ");
+            } else {
+                return back()->with("errorWrong", "Password atau Email anda salah");
+            }
+        } elseif($admin) {
+            if (password_verify($password, $admin->password)) {
+                Auth::guard('users')->login($admin, $remember);
+                return redirect()->route('landingPage')->with("admin", "selamat datang ");
             } else {
                 return back()->with("errorWrong", "Password atau Email anda salah");
             }
