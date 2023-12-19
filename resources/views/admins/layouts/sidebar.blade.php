@@ -45,14 +45,13 @@
                                 </span>
                                 <span class="nav-icon">
                                     <i class="material-icons">web
-
                                     </i>
                                 </span>
                                 <span class="nav-text">Data Akun</span>
                             </a>
                             <ul class="nav-sub">
                                 <li>
-                                    <a href="{{ route('userListTamu') }}">
+                                    <a href="{{ route('adminAkunUser') }}">
                                         <span class="nav-text">Akun Users</span>
                                     </a>
                                 </li>

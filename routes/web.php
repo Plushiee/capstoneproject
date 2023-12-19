@@ -99,6 +99,10 @@ Route::middleware(['auth:admin'])->group(function () {
     Route::get('admin/dashboard', 'PageUserController@adminDashboard')->name('adminDashboard');
     Route::get('admin/pesanan', 'PageUserController@adminPesanan')->name('adminPesanan');
     Route::post('admin/pesanan/lunas', 'PageUserController@lunas')->name('adminPesananLunas');
+    
+    Route::get('admin/akun/user', 'PageUserController@adminAkunUser')->name('adminAkunUser');
+    Route::post('admin/akun/user/edit', 'PageUserController@adminAkunUserEdit')->name('adminAkunUserEdit');
+    Route::post('admin/akun/user/simpan', 'PageUserController@adminAkunUserSimpan')->name('adminAkunUserSimpan');
     Route::get('admin/logout', 'LoginController@logout')->name('adminLogout');
 });
 // Admin End
