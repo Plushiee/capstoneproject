@@ -27,7 +27,7 @@ class PageUserController extends Controller
     // User Mulai
     public function userDashboard()
     {
-        $salam = TblSalamsModel::select('tbl_salams.id', 'nama_tamu', 'isi_salam', 'kehadiran', 'tbl_salams.created_at as tanggal_post', 'like_by')->join('tbl_buku_tamus', 'tbl_salams.id_tamu', '=', 'tbl_buku_tamus.id')->orderBy('tbl_salams.created_at', 'asc')->get();
+        $salam = TblSalamsModel::select('tbl_salams.id', 'nama_tamu', 'isi_salam', 'kehadiran', 'tbl_salams.created_at as tanggal_post', 'like_by')->join('tbl_buku_tamus', 'tbl_salams.id_tamu', '=', 'tbl_buku_tamus.id')->join('tbl_pesanans', 'tbl_pesanans.id', '=', 'tbl_buku_tamus.id_pesanan')->where('id_user', Auth::user()->id)->orderBy('tbl_salams.created_at', 'asc')->get();
         $pesanan = TblPesanansModel::where('id_user', Auth::user()->id)->count();
         $tanggalAkhir = TblPesanansModel::join('tbl_acaras', 'tbl_pesanans.id', '=', 'tbl_acaras.id_pesanan')
             ->select('tbl_pesanans.id', DB::raw('MAX(tbl_acaras.waktu_acara) as tanggal_terakhir'))
@@ -344,7 +344,7 @@ class PageUserController extends Controller
     {
         $pesanan = TblPesanansModel::where('id_user', Auth::user()->id)->pluck('id');
         $tamu = TblPesanansModel::select('tbl_buku_tamus.id as idtamu', 'nama_tamu', 'no_wa', 'alamat_tamu', 'domain', 'status', 'nama_panggilan_pria', 'nama_panggilan_wanita', 'tbl_pesanans.id as idpesanan')->join('tbl_buku_tamus', 'tbl_buku_tamus.id_pesanan', '=', 'tbl_pesanans.id')->join('tbl_mempelais', 'tbl_mempelais.id_pesanan', '=', 'tbl_pesanans.id')->where('tbl_pesanans.id', $pesanan)->get();
-        return view('users.listtamu', ['tamu' => $tamu]);
+        return view('users.listtamu', ['tamu' => $tamu, 'idpesanan' => $pesanan]);
     }
     public function getListTamu()
     {
@@ -354,15 +354,14 @@ class PageUserController extends Controller
     }
     public function userGaleri()
     {
-        $galeri = TblAlbumsModel::where('id_pesanan', TblPesanansModel::where('id_user', Auth::user()->id)->value('id'))->get();
 
-        return view('users.galeri', ['galeri' => $galeri]);
+        return view('users.galeri');
     }
 
 
     public function getUcapan()
     {
-        $salam = TblSalamsModel::select('tbl_salams.id', 'nama_tamu', 'isi_salam', 'kehadiran', 'tbl_salams.created_at as tanggal_post', 'like_by')->join('tbl_buku_tamus', 'tbl_salams.id_tamu', '=', 'tbl_buku_tamus.id')->orderBy('tbl_salams.created_at', 'asc')->get();
+        $salam = TblSalamsModel::select('tbl_salams.id', 'nama_tamu', 'isi_salam', 'kehadiran', 'tbl_salams.created_at as tanggal_post', 'like_by')->join('tbl_buku_tamus', 'tbl_salams.id_tamu', '=', 'tbl_buku_tamus.id')->join('tbl_pesanans', 'tbl_pesanans.id', '=', 'tbl_buku_tamus.id_pesanan')->where('id_user', Auth::user()->id)->orderBy('tbl_salams.created_at', 'asc')->get();
         return response()->json(['salamData' => $salam]);
     }
     public function userUcapan()
@@ -498,8 +497,7 @@ class PageUserController extends Controller
                 DB::raw('sum(jumlah_kunjungan) as total_kunjungan'),
             )
             ->whereYear('tbl_pengunjungs.created_at', $now->year)
-            ->get();
-        ;
+            ->get();;
         $banyakPengunjungPerHari = TblPengunjungModel::join('tbl_pesanans', 'tbl_pesanans.id', '=', 'tbl_pengunjungs.id_pesanan')
             ->select(
                 'id_pesanan',
@@ -538,15 +536,15 @@ class PageUserController extends Controller
         return view('admins.pesanan', [
             'pesanans' => $pesanan,
         ]);
-
     }
 
-    public function lunas(Request $request) {
+    public function lunas(Request $request)
+    {
         $idPesanan = $request->id;
         $pesanan = TblPesanansModel::find($idPesanan);
         $pesanan->status_pembayaran = 'lunas';
         $pesanan->save();
-        return back()->with('lunas' , 'Pesanan dengan ID'. $idPesanan . ' sudah lunas!');
+        return back()->with('lunas', 'Pesanan dengan ID' . $idPesanan . ' sudah lunas!');
     }
     // Admin Selesai
 }

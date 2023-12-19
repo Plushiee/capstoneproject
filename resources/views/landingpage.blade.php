@@ -78,7 +78,8 @@
     <section id="hero" class="d-flex align-items-center">
         <div class="container position-relative" data-aos="fade-up" data-aos-delay="500">
             <h1 style="color: white;">Selamat Datang Di ManToe</h1>
-            <h2 style="color: white;">Kami menyediakan berbagai tamplate Undangan Digital yang menarik yang bisa segera Anda gunakan.</h2>
+            <h2 style="color: white;">Kami menyediakan berbagai tamplate Undangan Digital yang menarik yang bisa segera
+                Anda gunakan.</h2>
             <a href="#tema" class="btn-get-started scrollto">Pesan Sekarang</a>
 
         </div>
@@ -297,7 +298,8 @@
                                                 <a href="" class="card-link" data-bs-toggle="modal"
                                                     data-bs-target="#modalOrder" data-produk-id="{{ $produks->id }}"
                                                     data-produk-nama="{{ $produks->nama_produk }}"
-                                                    data-produk-biaya="{{ $produks->biaya_dasar }}"><i
+                                                    data-produk-biaya="{{ $produks->biaya_dasar }}"
+                                                    data-user-id="{{ auth('users')->user()->id }}"><i
                                                         class="bi bi-cart-fill pesan"></i>Pesan</a>
                                             </div>
                                         @endif
@@ -317,138 +319,6 @@
                             </div>
                         </div>
                     @endforeach
-
-                    {{-- <div class="col-12 col-lg-4 col-md-6 d-flex align-items-stretch mt-4" data-aos="zoom-in">
-                        <div class="member">
-                            <img src="{{ asset('landingpage/assets/img/5.jpg') }}" alt="" />
-                            <h4>Tema 1</h4>
-                            <span class="harga-awal">IDR 100.000 - 150.000</span>
-                            <span class="harga-sekarang">IDR 90.000 - 120.000</span>
-                            <div class="link">
-                                <div class="link-item pesan">
-                                    <a href="#" class="card-link"><i
-                                            class="bi bi-cart-fill pesan"></i>Pesan</a>
-                                </div>
-                                <div class="link-item preview">
-                                    <a href="#" class="card-link">Preview<i
-                                            class="bi bi-arrow-up-right-square-fill"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-12 col-lg-4 col-md-6 mt-4 d-flex align-items-stretch" data-aos="zoom-in">
-                        <div class="member">
-                            <img src="{{ asset('landingpage/assets/img/5.jpg') }}" alt="" />
-                            <h4>Tema 1</h4>
-                            <span class="harga-awal">IDR 100.000 - 150.000</span>
-                            <span class="harga-sekarang">IDR 90.000 - 120.000</span>
-                            <div class="link">
-                                <div class="link-item pesan">
-                                    <a href="#" class="card-link"><i
-                                            class="bi bi-cart-fill pesan"></i>Pesan</a>
-                                </div>
-                                <div class="link-item preview">
-                                    <a href="#" class="card-link">Preview<i
-                                            class="bi bi-arrow-up-right-square-fill"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-12 col-lg-4 col-md-6 mt-4 d-flex align-items-stretch" data-aos="zoom-in">
-                        <div class="member">
-                            <img src="{{ asset('landingpage/assets/img/5.jpg') }}" alt="" />
-                            <h4>Tema 1</h4>
-                            <span class="harga-awal">IDR 100.000 - 150.000</span>
-                            <span class="harga-sekarang">IDR 90.000 - 120.000</span>
-                            <div class="link">
-                                <div class="link-item pesan">
-                                    <a href="#" class="card-link"><i
-                                            class="bi bi-cart-fill pesan"></i>Pesan</a>
-                                </div>
-                                <div class="link-item preview">
-                                    <a href="#" class="card-link">Preview<i
-                                            class="bi bi-arrow-up-right-square-fill"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-12 col-lg-4 col-md-6 mt-4 d-flex align-items-stretch" data-aos="zoom-in">
-                        <div class="member">
-                            <img src="{{ asset('landingpage/assets/img/5.jpg') }}" alt="" />
-                            <h4>Tema 1</h4>
-                            <span class="harga-awal">IDR 100.000 - 150.000</span>
-                            <span class="harga-sekarang">IDR 90.000 - 120.000</span>
-                            <div class="link">
-                                <div class="link-item pesan">
-                                    <a href="#" class="card-link"><i
-                                            class="bi bi-cart-fill pesan"></i>Pesan</a>
-                                </div>
-                                <div class="link-item preview">
-                                    <a href="#" class="card-link">Preview<i
-                                            class="bi bi-arrow-up-right-square-fill"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-12 col-lg-4 col-md-6 mt-4 d-flex align-items-stretch" data-aos="zoom-in">
-                        <div class="member">
-                            <img src="{{ asset('landingpage/assets/img/5.jpg') }}" alt="" />
-                            <h4>Tema 1</h4>
-                            <span class="harga-awal">IDR 100.000 - 150.000</span>
-                            <span class="harga-sekarang">IDR 90.000 - 120.000</span>
-                            <div class="link">
-                                <div class="link-item pesan">
-                                    <a href="#" class="card-link"><i
-                                            class="bi bi-cart-fill pesan"></i>Pesan</a>
-                                </div>
-                                <div class="link-item preview">
-                                    <a href="#" class="card-link">Preview<i
-                                            class="bi bi-arrow-up-right-square-fill"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-12 col-lg-4 col-md-6 mt-4 d-flex align-items-stretch" data-aos="zoom-in">
-                        <div class="member">
-                            <img src="{{ asset('landingpage/assets/img/5.jpg') }}" alt="" />
-                            <h4>Tema 1</h4>
-                            <span class="harga-awal">IDR 100.000 - 150.000</span>
-                            <span class="harga-sekarang">IDR 90.000 - 120.000</span>
-                            <div class="link">
-                                <div class="link-item pesan">
-                                    <a href="#" class="card-link"><i
-                                            class="bi bi-cart-fill pesan"></i>Pesan</a>
-                                </div>
-                                <div class="link-item preview">
-                                    <a href="#" class="card-link">Preview<i
-                                            class="bi bi-arrow-up-right-square-fill"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12 col-lg-4 col-md-6 mt-4 d-flex align-items-stretch" data-aos="zoom-in">
-                        <div class="member">
-                            <img src="{{ asset('landingpage/assets/img/5.jpg') }}" alt="" />
-                            <h4>Tema 1</h4>
-                            <span class="harga-awal">IDR 100.000 - 150.000</span>
-                            <span class="harga-sekarang">IDR 90.000 - 120.000</span>
-                            <div class="link">
-                                <div class="link-item pesan">
-                                    <a href="#" class="card-link"><i
-                                            class="bi bi-cart-fill pesan"></i>Pesan</a>
-                                </div>
-                                <div class="link-item preview">
-                                    <a href="#" class="card-link">Preview<i
-                                            class="bi bi-arrow-up-right-square-fill"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div> --}}
                 </div>
             </div>
         </section>
@@ -623,11 +493,12 @@
                         <div class="tab-content">
                             <div id="step-1" class="tab-pane" role="tabpanel" aria-labelledby="step-1">
                                 <form id="form-1" class="row row-cols-1 ms-5 me-5 needs-validation" novalidate>
-                                    <div class="col">
+                                    <div class="col-6">
                                         <label for="produkNama" class="form-label">Nama Produk</label>
                                         <input type="text" class="form-control" id="produkNama" value=""
                                             required disabled>
-                                        <input type="hidden" id="produkId">
+                                        <input type="hidden" id="idProduk" value="">
+                                        <input type="hidden" id="idUser" value="">
                                         <div class="valid-feedback">
                                             Looks good!
                                         </div>
@@ -635,7 +506,7 @@
                                             Please provide first name.
                                         </div>
                                     </div>
-                                    <div class="col">
+                                    <div class="col-6">
                                         <label for="validationCustom02" class="form-label">Harga Dasar</label>
                                         <input type="text" class="form-control" id="produkHarga" value=""
                                             required disabled>
@@ -665,7 +536,7 @@
                             </div>
                             <div id="step-2" class="tab-pane" role="tabpanel" aria-labelledby="step-2">
                                 <form id="form-2"class="row row-cols-1 ms-5 me-5 needs-validation" novalidate>
-                                    <div class="col">
+                                    <div class="col-6">
                                         <label for="namaPria" class="form-label">Nama Pria</label>
                                         <input type="text" class="form-control" id="namaPria" value=""
                                             required>
@@ -676,10 +547,76 @@
                                             Please provide first name.
                                         </div>
                                     </div>
-                                    <div class="col">
+                                    <div class="col-6">
+                                        <label for="namaWanita" class="form-label">Nama Wanita</label>
+                                        <input type="text" class="form-control" id="namaWanita" value=""
+                                            required>
+                                        <div class="valid-feedback">
+                                            Looks good!
+                                        </div>
+                                        <div class="invalid-feedback">
+                                            Please provide first name.
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
                                         <label for="namaLengkapPria" class="form-label">Nama Lengkap Pria</label>
                                         <input type="text" class="form-control" id="namaLengkapPria"
                                             value="" required>
+                                        <div class="valid-feedback">
+                                            Looks good!
+                                        </div>
+                                        <div class="invalid-feedback">
+                                            Please provide first name.
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <label for="namaLengkapWanita" class="form-label">Nama Lengkap Wanita</label>
+                                        <input type="text" class="form-control" id="namaLengkapWanita"
+                                            value="" required>
+                                        <div class="valid-feedback">
+                                            Looks good!
+                                        </div>
+                                        <div class="invalid-feedback">
+                                            Please provide first name.
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <label for="namaAyahPria" class="form-label">Nama Ayah Pria</label>
+                                        <input type="text" class="form-control" id="namaAyahPria" value=""
+                                            required>
+                                        <div class="valid-feedback">
+                                            Looks good!
+                                        </div>
+                                        <div class="invalid-feedback">
+                                            Please provide first name.
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <label for="namaAyahWanita" class="form-label">Nama Ayah Wanita</label>
+                                        <input type="text" class="form-control" id="namaAyahWanita"
+                                            value="" required>
+                                        <div class="valid-feedback">
+                                            Looks good!
+                                        </div>
+                                        <div class="invalid-feedback">
+                                            Please provide first name.
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <label for="namaIbuPria" class="form-label">Nama Ibu Pria</label>
+                                        <input type="text" class="form-control" id="namaIbuPria" value=""
+                                            required>
+                                        <div class="valid-feedback">
+                                            Looks good!
+                                        </div>
+                                        <div class="invalid-feedback">
+                                            Please provide first name.
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <label for="namaIbuWanita" class="form-label">Nama Ibu Wanita</label>
+                                        <input type="text" class="form-control" id="namaIbuWanita" value=""
+                                            required>
                                         <div class="valid-feedback">
                                             Looks good!
                                         </div>
@@ -774,6 +711,7 @@
 
 
     <!-- Vendor JS Files -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="{{ asset('landingpage/assets/vendor/aos/aos.js') }}"></script>
     <script src="{{ asset('landingpage/assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('landingpage/assets/vendor/glightbox/js/glightbox.min.js') }}"></script>
@@ -868,6 +806,52 @@
         }
 
         function onConfirm() {
+            $idProduk = $('#idProduk').val();
+            console.log(idProduk);
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                url: "{{ route('newOrder') }}",
+                method: "POST",
+                data: {
+
+                    idProduk: $('#idProduk').val(),
+                    domain: $('#domain').val(),
+                    idAdmin: 1,
+                    idUser: $('#idUser').val(),
+                    // biaya: $('#totalBiaya').val(),
+                    namaPria: $('#namaPria').val(),
+                    namaWanita: $('#namaWanita').val(),
+                    namaLengkapPria: $('#namaLengkapPria').val(),
+                    namaLengkapWanita: $('#namaLengkapWanita').val(),
+                    namaAyahWanita: $('#namaAyahWanita').val(),
+                    namaIbuWanita: $('#namaIbuWanita').val(),
+                    namaAyahPria: $('#namaAyahPria').val(),
+                    namaIbuPria: $('#namaIbuPria').val()
+
+
+                },
+
+                success: function(response) {
+                    console.log(response);
+                    Swal.fire({
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 3000,
+                        icon: 'success',
+                        title: 'Order Berhasil',
+                        text: "Anda Akan Dialihkan Ke Halaman Dashboard Secara Otomatis",
+                        timer: 3000,
+                        showConfirmButton: false
+                    }).then((result) => {
+                        window.location.href = "{{ route('userDashboard') }}";
+                    });
+                }
+            });
 
         }
 
@@ -960,17 +944,19 @@
         $('#modalOrder').on('show.bs.modal', function(event) {
             var button = $(event.relatedTarget); // Button that triggered the modal
             var produkId = button.data('produk-id'); // Extract info from data-* attributes
+            var userId = button.data('user-id'); // Extract info from data-* attributes
             var produkNama = button.data('produk-nama');
             var produkHarga = button.data('produk-biaya');
 
 
             // Update the modal content
-            $('#produkId').val(produkId);
+            $('#idProduk').val(produkId);
             $('#produkNama').val(produkNama);
             $('#produkHarga').val(produkHarga);
             $('#showProdukId').text(produkId);
             $('#showProdukNama').text(produkNama);
             $('#showProdukHarga').text(produkHarga);
+            $('#idUser').val(userId);
         });
     </script>
 </body>

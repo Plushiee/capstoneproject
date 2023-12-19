@@ -102,7 +102,7 @@
                 <div class="modal-body">
                     <div class="col mt-2">
                         <label>Nama Tamu Undangan</label>
-                        <input id="id_pesanan" type="hidden" class="form-control" value="{{ $tamu->first()->idpesanan }}">
+                        <input id="id_pesanan" type="hidden" class="form-control" value="{{ $idpesanan->first() }}">
                         <input id="nama_tamu" type="text" class="form-control" placeholder="Contoh : Agus Sukamto"
                             style='text-transform:capitalize' required>
                     </div>
@@ -187,7 +187,7 @@
     </div>
 @endsection
 @section('addJS')
-   
+
     <script src="{{ asset('assets/themes/jellyblack/themes-rsvp/sw-vendor/js/jquery.classyqr.js') }}"></script>
 
     <script>
