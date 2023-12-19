@@ -548,5 +548,38 @@ class PageUserController extends Controller
         $pesanan->save();
         return back()->with('lunas' , 'Pesanan dengan ID'. $idPesanan . ' sudah lunas!');
     }
+
+    public function adminAkunUser() {
+        $akunUser = TblUsersModel::get();
+
+        return view('admins.user', [
+            'akunUser' => $akunUser,
+        ]);
+    }
+
+    public function adminAkunUserEdit(Request $request) {
+        $id = $request->idPengguna;
+        $akunUser = TblUsersModel::where('id', $id)
+            ->get();
+
+        return view('admins.user-edit', [
+            'akunUser' => $akunUser,
+        ]);
+    }
+
+    public function adminAkunUserSimpan(Request $request) {
+        $id = $request->idPengguna;
+        $nama = $request->nama;
+        $email = $request->email;
+        $nomor = $request->nomor;
+
+        $akunUpdate = TblUsersModel::find($id);
+        $akunUpdate->nama = $nama;
+        $akunUpdate->email = $email;
+        $akunUpdate->no_telp = $nomor;
+        $akunUpdate->save();
+
+        return redirect()->route('adminAkunUser')->with('success', 'Data User Berhasil Di Update');
+    }
     // Admin Selesai
 }
