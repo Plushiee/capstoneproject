@@ -18,17 +18,17 @@ class LoginController extends Controller
         $users = TblUsersModel::where('email', $email)->first();
         $admin = TblAdminsModel::where('email', $email)->first();
 
-        if ($users) {
-            if (password_verify($password, $users->password)) {
-                Auth::guard('users')->login($users, $remember);
-                return redirect()->route('landingPage')->with("user", "selamat datang ");
-            } else {
-                return back()->with("errorWrong", "Password atau Email anda salah");
-            }
-        } elseif ($admin) {
+        if ($admin) {
             if (password_verify($password, $admin->password)) {
                 Auth::guard('admin')->login($admin, $remember);
                 return redirect()->route('adminDashboard')->with("admin", "selamat datang ");
+            } else {
+                return back()->with("errorWrong", "Password atau Email anda salah");
+            }
+        } elseif ($users) {
+            if (password_verify($password, $users->password)) {
+                Auth::guard('users')->login($users, $remember);
+                return redirect()->route('landingPage')->with("user", "selamat datang ");
             } else {
                 return back()->with("errorWrong", "Password atau Email anda salah");
             }

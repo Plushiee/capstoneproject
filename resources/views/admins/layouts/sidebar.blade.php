@@ -38,6 +38,7 @@
                                 <span class="nav-text">Daftar Pesanan</span>
                             </a>
                         </li>
+                        @if(Auth::user()->super_admin == true)
                         <li>
                             <a>
                                 <span class="nav-caret">
@@ -56,12 +57,13 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="{{ route('userUcapan') }}">
+                                    <a href="{{ route('adminAkunAdmin') }}">
                                         <span class="nav-text">Akun Admin</span>
                                     </a>
                                 </li>
                             </ul>
                         </li>
+                        @endif
                     </ul>
                 </nav>
             </div>

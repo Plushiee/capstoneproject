@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Imports\ImportTamuExcel;
 use App\TblAcarasModel;
+use App\TblAdminsModel;
 use App\TblAlbumsModel;
 use App\TblBukuTamusModel;
 use App\TblCeritasModel;
@@ -497,7 +498,8 @@ class PageUserController extends Controller
                 DB::raw('sum(jumlah_kunjungan) as total_kunjungan'),
             )
             ->whereYear('tbl_pengunjungs.created_at', $now->year)
-            ->get();;
+            ->get();
+        ;
         $banyakPengunjungPerHari = TblPengunjungModel::join('tbl_pesanans', 'tbl_pesanans.id', '=', 'tbl_pengunjungs.id_pesanan')
             ->select(
                 'id_pesanan',
@@ -547,7 +549,8 @@ class PageUserController extends Controller
         return back()->with('lunas', 'Pesanan dengan ID' . $idPesanan . ' sudah lunas!');
     }
 
-    public function adminAkunUser() {
+    public function adminAkunUser()
+    {
         $akunUser = TblUsersModel::get();
 
         return view('admins.user', [
@@ -555,7 +558,8 @@ class PageUserController extends Controller
         ]);
     }
 
-    public function adminAkunUserEdit(Request $request) {
+    public function adminAkunUserEdit(Request $request)
+    {
         $id = $request->idPengguna;
         $akunUser = TblUsersModel::where('id', $id)
             ->get();
@@ -565,7 +569,8 @@ class PageUserController extends Controller
         ]);
     }
 
-    public function adminAkunUserSimpan(Request $request) {
+    public function adminAkunUserSimpan(Request $request)
+    {
         $id = $request->idPengguna;
         $nama = $request->nama;
         $email = $request->email;
@@ -578,6 +583,73 @@ class PageUserController extends Controller
         $akunUpdate->save();
 
         return redirect()->route('adminAkunUser')->with('success', 'Data User Berhasil Di Update');
+    }
+
+    public function adminAkunAdmin()
+    {
+        $akunAdmin = TblAdminsModel::get();
+
+        return view('admins.admin', [
+            'akunAdmin' => $akunAdmin,
+        ]);
+    }
+
+    public function adminAkunAdminForm(Request $request)
+    {
+        if ($request->jenis === 'baru') {
+            return view('admins.admin-form', ['tipe' => 'baru']);
+        } else {
+            $id = $request->idPengguna;
+            $akunAdmin = TblAdminsModel::where('id', $id)
+                ->get();
+
+            return view('admins.admin-form', [
+                'akunAdmin' => $akunAdmin,
+                'tipe' => 'update'
+            ]);
+        }
+    }
+
+    public function adminAkunAdminEdit(Request $request)
+    {
+        $id = $request->idPengguna;
+        $akunAdmin = TblAdminsModel::where('id', $id)
+            ->get();
+
+        return view('admins.admin-edit', [
+            'akunAdmin' => $akunAdmin,
+        ]);
+    }
+
+    public function adminAkunAdminSimpan(Request $request)
+    {
+        $id = $request->idPengguna;
+        $nama = $request->nama;
+        $email = $request->email;
+        $nomor = $request->nomor;
+        $super_admin = $request->super_admin;
+
+        if ($request->submit === 'baru') {
+            $akunAdminBaru = new TblAdminsModel;
+            $akunAdminBaru->nama = $nama;
+            $akunAdminBaru->email = $email;
+            $akunAdminBaru->no_telp = $nomor;
+            $akunAdminBaru->super_admin = $super_admin;
+            $akunAdminBaru->password = bcrypt($request->passwordRegister);
+            $akunAdminBaru->save();
+            return redirect()->route('adminAkunAdmin')->with('successTambahAdmin', 'Data Admin Berhasil Di Tambah');
+
+        } else {
+
+            $akunAdminUpdate = TblAdminsModel::find($id);
+            $akunAdminUpdate->nama = $nama;
+            $akunAdminUpdate->email = $email;
+            $akunAdminUpdate->no_telp = $nomor;
+            $akunAdminUpdate->super_admin = $super_admin;
+            $akunAdminUpdate->save();
+
+            return redirect()->route('adminAkunAdmin')->with('successEditAdmin', 'Data Admin Berhasil Di Update');
+        }
     }
     // Admin Selesai
 }
