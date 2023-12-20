@@ -49,7 +49,8 @@ Route::middleware(['auth:users'])->group(function () {
     Route::permanentRedirect('/home', 'users/dashboard');
     Route::get('users/dashboard', 'PageUserController@userDashboard')->name('userDashboard');
     Route::get('users/order', 'PageUserController@userOrder')->name('userOrder');
-    Route::post('/newOrder', 'LandingPageController@newOrder')->name('newOrder');
+    Route::post('/neworder', 'LandingPageController@newOrder')->name('newOrder');
+    Route::post('/uploadbukti', 'PageUserController@uploadBukti')->name('uploadBukti');
 
     // Mempelai Start
     Route::get('users/mempelai', 'PageUserController@userMempelai')->name('userMempelai');

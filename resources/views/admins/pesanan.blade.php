@@ -60,12 +60,23 @@
                                         <td>{{ $pesanan->biaya }}</td>
                                         <td>{{ $pesanan->created_at }}</td>
                                         <td>
-                                            @if ($pesanan->status_pembayaran !== 'lunas')
+                                            {{-- @if ($pesanan->status_pembayaran !== 'lunas')
                                                 <form action="{{ route('adminPesananLunas') }}" method="POST">
                                                     @csrf
                                                     <input type="hidden" name="id" value="{{ $pesanan->id }}">
                                                     <button type="submit" class="btn btn-success">Lunas</button>
                                                 </form>
+                                            @else
+                                                {{ $pesanan->status_pembayaran }}
+                                            @endif --}}
+                                            @if ($pesanan->status_pembayaran != 'lunas')
+                                                @if ($pesanan->status_pesanan === 'perlu konfirmasi')
+                                                    <button class="btn btn-raised btn-warning" data-toggle="modal"
+                                                        data-target="#confirmOrder">Konfirmasi
+                                                        Pembayaran</button>
+                                                @else
+                                                    Belum Konfirmasi
+                                                @endif
                                             @else
                                                 {{ $pesanan->status_pembayaran }}
                                             @endif
@@ -74,6 +85,35 @@
                                 @endforeach
                             </tbody>
                         </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="confirmOrder" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Bukti Transfer</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <img src="{{ asset($dirbukti . '/bukti_transfer.jpg') }}" alt="Image" class="img-fluid">
+                        <form action="{{ route('adminPesananLunas') }}" method="POST">
+                            @csrf
+                            <input type="hidden" name="id" value="{{ $pesanan->id }}">
+                            <div class="col mt-2">
+                                <label>Pesan</label>
+                                <textarea id="isiPesan" type="text" class="form-control" placeholder="Masukan Pesan" rows="3">{{ $pesanan->pesan }}</textarea>
+                            </div>
+
+                            <div class="modal-footer">
+
+                                <button type="submit" class="btn btn-success">Lunas</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>

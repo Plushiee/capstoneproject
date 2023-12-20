@@ -439,23 +439,21 @@
                             },
                             dataType: 'json',
                             success: function(response) {
-                                if (response.success) {
 
-                                    Swal.fire({
-                                        icon: 'success',
-                                        toast: true,
-                                        title: 'Berhasil',
-                                        text: response.message,
-                                        position: 'top-end',
-                                        showConfirmButton: false,
-                                        timer: 3000,
-                                    }).then((result) => {
-                                        location.reload();
-                                    });
 
-                                } else {
-                                    alert(response.message);
-                                }
+                                Swal.fire({
+                                    icon: 'success',
+                                    toast: true,
+                                    title: 'Berhasil',
+                                    text: response.message,
+                                    position: 'top-end',
+                                    showConfirmButton: false,
+                                    timer: 3000,
+                                }).then((result) => {
+                                    location.reload();
+                                });
+
+
                             },
                             error: function(xhr, status, error) {
                                 console.error(xhr.responseText);

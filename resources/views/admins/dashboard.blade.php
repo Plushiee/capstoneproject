@@ -35,6 +35,21 @@
             <div class="col-xs-12 col-sm-4">
                 <div class="box p-a">
                     <div class="pull-left m-r">
+                        <span class="w-48 rounded  warn">
+                            <i class="material-icons">&#xe8b5;</i>
+                        </span>
+                    </div>
+                    <div class="clear">
+                        <h4 class="m-0 text-lg _300"><a href=""> {{ $banyakKonfirmasi }}
+                                <span class="text-sm">Pesanan</span>
+                            </a></h4>
+                        <small class="text-muted">Menunggu Konfirmasi</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-4">
+                <div class="box p-a">
+                    <div class="pull-left m-r">
                         <span class="w-48 rounded  success">
                             <i class="material-icons">&#xe877;</i>
                         </span>
@@ -142,39 +157,39 @@
             });
 
             var myLineChart = new Chart(ctxLineChart2, {
-                    type: 'line',
-                    data: {
-                        labels: labelsLineChart2,
-                        datasets: [{
-                            label: 'Jumlah Akun Dibuat ',
-                            data: dataLineChart2,
-                            borderColor: 'rgb(75, 192, 192)',
-                            borderWidth: 2,
-                            fill: false,
-                        }],
-                    },
-                    options: {
-                        animations: {
-                            tension: {
-                                duration: 1000,
-                                easing: 'linear',
-                                from: 1,
-                                to: 0,
-                                loop: true
-                            }
-                        },
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        scales: {
-                            y: {
-                                beginAtZero: false,
-                                ticks: {
-                                    stepSize: 1,
-                                    precision: 0
-                                }
-                            }
+                type: 'line',
+                data: {
+                    labels: labelsLineChart2,
+                    datasets: [{
+                        label: 'Jumlah Akun Dibuat ',
+                        data: dataLineChart2,
+                        borderColor: 'rgb(75, 192, 192)',
+                        borderWidth: 2,
+                        fill: false,
+                    }],
+                },
+                options: {
+                    animations: {
+                        tension: {
+                            duration: 1000,
+                            easing: 'linear',
+                            from: 1,
+                            to: 0,
+                            loop: true
                         }
                     },
-                });
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: false,
+                            ticks: {
+                                stepSize: 1,
+                                precision: 0
+                            }
+                        }
+                    }
+                },
+            });
         </script>
     @endsection

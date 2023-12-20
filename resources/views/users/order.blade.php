@@ -8,8 +8,8 @@
     <style>
         @media print {
             /* @page {
-                                                                                                                size: A4 landscape;
-                                                                                                            } */
+                                                                                                                                                                                                                                                                                                                            size: A4 landscape;
+                                                                                                                                                                                                                                                                                                                        } */
 
             #aside,
             .p-a.white.lt.box-shadow {
@@ -149,9 +149,14 @@
                                             class="material-icons">&#xe8ad;</i></a>
 
                                     @if ($pesanan->status_pembayaran != 'lunas')
-                                        <button class="btn btn-raised btn-warning" data-toggle="modal"
-                                            data-target="#confirmOrder">Konfirmasi
-                                            Pembayaran</button>
+                                        @if ($pesanan->status_pesanan !== 'perlu konfirmasi')
+                                            <button class="btn btn-raised btn-warning" data-toggle="modal"
+                                                data-target="#confirmOrder">Konfirmasi
+                                                Pembayaran</button>
+                                        @else
+                                            <button class="btn btn-raised btn-primary disable"> Sedang Ditinjau
+                                            </button>
+                                        @endif
                                     @endif
                                 </div>
                             </div>
@@ -166,32 +171,25 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Tambah Data Tamu</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Konfirmasi Orderan</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    {{-- <div class="col mt-2">
-                        <label>Nama Tamu Undangan</label>
-                        <input id="id_pesanan" type="hidden" class="form-control" value="{{ $idpesanan->first() }}">
-                        <input id="nama_tamu" type="text" class="form-control" placeholder="Contoh : Agus Sukamto"
-                            style='text-transform:capitalize' required>
-                    </div>
-                    <div class="col mt-2">
-                        <label>Alamat Tamu Undangan</label>
-                        <input id="alamat_tamu" type="text" class="form-control" placeholder="Contoh : Medan Merdeka"
-                            style='text-transform:capitalize' required>
-                    </div>
 
                     <div class="col mt-2">
-                        <label>No Whatsapp</label>
-                        <input id="no_wa" type="text" placeholder="Contoh : 628xxxxx" class="form-control" required>
-                    </div> --}}
+                        <label>Pesan</label>
+                        <textarea id="isiPesan" type="text" class="form-control" placeholder="Masukan Pesan" rows="3"></textarea>
+                    </div>
+                    <div class="col mt-2">
+                        <label for="fileBukti">Upload Bukti</label>
+                        <input type="file" class="form-control-file" id="fileBukti" name="fileBukti">
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button class="btn btn-primary" id="simpanTamu">Simpan</button>
+                    <button class="btn btn-primary" id="simpanBukti">Simpan</button>
                 </div>
             </div>
         </div>
@@ -202,5 +200,53 @@
 
 @endsection
 @section('addJS')
-    <script></script>
+    <script>
+        $(document).ready(function() {
+
+
+            $('#simpanBukti').on('click', function() {
+                var pesan = $('#isiPesan').val();
+                var fileInput = $('#fileBukti')[0].files[0];
+
+                var formData = new FormData();
+                formData.append('pesan', pesan);
+                formData.append('fileBukti', fileInput);
+                formData.append('idPesanan', {{ $pesanan->id }})
+                console.log(formData);
+                $.ajax({
+                    type: 'POST',
+                    url: "{{ route('uploadBukti') }}",
+                    contentType: false,
+                    processData: false,
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    data: formData,
+                    success: function(response) {
+                        if (response.success) {
+
+                            Swal.fire({
+                                icon: 'success',
+                                toast: true,
+                                title: 'Berhasil',
+                                text: response.message,
+                                position: 'top-end',
+                                showConfirmButton: false,
+                                timer: 3000,
+                            }).then((result) => {
+                                location.reload();
+                            });
+
+                        } else {
+                            alert(response.message);
+                        }
+                    },
+                    error: function(error) {
+                        console.log(error);
+
+                    }
+                });
+            });
+        });
+    </script>
 @endsection

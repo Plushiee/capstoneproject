@@ -25,7 +25,7 @@ class CreateTblPesanans extends Migration
             $table->integer('biaya')->nullable();
             $table->string('status_pembayaran')->default('belum lunas');
             $table->string('status_pesanan')->nullable();
-            $table->string('file_musik')->nullable();
+            $table->string('pesan')->nullable();
             $table->timestamps();
         });
     }

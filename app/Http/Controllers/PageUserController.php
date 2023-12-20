@@ -78,9 +78,41 @@ class PageUserController extends Controller
         $pesanan = TblPesanansModel::join('tbl_users', 'tbl_pesanans.id_user', '=', 'tbl_users.id')
             ->join('tbl_produks', 'tbl_pesanans.id_produk', '=', 'tbl_produks.id')
             ->where('tbl_pesanans.id_user', Auth::user()->id)
-            ->select('tbl_pesanans.*', 'tbl_users.*', 'tbl_produks.*', 'tbl_pesanans.created_at as pesanan_created_at')
+            ->select('tbl_pesanans.*', 'tbl_produks.*', 'tbl_pesanans.created_at as pesanan_created_at', 'tbl_pesanans.id as id', 'nama', 'email', 'no_telp')
             ->first();
         return view('users.order', ['pesanan' => $pesanan]);
+    }
+    public function uploadBukti(Request $request)
+    {
+        $mempelai = TblMempelaisModel::where('id_pesanan', TblPesanansModel::where('id_user', Auth::user()->id)->value('id'))->first();
+        $formattanggal = Carbon::parse($mempelai->created_at)->format('YmdHis');
+
+
+        $pesan = $request->input('pesan');
+        $id = $request->input('idPesanan');
+
+        $direktori = "dir_{$mempelai->id}{$mempelai->id_pesanan}_{$formattanggal}";
+        $basePath = public_path('assets/file-upload/image/');
+        $path = $basePath . $direktori;
+        // return ($path);
+        if (!file_exists($path)) {
+
+            mkdir($path, 0777, true);
+        }
+        if ($request->hasFile('fileBukti')) {
+            $fileBukti = $request->file('fileBukti');
+            $customFileName = 'bukti_transfer.' . $fileBukti->getClientOriginalExtension();
+
+            $fileBukti->move($path, $customFileName);
+
+
+            $pesanan = TblPesanansModel::find($id);
+            $pesanan->status_pesanan = 'perlu konfirmasi';
+            $pesanan->pesan = $pesan;
+            $pesanan->save();
+
+            return response()->json(['success' => true, 'message' => 'Bukti Transfer Berhasil Diupload',]);
+        }
     }
 
 
@@ -491,6 +523,8 @@ class PageUserController extends Controller
         $banyakPesanan = TblPesanansModel::whereMonth('created_at', $now->month)
             ->whereYear('created_at', $now->year)
             ->count();
+        $banyakKonfirmasi = TblPesanansModel::where('status_pesanan', 'perlu konfirmasi')
+            ->count();
         $banyakPelanggan = TblUsersModel::whereYear('created_at', $now->year)
             ->count();
         $banyakPengunjung = TblPengunjungModel::join('tbl_pesanans', 'tbl_pesanans.id', '=', 'tbl_pengunjungs.id_pesanan')
@@ -498,8 +532,7 @@ class PageUserController extends Controller
                 DB::raw('sum(jumlah_kunjungan) as total_kunjungan'),
             )
             ->whereYear('tbl_pengunjungs.created_at', $now->year)
-            ->get();
-        ;
+            ->get();;
         $banyakPengunjungPerHari = TblPengunjungModel::join('tbl_pesanans', 'tbl_pesanans.id', '=', 'tbl_pengunjungs.id_pesanan')
             ->select(
                 'id_pesanan',
@@ -525,11 +558,18 @@ class PageUserController extends Controller
             'banyakPengunjung' => $banyakPengunjung,
             'banyakPengunjungPerHari' => $banyakPengunjungPerHari,
             'banyakAkunBaruPerHari' => $banyakAkunBaruPerHari,
+            'banyakKonfirmasi' => $banyakKonfirmasi,
         ]);
     }
 
     public function adminPesanan()
     {
+
+        $mempelai = TblMempelaisModel::where('id_pesanan', TblPesanansModel::where('id_user', Auth::user()->id)->value('id'))->first();
+        $formattanggal = Carbon::parse($mempelai->created_at)->format('YmdHis');
+
+        $dirbukti = "assets/file-upload/image/dir_{$mempelai->id}{$mempelai->id_pesanan}_{$formattanggal}/";
+
         $pesanan = TblPesanansModel::leftJoin('tbl_users', 'tbl_users.id', '=', 'tbl_pesanans.id_user')
             ->leftJoin('tbl_produks', 'tbl_produks.id', '=', 'tbl_pesanans.id_produk')
             ->select('tbl_pesanans.*', 'tbl_produks.nama_produk', 'tbl_users.nama')
@@ -537,6 +577,7 @@ class PageUserController extends Controller
 
         return view('admins.pesanan', [
             'pesanans' => $pesanan,
+            'dirbukti' => $dirbukti
         ]);
     }
 
@@ -638,7 +679,6 @@ class PageUserController extends Controller
             $akunAdminBaru->password = bcrypt($request->passwordRegister);
             $akunAdminBaru->save();
             return redirect()->route('adminAkunAdmin')->with('successTambahAdmin', 'Data Admin Berhasil Di Tambah');
-
         } else {
 
             $akunAdminUpdate = TblAdminsModel::find($id);
