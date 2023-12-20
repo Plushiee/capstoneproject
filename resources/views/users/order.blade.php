@@ -8,8 +8,8 @@
     <style>
         @media print {
             /* @page {
-                                                    size: A4 landscape;
-                                                } */
+                                                                                                                size: A4 landscape;
+                                                                                                            } */
 
             #aside,
             .p-a.white.lt.box-shadow {
@@ -119,9 +119,10 @@
                                                         <td></td>
 
                                                         <td></td>
-
-                                                        <td class="text-right">Voucher Admin: -@currency(20000)</td>
-
+                                                        @if ($pesanan->biaya_dasar !== $pesanan->biaya)
+                                                            <td class="text-right">Voucher Admin:
+                                                                @currency($pesanan->biaya_dasar - $pesanan->biaya)</td>
+                                                        @endif
                                                     </tr>
                                                 @endif
                                                 <tr>
@@ -148,7 +149,8 @@
                                             class="material-icons">&#xe8ad;</i></a>
 
                                     @if ($pesanan->status_pembayaran != 'lunas')
-                                        <button class="btn btn-raised btn-warning">Konfirmasi
+                                        <button class="btn btn-raised btn-warning" data-toggle="modal"
+                                            data-target="#confirmOrder">Konfirmasi
                                             Pembayaran</button>
                                     @endif
                                 </div>
@@ -159,7 +161,41 @@
             </div>
         </div>
     </div>
-    
+    <div class="modal fade" id="confirmOrder" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Tambah Data Tamu</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    {{-- <div class="col mt-2">
+                        <label>Nama Tamu Undangan</label>
+                        <input id="id_pesanan" type="hidden" class="form-control" value="{{ $idpesanan->first() }}">
+                        <input id="nama_tamu" type="text" class="form-control" placeholder="Contoh : Agus Sukamto"
+                            style='text-transform:capitalize' required>
+                    </div>
+                    <div class="col mt-2">
+                        <label>Alamat Tamu Undangan</label>
+                        <input id="alamat_tamu" type="text" class="form-control" placeholder="Contoh : Medan Merdeka"
+                            style='text-transform:capitalize' required>
+                    </div>
+
+                    <div class="col mt-2">
+                        <label>No Whatsapp</label>
+                        <input id="no_wa" type="text" placeholder="Contoh : 628xxxxx" class="form-control" required>
+                    </div> --}}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button class="btn btn-primary" id="simpanTamu">Simpan</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
 

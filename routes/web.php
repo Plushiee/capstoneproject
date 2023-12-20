@@ -99,7 +99,7 @@ Route::middleware(['auth:admin'])->group(function () {
     Route::get('admin/dashboard', 'PageUserController@adminDashboard')->name('adminDashboard');
     Route::get('admin/pesanan', 'PageUserController@adminPesanan')->name('adminPesanan');
     Route::post('admin/pesanan/lunas', 'PageUserController@lunas')->name('adminPesananLunas');
-    
+
     Route::get('admin/akun/user', 'PageUserController@adminAkunUser')->name('adminAkunUser');
     Route::post('admin/akun/user/edit', 'PageUserController@adminAkunUserEdit')->name('adminAkunUserEdit');
     Route::post('admin/akun/user/simpan', 'PageUserController@adminAkunUserSimpan')->name('adminAkunUserSimpan');
@@ -110,6 +110,7 @@ Route::middleware(['auth:admin'])->group(function () {
 //testing undngan
 // Route::get('/{domain}', 'UndanganController@index');
 Route::post('/check-domain', 'LandingPageController@checkDomain')->name('checkDomain');
+Route::post('/referal', 'LandingPageController@checkReferal')->name('checkReferal');
 Route::get('/{domain}/{tamu?}', 'UndanganController@tamu')->name('domainUndangan');
 Route::patch('/kehadiran', 'UndanganController@updateKehadiran')->name('updateKehadiran');
 

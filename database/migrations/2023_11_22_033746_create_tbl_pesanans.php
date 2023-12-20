@@ -15,7 +15,7 @@ class CreateTblPesanans extends Migration
     {
         Schema::create('tbl_pesanans', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('id_admin')->nullable();
+            $table->unsignedBigInteger('id_admin')->default('1');
             $table->foreign('id_admin')->references('id')->on('tbl_admins');
             $table->unsignedBigInteger('id_user');
             $table->foreign('id_user')->references('id')->on('tbl_users');

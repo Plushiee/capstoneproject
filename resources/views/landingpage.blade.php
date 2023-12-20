@@ -479,13 +479,7 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="#step-3">
                                     <span class="num">3</span>
-                                    Shipping Details
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link " href="#step-4">
-                                    <span class="num">4</span>
-                                    Confirm Order
+                                    Konfirmasi Pesanan
                                 </a>
                             </li>
                         </ul>
@@ -530,6 +524,14 @@
                                                 OK
                                             </div>
 
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <label for="reff" class="form-label">Refferal</label>
+                                        <input type="text" class="form-control" id="reff" value=""
+                                            placeholder="Optional" data-id-admin>
+                                        <div class="d-none" id="statusRef">
+                                            Referal Tersedia, Anda Mendapatkan Potongan Harga sebesar Rp.20.000
                                         </div>
                                     </div>
                                 </form>
@@ -628,72 +630,24 @@
                                 </form>
                             </div>
                             <div id="step-3" class="tab-pane" role="tabpanel" aria-labelledby="step-3">
-                                Step content
-                            </div>
-                            <div id="step-4" class="tab-pane" role="tabpanel" aria-labelledby="step-4">
-                                {{--
-                                <form id="form-4" class="row row-cols-1 ms-5 me-5 needs-validation" novalidate>
-                                    <div class="col">
-                                        <div class="mb-3 text-muted">Please confirm your order details</div>
+                                <h4 class="mb-3-">Detail Pesanan</h4>
+                                <hr class="my-2">
 
-                                        <div id="order-details"></div>
 
-                                        <h4 class="mt-3">Payment</h4>
-                                        <hr class="my-2">
+                                <table class="g-3 align-items-center pb-3" id="confirmDetailProd">
 
-                                        <div class="row gy-3">
-                                            <div class="col-md-3">
-                                                <label for="cc-name" class="form-label">Name on card</label>
-                                                <input type="text" class="form-control" id="cc-name"
-                                                    value="My Name" placeholder="" required="">
-                                                <small class="text-muted">Full name as displayed on card</small>
-                                                <div class="invalid-feedback">
-                                                    Name on card is required
-                                                </div>
-                                            </div>
 
-                                            <div class="col-md-3">
-                                                <label for="cc-number" class="form-label">Credit card number</label>
-                                                <input type="text" class="form-control" id="cc-number"
-                                                    value="54545454545454" placeholder="" required="">
-                                                <div class="invalid-feedback">
-                                                    Credit card number is required
-                                                </div>
-                                            </div>
+                                </table>
 
-                                            <div class="col-md-3">
-                                                <label for="cc-expiration" class="form-label">Expiration</label>
-                                                <input type="text" class="form-control" id="cc-expiration"
-                                                    value="1/28" placeholder="" required="">
-                                                <div class="invalid-feedback">
-                                                    Expiration date required
-                                                </div>
-                                            </div>
 
-                                            <div class="col-md-3">
-                                                <label for="cc-cvv" class="form-label">CVV</label>
-                                                <input type="text" class="form-control" id="cc-cvv"
-                                                    value="123" placeholder="" required="">
-                                                <div class="invalid-feedback">
-                                                    Security code required
-                                                </div>
-                                            </div>
 
-                                            <div class="col">
-                                                <input type="checkbox" class="form-check-input" id="save-info"
-                                                    required>
-                                                <label class="form-check-label" for="save-info">I agree to the terms
-                                                    and conditions</label>
-                                            </div>
+                                <h4 class="mt-3">Detail Mempelai</h4>
+                                <hr class="my-2">
 
-                                            <small class="text-muted">This is an example page, do not enter any real
-                                                data, even tho we don't submit this information!</small>
+                                <table class="g-3 align-items-center pb-3" id="confirmDetailMempelai">
 
-                                        </div>
-                                    </div>
-                                </form> --}}
 
-                                step4
+                                </table>
 
                             </div>
                         </div>
@@ -734,7 +688,16 @@
     <script>
         $(document).ready(function() {
 
-            // Instansiasi awal untuk mencegah user submit saat load pertama kali
+
+            var fragment = window.location.hash;
+            console.log(fragment);
+
+            if (fragment) {
+
+                window.location.href = '';
+            }
+
+
             $('#domain').addClass('is-invalid').removeClass('is-valid');
             $('#domaincek').prop('checked', true);
             $('#domainAvailabilityStatus').text('Domain still empty!');
@@ -792,7 +755,109 @@
                     });
                 }
             });
+            $('#reff').on('input', function() {
+                var referal = $(this).val().split('_');
+                // console.log(referal);
+                // console.log(domainInput);
+
+
+
+
+                $.ajax({
+                    type: 'POST',
+                    url: "{{ route('checkReferal') }}", // Replace with your Laravel route
+                    data: {
+                        id: referal[0],
+                        nama: referal[1]
+
+                    },
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function(response) {
+                        if (response.message == true) {
+                            $('#reff').addClass('active');
+                            $('#reff').data('idAdmin', response.id);
+                            $('#statusRef').removeClass('d-none');
+                            console.log($('#reff').data('idAdmin'))
+                        } else {
+                            // $('#reff').data('idAdmin', '1');
+                            $('#reff').removeClass('active');
+                            $('#statusRef').addClass('d-none');
+                            console.log($('#reff').data('idAdmin'))
+
+                        };
+                    }
+                });
+
+            });
         });
+
+        function showConfirmOrder() {
+            var domain = $('#domain').val();
+            let idAdmin = $('#reff').data('idAdmin');
+            var idUser = $('#idUser').val();
+            var namaProduk = $('#produkNama').val();
+            var hargaProduk = $('#produkHarga').val();
+            var namaPria = $('#namaPria').val();
+            var namaWanita = $('#namaWanita').val();
+            var namaLengkapPria = $('#namaLengkapPria').val();
+            var namaLengkapWanita = $('#namaLengkapWanita').val();
+            var namaAyahWanita = $('#namaAyahWanita').val();
+            var namaIbuWanita = $('#namaIbuWanita').val();
+            var namaAyahPria = $('#namaAyahPria').val();
+            var namaIbuPria = $('#namaIbuPria').val();
+            const voucher = idAdmin === '' ? 0 : 20000;
+            const total = hargaProduk - voucher;
+
+            const formatCurrency = (amount) => {
+                return new Intl.NumberFormat('id-ID', {
+                    style: 'currency',
+                    currency: 'IDR'
+                }).format(amount);
+            };
+            let confirmDetailMempelai = ` <tr>
+                                        <th></th>
+                                        <th>Nama</th>
+                                        <th>Nama Lengkap</th>
+                                        <th>Nama Ibu</th>
+                                        <th>Nama Ayah</th>
+                                    </tr>
+                                    <tr id='confirmDetailMempelai'></tr>
+                                    <tr>
+                                        <th>Pria</th>
+                                        <td>${namaPria}</td>
+                                        <td>${namaLengkapPria}</td>
+                                        <td>${namaIbuPria}</td>
+                                        <td>${namaAyahPria}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Wanita</th>
+                                        <td>${namaWanita}</td>
+                                        <td>${namaLengkapWanita}</td>
+                                        <td>${namaIbuWanita}</td>
+                                        <td>${namaAyahWanita}</td>
+                                    </tr>`;
+            let confirmDetailProd = `
+                                    <tr>
+                                        <th>Nama Produk</th>
+                                        <th>Domain</th>
+                                        <th>Harga</th>
+                                        <th>Voucher</th>
+                                        <th>Total</th>
+                                    </tr>
+                                    <tr>
+                                        <td>${namaProduk}</td>
+                                        <td>${domain}</td>
+                                        <td>${formatCurrency(hargaProduk)}</td>
+                                        <td>${formatCurrency(voucher)}</td>
+                                        <td id='totalBiaya' data-total-biaya='${total}'>${formatCurrency(total)}</td>
+                                    </tr>`;
+            $('#confirmDetailProd').html(confirmDetailProd);
+            $('#confirmDetailMempelai').html(confirmDetailMempelai);
+
+
+        }
 
         function onCancel() {
             // Reset wizard
@@ -806,6 +871,7 @@
         }
 
         function onConfirm() {
+
             $idProduk = $('#idProduk').val();
             console.log(idProduk);
             $.ajaxSetup({
@@ -820,9 +886,9 @@
 
                     idProduk: $('#idProduk').val(),
                     domain: $('#domain').val(),
-                    idAdmin: 1,
+                    idAdmin: $('#reff').data('idAdmin'),
                     idUser: $('#idUser').val(),
-                    // biaya: $('#totalBiaya').val(),
+                    biaya: $('#totalBiaya').data('totalBiaya'),
                     namaPria: $('#namaPria').val(),
                     namaWanita: $('#namaWanita').val(),
                     namaLengkapPria: $('#namaLengkapPria').val(),
@@ -859,6 +925,7 @@
         // Step show event
         $(function() {
             $("#smartwizard").on("showStep", function(e, anchorObject, stepIndex, stepDirection, stepPosition) {
+                showConfirmOrder();
                 $("#prev-btn").removeClass('disabled').prop('disabled', false);
                 $("#next-btn").removeClass('disabled').prop('disabled', false);
                 if (stepPosition === 'first') {
@@ -868,6 +935,7 @@
                 } else {
                     $("#prev-btn").removeClass('disabled').prop('disabled', false);
                     $("#next-btn").removeClass('disabled').prop('disabled', false);
+                    console.log($('#save-info').is(':checked'));
                 }
 
                 // Get step info from Smart Wizard
@@ -877,6 +945,8 @@
 
                 if (stepPosition == 'last') {
                     // showConfirm();
+                    // showConfirmOrder();
+
                     $("#btnFinish").prop('disabled', false);
                 } else {
                     $("#btnFinish").prop('disabled', true);
@@ -896,32 +966,35 @@
                 stepDirection) {
                 // Validate only on forward movement
                 if (stepDirection == 'forward') {
-                    var form = document.getElementById('form-' + (currentStepIdx + 1));
+                    let form = document.getElementById('form-' + (currentStepIdx + 1));
                     var domcek = $('#domaincek').prop('checked');
                     if (form) {
+                        console.log($('#reff').data('idAdmin'))
                         if (!form.checkValidity() || domcek) {
                             console.log(domcek, !form.checkValidity());
-                            form.classList.add('was-validated');
+                            if (currentStepIdx > 0) {
+                                form.classList.add('was-validated');
+                            }
+
                             $('#smartwizard').smartWizard("setState", [currentStepIdx], 'error');
                             $("#smartwizard").smartWizard('fixHeight');
+                            e.preventDefault();
                             return false;
                         }
                         $('#smartwizard').smartWizard("unsetState", [currentStepIdx], 'error');
 
                     }
                 }
-                console.log(currentStepIdx, nextStepIdx, domcek)
-                // console.log(domcek, !form.checkValidity());
             });
             // SmartWizard initialize
             $('#smartwizard').smartWizard({
                 selected: 0,
-                theme: 'dots', // basic, arrows, square, round, dots
+                theme: 'dots',
                 justified: true,
                 toolbar: {
-                    showNextButton: true, // show/hide a Next button
-                    showPreviousButton: true, // show/hide a Previous button
-                    position: 'bottom', // none/ top/ both bottom
+                    showNextButton: true,
+                    showPreviousButton: true,
+                    position: 'bottom',
                     extraHtml: `<button class="btn btn-success" id="btnFinish" disabled onclick="onConfirm()">Complete Order</button>
                               <button class="btn btn-danger" id="btnCancel" onclick="onCancel()">Cancel</button>`
                 },
@@ -929,12 +1002,12 @@
                     animation: 'fade'
                 },
                 anchor: {
-                    enableNavigation: true, // Enable/Disable anchor navigation
-                    enableNavigationAlways: false, // Activates all anchors clickable always
-                    enableDoneState: true, // Add done state on visited steps
-                    markPreviousStepsAsDone: true, // When a step selected by url hash, all previous steps are marked done
-                    unDoneOnBackNavigation: true, // While navigate back, done state will be cleared
-                    enableDoneStateNavigation: true // Enable/Disable the done state navigation
+                    enableNavigation: true,
+                    enableNavigationAlways: false,
+                    enableDoneState: true,
+                    markPreviousStepsAsDone: true,
+                    unDoneOnBackNavigation: true,
+                    enableDoneStateNavigation: true
                 },
             });
 
@@ -957,6 +1030,8 @@
             $('#showProdukNama').text(produkNama);
             $('#showProdukHarga').text(produkHarga);
             $('#idUser').val(userId);
+
+
         });
     </script>
 </body>

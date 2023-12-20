@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\TblAdminsModel;
 use App\TblMempelaisModel;
 use App\TblPesanansModel;
 use App\TblProduksModel;
@@ -33,13 +34,26 @@ class LandingPageController extends Controller
             return response()->json(['error' => 'Internal Server Error'], 500);
         }
     }
+
+    public function checkReferal(Request $request)
+    {
+        try {
+            $idAdmin = $request->input('id');
+            $namaAdmin = $request->input('nama');
+            $adminExists = TblAdminsModel::where('id', $idAdmin)->where('nama', $namaAdmin)->exists();
+            return response()->json(['message' => $adminExists, 'id' => $idAdmin]);
+        } catch (\Exception $e) {
+            \Log::error($e->getMessage());
+            return response()->json(['error' => 'Internal Server Error'], 500);
+        }
+    }
     public function newOrder(Request $request)
     {
         $idProduk = $request->input('idProduk');
         $domain = $request->input('domain');
         $idAdmin = $request->input('idAdmin');
         $idUser = $request->input('idUser');
-
+        $biaya = $request->input('biaya');
         $namaPria = $request->input('namaPria');
         $namaWanita = $request->input('namaWanita');
         $namaLengkapPria = $request->input('namaLengkapPria');
@@ -51,10 +65,14 @@ class LandingPageController extends Controller
 
 
         $pesanan = new TblPesanansModel();
-        $pesanan->id_admin = $idAdmin;
+        if ($idAdmin !== null) {
+            $pesanan->id_admin = $idAdmin;
+        }
+
         $pesanan->id_produk = $idProduk;
         $pesanan->id_user = $idUser;
         $pesanan->domain = $domain;
+        $pesanan->biaya = $biaya;
 
         $pesanan->save();
 
@@ -69,7 +87,7 @@ class LandingPageController extends Controller
         $mempelai->nama_ibu_wanita = $namaIbuWanita;
         $mempelai->nama_ayah_pria = $namaAyahPria;
         $mempelai->nama_ibu_pria = $namaIbuPria;
-        // // ... sisipkan nilai-nilai lainnya ...
+
         $mempelai->save();
         return response()->json(['message' => "Pesanan Sukses Dibuat"], 200);
     }
