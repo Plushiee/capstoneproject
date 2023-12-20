@@ -101,9 +101,9 @@ class PageUserController extends Controller
         }
         if ($request->hasFile('fileBukti')) {
             $fileBukti = $request->file('fileBukti');
-            $customFileName = 'bukti_transfer.' . $fileBukti->getClientOriginalExtension();
 
-            $fileBukti->move($path, $customFileName);
+
+            $fileBukti->move($path, 'bukti_transfer.jpg');
 
 
             $pesanan = TblPesanansModel::find($id);
