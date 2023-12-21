@@ -100,13 +100,14 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <img src="{{ asset($dirbukti . '/bukti_transfer.jpg') }}" alt="Image" class="img-fluid">
+                        <img src="{{ asset($dirbukti . $mempelai->where('id_pesanan', $pesanan->id)->first()->id . $pesanan->id . '_' . \Carbon\Carbon::parse($mempelai->where('id_pesanan', $pesanan->id)->first()->created_at)->format('YmdHis') . '/bukti_transfer.jpg') }}"
+                            alt="Image" class="img-fluid">
                         <form action="{{ route('adminPesananLunas') }}" method="POST">
                             @csrf
                             <input type="hidden" name="id" value="{{ $pesanan->id }}">
                             <div class="col mt-2">
                                 <label>Pesan</label>
-                                <textarea id="isiPesan" type="text" class="form-control" placeholder="Masukan Pesan" rows="3">{{ $pesanan->pesan }}</textarea>
+                                <textarea id="isiPesan" type="text" class="form-control" placeholder="Masukan Pesan" rows="3" disabled>{{ $pesanan->pesan }}</textarea>
                             </div>
 
                             <div class="modal-footer">

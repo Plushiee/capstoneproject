@@ -577,19 +577,22 @@ class PageUserController extends Controller
     public function adminPesanan()
     {
 
-        $mempelai = TblMempelaisModel::where('id_pesanan', TblPesanansModel::where('id_user', Auth::user()->id)->value('id'))->first();
-        $formattanggal = Carbon::parse($mempelai->created_at)->format('YmdHis');
 
-        $dirbukti = "assets/file-upload/image/dir_{$mempelai->id}{$mempelai->id_pesanan}_{$formattanggal}/";
+
 
         $pesanan = TblPesanansModel::leftJoin('tbl_users', 'tbl_users.id', '=', 'tbl_pesanans.id_user')
             ->leftJoin('tbl_produks', 'tbl_produks.id', '=', 'tbl_pesanans.id_produk')
             ->select('tbl_pesanans.*', 'tbl_produks.nama_produk', 'tbl_users.nama')
             ->get();
 
+
+        $mempelai = TblMempelaisModel::all();
+        // $formattanggal = Carbon::parse($mempelai->created_at)->format('YmdHis');
+        $dirbukti = "assets/file-upload/image/dir_";
         return view('admins.pesanan', [
             'pesanans' => $pesanan,
-            'dirbukti' => $dirbukti
+            'dirbukti' => $dirbukti,
+            'mempelai' => $mempelai
         ]);
     }
 
