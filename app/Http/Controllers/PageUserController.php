@@ -58,7 +58,7 @@ class PageUserController extends Controller
             ->get();
 
         $tamunya = TblBukuTamusModel::where('id_pesanan', TblPesanansModel::where('id_user', Auth::user()->id)->value('id'))->get();
-        if (!$pesanan) {
+        if (empty($pesanan)) {
             return back()->with('alert', 'Harap Melakukan Order Terlebih Dahulu');
         } else {
             return view('users.dashboard', [
@@ -80,7 +80,13 @@ class PageUserController extends Controller
             ->where('tbl_pesanans.id_user', Auth::user()->id)
             ->select('tbl_pesanans.*', 'tbl_produks.*', 'tbl_pesanans.created_at as pesanan_created_at', 'tbl_pesanans.id as id', 'nama', 'email', 'no_telp')
             ->first();
-        return view('users.order', ['pesanan' => $pesanan]);
+
+        if (empty($pesanan)) {
+            return redirect()->route('landingPage')->with('alert', 'Harap Melakukan Order Terlebih Dahulu');
+        } else {
+
+            return view('users.order', ['pesanan' => $pesanan]);
+        }
     }
     public function uploadBukti(Request $request)
     {
@@ -119,31 +125,36 @@ class PageUserController extends Controller
     public function userMempelai()
     {
         $mempelai = TblMempelaisModel::where('id_pesanan', TblPesanansModel::where('id_user', Auth::user()->id)->value('id'))->first();
-        $formattanggal = Carbon::parse($mempelai->created_at)->format('YmdHis');
+        if ($mempelai) {
+            $formattanggal = Carbon::parse($mempelai->created_at)->format('YmdHis');
 
-        $basePath = public_path('assets/file-upload/image/dir_' . $mempelai->id . $mempelai->id_pesanan . '_' . $formattanggal);
+            $basePath = public_path('assets/file-upload/image/dir_' . $mempelai->id . $mempelai->id_pesanan . '_' . $formattanggal);
 
-        $dir = [
-            'fotopria' => $basePath . '/mempelaipria.jpg',
-            'fotowanita' => $basePath . '/mempelaiwanita.jpg',
-            'fotosampul' => $basePath . '/sampul.jpg',
-        ];
-        if (!file_exists($dir['fotopria'])) {
-            $dir['fotopria'] = asset('assets/file-upload/image/camera.jpg');
+            $dir = [
+                'fotopria' => $basePath . '/mempelaipria.jpg',
+                'fotowanita' => $basePath . '/mempelaiwanita.jpg',
+                'fotosampul' => $basePath . '/sampul.jpg',
+            ];
+            if (!file_exists($dir['fotopria'])) {
+                $dir['fotopria'] = asset('assets/file-upload/image/camera.jpg');
+            } else {
+                $dir['fotopria'] = asset('assets/file-upload/image/dir_' . $mempelai->id . $mempelai->id_pesanan . '_' . $formattanggal . '/mempelaipria.jpg');
+            }
+            if (!file_exists($dir['fotowanita'])) {
+                $dir['fotowanita'] = asset('assets/file-upload/image/camera.jpg');
+            } else {
+                $dir['fotowanita'] = asset('assets/file-upload/image/dir_' . $mempelai->id . $mempelai->id_pesanan . '_' . $formattanggal . '/mempelaiwanita.jpg');
+            }
+            if (!file_exists($dir['fotosampul'])) {
+                $dir['fotosampul'] = asset('assets/file-upload/image/camera.jpg');
+            } else {
+                $dir['fotosampul'] = asset('assets/file-upload/image/dir_' . $mempelai->id . $mempelai->id_pesanan . '_' . $formattanggal . '/sampul.jpg');
+            }
+
+            return view('users.mempelai', ['mempelai' => $mempelai, 'direktori' => "dir_{$mempelai->id}{$mempelai->id_pesanan}_{$formattanggal}", 'dir' => $dir]);
         } else {
-            $dir['fotopria'] = asset('assets/file-upload/image/dir_' . $mempelai->id . $mempelai->id_pesanan . '_' . $formattanggal . '/mempelaipria.jpg');
+            return redirect()->route('landingPage')->with('alert', 'Harap Melakukan Order Terlebih Dahulu');
         }
-        if (!file_exists($dir['fotowanita'])) {
-            $dir['fotowanita'] = asset('assets/file-upload/image/camera.jpg');
-        } else {
-            $dir['fotowanita'] = asset('assets/file-upload/image/dir_' . $mempelai->id . $mempelai->id_pesanan . '_' . $formattanggal . '/mempelaiwanita.jpg');
-        }
-        if (!file_exists($dir['fotosampul'])) {
-            $dir['fotosampul'] = asset('assets/file-upload/image/camera.jpg');
-        } else {
-            $dir['fotosampul'] = asset('assets/file-upload/image/dir_' . $mempelai->id . $mempelai->id_pesanan . '_' . $formattanggal . '/sampul.jpg');
-        }
-        return view('users.mempelai', ['mempelai' => $mempelai, 'direktori' => "dir_{$mempelai->id}{$mempelai->id_pesanan}_{$formattanggal}", 'dir' => $dir]);
     }
     public function uploadGaleri(Request $request)
     {
@@ -302,6 +313,7 @@ class PageUserController extends Controller
     public function userCerita()
     {
         $cerita = TblCeritasModel::where('id_pesanan', TblPesanansModel::where('id_user', Auth::user()->id)->value('id'))->get();
+
         return view('users.cerita', ['cerita' => $cerita]);
     }
 

@@ -8,8 +8,8 @@
     <style>
         @media print {
             /* @page {
-                                                                                                                                                                                                                                                                                                                            size: A4 landscape;
-                                                                                                                                                                                                                                                                                                                        } */
+                                                                                                                                                                                                                                                                                                                                                    size: A4 landscape;
+                                                                                                                                                                                                                                                                                                                                                } */
 
             #aside,
             .p-a.white.lt.box-shadow {
@@ -154,8 +154,8 @@
                                                 data-target="#confirmOrder">Konfirmasi
                                                 Pembayaran</button>
                                         @else
-                                            <button class="btn btn-raised btn-primary disable"> Sedang Ditinjau
-                                            </button>
+                                            <img src="{{ asset('assets/file-upload/image/confirm_order.gif') }}"
+                                                alt="Sedah Ditinjau" width="15%">
                                         @endif
                                     @endif
                                 </div>

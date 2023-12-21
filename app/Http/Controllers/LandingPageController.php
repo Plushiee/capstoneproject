@@ -17,7 +17,8 @@ class LandingPageController extends Controller
 
 
         $produk = TblProduksModel::all();
-        return view('landingpage', ['produk' => $produk]);
+        $pesanan = TblPesanansModel::all();
+        return view('landingpage', ['produk' => $produk, 'pesanan' => $pesanan]);
     }
     public function checkDomain(Request $request)
     {

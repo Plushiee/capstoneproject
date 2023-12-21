@@ -275,7 +275,7 @@
                         Sesuaikan acara Anda dengan gaya unik dan menarik.
                     </p>
                 </div>
-                {{ $produk }}
+
                 <div class="row justify-content-center">
                     @foreach ($produk as $produks)
                         <div class="col-12 col-lg-4 col-md-6 d-flex align-items-stretch mt-4" data-aos="zoom-in">
@@ -375,12 +375,12 @@
             <div class="container" data-aos="zoom-in">
                 <div class="row d-flex justify-content-center align-items-center content-data">
                     <div class="col-lg-2 col-md-4 col-6 data-item">
-                        <h1 class="jumlah">0</h1>
+                        <h1 class="jumlah">{{ $pesanan->count() }}</h1>
                         <p>Pelanggan</p>
                     </div>
 
                     <div class="col-lg-2 col-md-4 col-6 data-item">
-                        <h1 class="jumlah">0</h1>
+                        <h1 class="jumlah">{{ $pesanan->where('status_pembayaran', 'lunas')->count() }}</h1>
                         <p>Undangan Dibuat</p>
                     </div>
 
