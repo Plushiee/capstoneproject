@@ -7,8 +7,9 @@ use App\TblPesanansModel;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
-class ImportTamuExcel implements ToCollection
+class ImportTamuExcel implements ToCollection,   WithHeadingRow
 {
     /**
      * @param Collection $collection
@@ -20,9 +21,9 @@ class ImportTamuExcel implements ToCollection
         foreach ($collection as $row) {
             TblBukuTamusModel::create([
                 'id_pesanan' => TblPesanansModel::where('id_user', Auth::user()->id)->first()->id,
-                'nama_tamu' => $row[0],
-                'alamat_tamu' => $row[1],
-                'no_wa' => $row[2],
+                'nama_tamu' => $row['nama'],
+                'alamat_tamu' => $row['alamat'],
+                'no_wa' => $row['no_wa'],
             ]);
         }
     }

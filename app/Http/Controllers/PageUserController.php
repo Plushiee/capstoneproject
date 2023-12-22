@@ -576,10 +576,6 @@ class PageUserController extends Controller
 
     public function adminPesanan()
     {
-
-
-
-
         $pesanan = TblPesanansModel::leftJoin('tbl_users', 'tbl_users.id', '=', 'tbl_pesanans.id_user')
             ->leftJoin('tbl_produks', 'tbl_produks.id', '=', 'tbl_pesanans.id_produk')
             ->select('tbl_pesanans.*', 'tbl_produks.nama_produk', 'tbl_users.nama')
@@ -587,7 +583,7 @@ class PageUserController extends Controller
 
 
         $mempelai = TblMempelaisModel::all();
-        // $formattanggal = Carbon::parse($mempelai->created_at)->format('YmdHis');
+
         $dirbukti = "assets/file-upload/image/dir_";
         return view('admins.pesanan', [
             'pesanans' => $pesanan,
