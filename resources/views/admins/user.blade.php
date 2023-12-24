@@ -23,12 +23,12 @@
                     <h5 class="card-title">Filter Waktu</h5>
                     <div class="row">
                         <div class="col-md-6">
-                            <label for="startDate">Tanggal Mulai</label>
+                            <label for="startDate">Tanggal Awal Pembuatan</label>
                             <input type="date" id="startDate" class="form-control" name="startDate">
                         </div>
                         <div class="col-md-6 pt-2 pt-md-0">
-                            <label for="endDate">Tanggal Akhir</label>
-                            <input type="date" id="endDate" class="form-control" name="endDate">
+                            <label for="endDate">Tanggal Akhir Pembuatan</label>
+                            <input type="date" id="endDate" class="form-control" name="endDate" disabled>
                         </div>
                     </div>
                 </div>
@@ -144,6 +144,24 @@
 
                 var table = $('#transaksi');
                 initializeDataTable(table, 'startDate', 'endDate', 'applyFilter', 'resetFilter', 4);
+
+                const startDateInput = document.getElementById("startDate");
+                const endDateInput = document.getElementById("endDate");
+
+                startDateInput.addEventListener("input", function() {
+                    endDateInput.min = this.value;
+                    if (this.value == '') {
+                        endDateInput.value = '';
+                        endDateInput.disabled = true;
+                    } else {
+                        endDateInput.disabled = false;
+                    }
+                    console.log(this.value);
+                });
+
+                endDateInput.addEventListener("input", function() {
+                    startDateInput.max = this.value;
+                });
             });
         </script>
         @if (session('lunas'))

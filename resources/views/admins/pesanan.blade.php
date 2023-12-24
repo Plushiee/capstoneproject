@@ -23,12 +23,20 @@
                     <h5 class="card-title">Filter Waktu</h5>
                     <div class="row">
                         <div class="col-md-6">
-                            <label for="startDate">Tanggal Mulai</label>
+                            <label for="startDate">Tanggal Awal Transaksi</label>
                             <input type="date" id="startDate" class="form-control" name="startDate">
                         </div>
                         <div class="col-md-6 pt-2 pt-md-0">
-                            <label for="endDate">Tanggal Akhir</label>
-                            <input type="date" id="endDate" class="form-control" name="endDate">
+                            <label for="endDate">Tanggal Akhir Transaksi</label>
+                            <input type="date" id="endDate" class="form-control" name="endDate" disabled>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <a id="unduhLaporanLink" href="#" class="btn btn-success mt-3">
+                                <i class="bi bi-file-earmark-arrow-down"></i>
+                                &nbsp;Unduh Laporan
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -47,7 +55,7 @@
                                     <th>Domain Web</th>
                                     <th>Biaya</th>
                                     <th>Tanggal Pesanan</th>
-                                    <th>Status Pembaytaran</th>
+                                    <th>Status Pembayaran</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -60,15 +68,6 @@
                                         <td>{{ $pesanan->biaya }}</td>
                                         <td>{{ $pesanan->created_at }}</td>
                                         <td>
-                                            {{-- @if ($pesanan->status_pembayaran !== 'lunas')
-                                                <form action="{{ route('adminPesananLunas') }}" method="POST">
-                                                    @csrf
-                                                    <input type="hidden" name="id" value="{{ $pesanan->id }}">
-                                                    <button type="submit" class="btn btn-success">Lunas</button>
-                                                </form>
-                                            @else
-                                                {{ $pesanan->status_pembayaran }}
-                                            @endif --}}
                                             @if ($pesanan->status_pembayaran != 'lunas')
                                                 @if ($pesanan->status_pesanan === 'perlu konfirmasi')
                                                     <button class="btn btn-raised btn-warning" data-toggle="modal"
@@ -130,6 +129,39 @@
         <script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
 
+        <!-- Download Laporan -->
+        <script>
+            $(document).ready(function() {
+                function download(startDate, endDate) {
+                    var downloadUrl = '';
+                    if (startDate == '') {
+                        downloadUrl = '/admin/pesanan/laporan/';
+                    } else {
+                        if (endDate == '') {
+                            downloadUrl = `/admin/pesanan/laporan/${startDate}`;
+                        } else {
+                            downloadUrl =  `/admin/pesanan/laporan/${startDate}/${endDate}`;
+                        }
+                    }
+                    window.open(downloadUrl, '_blank');
+                }
+
+                function onUnduhLaporanClick() {
+
+                    var startDate = $('#startDate').val();
+                    var endDate = $('#endDate').val();
+
+                    download(startDate, endDate);
+                }
+
+                $('#unduhLaporanLink').on('click', function(e) {
+                    e.preventDefault();
+                    onUnduhLaporanClick();
+                });
+            });
+        </script>
+
+        <!-- Data Table -->
         <script>
             $(document).ready(function() {
                 function initializeDataTable(table, startDateId, endDateId, applyFilterBtnId, resetFilterBtnId,
@@ -191,6 +223,24 @@
 
                 var table = $('#transaksi');
                 initializeDataTable(table, 'startDate', 'endDate', 'applyFilter', 'resetFilter', 5);
+
+                const startDateInput = document.getElementById("startDate");
+                const endDateInput = document.getElementById("endDate");
+
+                startDateInput.addEventListener("input", function() {
+                    endDateInput.min = this.value;
+                    if (this.value == '') {
+                        endDateInput.value = '';
+                        endDateInput.disabled = true;
+                    } else {
+                        endDateInput.disabled = false;
+                    }
+                    console.log(this.value);
+                });
+
+                endDateInput.addEventListener("input", function() {
+                    startDateInput.max = this.value;
+                });
             });
         </script>
 

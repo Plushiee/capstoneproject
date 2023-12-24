@@ -66,7 +66,7 @@
                 <div class="box p-a">
                     <div class="pull-left m-r">
                         <span class="w-48 rounded danger">
-                            <i class="material-icons">&#xe5c9;</i>
+                            <i class="material-icons">&#xe0b9;</i>
                         </span>
                     </div>
                     <div class="clear">

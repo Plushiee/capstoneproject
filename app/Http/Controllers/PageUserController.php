@@ -544,7 +544,8 @@ class PageUserController extends Controller
                 DB::raw('sum(jumlah_kunjungan) as total_kunjungan'),
             )
             ->whereYear('tbl_pengunjungs.created_at', $now->year)
-            ->get();;
+            ->get();
+        ;
         $banyakPengunjungPerHari = TblPengunjungModel::join('tbl_pesanans', 'tbl_pesanans.id', '=', 'tbl_pengunjungs.id_pesanan')
             ->select(
                 'id_pesanan',
@@ -701,6 +702,29 @@ class PageUserController extends Controller
 
             return redirect()->route('adminAkunAdmin')->with('successEditAdmin', 'Data Admin Berhasil Di Update');
         }
+    }
+
+    public function laporanTransaksi($tanggalMulai = null, $tanggalAkhir = null)
+    {
+        if (!$tanggalMulai) {
+            $pesanan = TblPesanansModel::leftJoin('tbl_users', 'tbl_users.id', '=', 'tbl_pesanans.id_user')
+            ->leftJoin('tbl_produks', 'tbl_produks.id', '=', 'tbl_pesanans.id_produk')
+            ->select('tbl_pesanans.*', 'tbl_produks.nama_produk', 'tbl_users.nama')
+            ->get();
+        } else {
+            $tanggalAkhir = $tanggalAkhir ?? Carbon::now();
+            $pesanan = TblPesanansModel::leftJoin('tbl_users', 'tbl_users.id', '=', 'tbl_pesanans.id_user')
+            ->leftJoin('tbl_produks', 'tbl_produks.id', '=', 'tbl_pesanans.id_produk')
+            ->whereBetween('tbl_pesanans.created_at', [$tanggalMulai, $tanggalAkhir])
+            ->select('tbl_pesanans.*', 'tbl_produks.nama_produk', 'tbl_users.nama')
+            ->get();
+        }
+
+        return view('admins.download.laporanTransaksi', [
+            'tanggalMulai' => $tanggalMulai,
+            'tanggalAkhir' => $tanggalAkhir,
+            'pesanans' => $pesanan,
+        ]);
     }
     // Admin Selesai
 }

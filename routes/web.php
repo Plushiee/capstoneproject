@@ -98,8 +98,11 @@ Route::middleware(['auth:users'])->group(function () {
 Route::middleware(['auth:admin'])->group(function () {
     Route::permanentRedirect('/home', 'admin/dashboard');
     Route::get('admin/dashboard', 'PageUserController@adminDashboard')->name('adminDashboard');
+
+    // Pesanan
     Route::get('admin/pesanan', 'PageUserController@adminPesanan')->name('adminPesanan');
     Route::post('admin/pesanan/lunas', 'PageUserController@lunas')->name('adminPesananLunas');
+    Route::get('admin/pesanan/laporan/{tanggalMulai?}/{tanggalAkhir?}', 'PageUserController@laporanTransaksi')->name('adminUnduhLaporan');
 
     // User
     Route::get('admin/akun/user', 'PageUserController@adminAkunUser')->name('adminAkunUser');
