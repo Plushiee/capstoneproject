@@ -544,8 +544,7 @@ class PageUserController extends Controller
                 DB::raw('sum(jumlah_kunjungan) as total_kunjungan'),
             )
             ->whereYear('tbl_pengunjungs.created_at', $now->year)
-            ->get();
-        ;
+            ->get();;
         $banyakPengunjungPerHari = TblPengunjungModel::join('tbl_pesanans', 'tbl_pesanans.id', '=', 'tbl_pengunjungs.id_pesanan')
             ->select(
                 'id_pesanan',
@@ -596,11 +595,72 @@ class PageUserController extends Controller
     public function lunas(Request $request)
     {
         $idPesanan = $request->id;
+        $admin = $request->admin;
         $pesanan = TblPesanansModel::find($idPesanan);
         $pesanan->status_pembayaran = 'lunas';
+        $pesanan->status_pesanan = 'dikonfirmasi oleh: ' . $admin;
         $pesanan->save();
         return back()->with('lunas', 'Pesanan dengan ID' . $idPesanan . ' sudah lunas!');
     }
+
+    public function adminProduk()
+    {
+        $produk = TblProduksModel::all();
+        return view('admins.produk', ['produk' => $produk]);
+    }
+    public function produkForm(Request $request)
+    {
+        if ($request->jenis === 'baru') {
+            return view('admins.produk-form', ['tipe' => 'baru']);
+        } else {
+            $id = $request->idProduk;
+            $produk = TblProduksModel::where('id', $id)
+                ->get();
+
+            return view('admins.produk-form', [
+                'produk' => $produk,
+                'tipe' => 'update'
+            ]);
+        }
+    }
+    public function produkSimpan(Request $request)
+    {
+        $id = $request->idProduk;
+        $nama = $request->nama;
+        $harga_asli = $request->harga_asli;
+        $biaya_dasar = $request->biaya_dasar;
+        $aktif = $request->aktif;
+        if ($request->submit === 'baru') {
+
+            $produkUpdate = new TblProduksModel();
+            $produkUpdate->nama_produk = $nama;
+            $produkUpdate->harga_asli = $harga_asli;
+            $produkUpdate->biaya_dasar = $biaya_dasar;
+            $produkUpdate->aktif = $aktif;
+            $produkUpdate->save();
+        } else {
+            $produkAdd = TblProduksModel::find($id);
+            $produkAdd->nama_produk = $nama;
+            $produkAdd->harga_asli = $harga_asli;
+            $produkAdd->biaya_dasar = $biaya_dasar;
+            $produkAdd->aktif = $aktif;
+            $produkAdd->save();
+        }
+
+
+
+        return redirect()->route('adminProduk')->with('success', 'Data Produk Berhasil Di Update');
+        // dd($request->all());
+    }
+    public function produkHapus(Request $request)
+    {
+
+        $id = $request->input('idProduk');
+        TblProduksModel::destroy($id);
+
+        return redirect()->route('adminProduk')->with('success', 'Data User Berhasil Di Hapus');
+    }
+
 
     public function adminAkunUser()
     {
@@ -621,6 +681,7 @@ class PageUserController extends Controller
             'akunUser' => $akunUser,
         ]);
     }
+
 
     public function adminAkunUserSimpan(Request $request)
     {
@@ -647,6 +708,7 @@ class PageUserController extends Controller
         ]);
     }
 
+
     public function adminAkunAdminForm(Request $request)
     {
         if ($request->jenis === 'baru') {
@@ -662,7 +724,6 @@ class PageUserController extends Controller
             ]);
         }
     }
-
     public function adminAkunAdminEdit(Request $request)
     {
         $id = $request->idPengguna;
@@ -708,16 +769,16 @@ class PageUserController extends Controller
     {
         if (!$tanggalMulai) {
             $pesanan = TblPesanansModel::leftJoin('tbl_users', 'tbl_users.id', '=', 'tbl_pesanans.id_user')
-            ->leftJoin('tbl_produks', 'tbl_produks.id', '=', 'tbl_pesanans.id_produk')
-            ->select('tbl_pesanans.*', 'tbl_produks.nama_produk', 'tbl_users.nama')
-            ->get();
+                ->leftJoin('tbl_produks', 'tbl_produks.id', '=', 'tbl_pesanans.id_produk')
+                ->select('tbl_pesanans.*', 'tbl_produks.nama_produk', 'tbl_users.nama')
+                ->get();
         } else {
             $tanggalAkhir = $tanggalAkhir ?? Carbon::now();
             $pesanan = TblPesanansModel::leftJoin('tbl_users', 'tbl_users.id', '=', 'tbl_pesanans.id_user')
-            ->leftJoin('tbl_produks', 'tbl_produks.id', '=', 'tbl_pesanans.id_produk')
-            ->whereBetween('tbl_pesanans.created_at', [$tanggalMulai, $tanggalAkhir])
-            ->select('tbl_pesanans.*', 'tbl_produks.nama_produk', 'tbl_users.nama')
-            ->get();
+                ->leftJoin('tbl_produks', 'tbl_produks.id', '=', 'tbl_pesanans.id_produk')
+                ->whereBetween('tbl_pesanans.created_at', [$tanggalMulai, $tanggalAkhir])
+                ->select('tbl_pesanans.*', 'tbl_produks.nama_produk', 'tbl_users.nama')
+                ->get();
         }
 
         return view('admins.download.laporanTransaksi', [

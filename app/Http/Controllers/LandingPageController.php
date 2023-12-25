@@ -16,7 +16,7 @@ class LandingPageController extends Controller
     {
 
 
-        $produk = TblProduksModel::all();
+        $produk = TblProduksModel::where('aktif', 1)->get();
         $pesanan = TblPesanansModel::all();
         return view('landingpage', ['produk' => $produk, 'pesanan' => $pesanan]);
     }

@@ -8,8 +8,8 @@
     <style>
         @media print {
             /* @page {
-                                                                                                                                                                                                                                                                                                                                                    size: A4 landscape;
-                                                                                                                                                                                                                                                                                                                                                } */
+                                                                                                                                                                                                                                                                                                                                                                size: A4 landscape;
+                                                                                                                                                                                                                                                                                                                                                            } */
 
             #aside,
             .p-a.white.lt.box-shadow {
@@ -106,7 +106,9 @@
                                                 <tr>
                                                     <td>1</td>
                                                     <td>{{ $pesanan->nama_produk }}</td>
-                                                    <td>{{ $pesanan->domain }}</td>
+                                                    <td> <a
+                                                            href="{{ route('domainUndangan', ['domain' => $pesanan->domain]) }}">
+                                                            {{ $pesanan->domain }}</a></td>
                                                     <td>@currency($pesanan->biaya_dasar)</td>
 
                                                     <td class="text-right">@currency($pesanan->biaya_dasar)</td>

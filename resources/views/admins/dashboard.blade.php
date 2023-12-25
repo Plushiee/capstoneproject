@@ -23,10 +23,10 @@
                         </span>
                     </div>
                     <div class="clear">
-                        <h4 class="m-0 text-lg _300"><a href="{{ route('userListTamu') }}">
-                                {{ $banyakPesanan }}
-                                <span class="text-sm"> Kali</span>
-                            </a></h4>
+                        <h4 class="m-0 text-lg _300">
+                            {{ $banyakPesanan }}
+                            <span class="text-sm"> Kali</span>
+                        </h4>
                         <small class="text-muted">Pesanan per {{ now()->locale('id')->monthName }}
                             {{ now()->year }}</small>
                     </div>
@@ -40,7 +40,7 @@
                         </span>
                     </div>
                     <div class="clear">
-                        <h4 class="m-0 text-lg _300"><a href=""> {{ $banyakKonfirmasi }}
+                        <h4 class="m-0 text-lg _300"><a href="{{ route('adminPesanan') }}"> {{ $banyakKonfirmasi }}
                                 <span class="text-sm">Pesanan</span>
                             </a></h4>
                         <small class="text-muted">Menunggu Konfirmasi</small>

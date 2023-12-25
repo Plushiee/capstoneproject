@@ -64,7 +64,8 @@
                                         <td>{{ $pesanan->id }}</td>
                                         <td>{{ $pesanan->nama }}</td>
                                         <td>{{ $pesanan->nama_produk }}</td>
-                                        <td>{{ $pesanan->domain }}</td>
+                                        <td> <a href="{{ route('domainUndangan', ['domain' => $pesanan->domain]) }}">
+                                                {{ $pesanan->domain }}</a></td>
                                         <td>{{ $pesanan->biaya }}</td>
                                         <td>{{ $pesanan->created_at }}</td>
                                         <td>
@@ -74,10 +75,14 @@
                                                         data-target="#confirmOrder">Konfirmasi
                                                         Pembayaran</button>
                                                 @else
-                                                    Belum Konfirmasi
+                                                    <span class="label danger">Belum Konfirmasi</span>
                                                 @endif
                                             @else
-                                                {{ $pesanan->status_pembayaran }}
+                                                <span class="label success">{{ strtoupper($pesanan->status_pembayaran) }}
+                                                </span>
+                                                @if ($pesanan->status_pesanan != null)
+                                                    <span class="label primary"> {{ $pesanan->status_pesanan }}</span>
+                                                @endif
                                             @endif
                                         </td>
                                     </tr>
@@ -104,6 +109,8 @@
                         <form action="{{ route('adminPesananLunas') }}" method="POST">
                             @csrf
                             <input type="hidden" name="id" value="{{ $pesanan->id }}">
+                            <input type="hidden" name="admin"
+                                value="{{ auth()->user()->id . ' - ' . auth()->user()->nama }}">
                             <div class="col mt-2">
                                 <label>Pesan</label>
                                 <textarea id="isiPesan" type="text" class="form-control" placeholder="Masukan Pesan" rows="3" disabled>{{ $pesanan->pesan }}</textarea>
@@ -140,7 +147,7 @@
                         if (endDate == '') {
                             downloadUrl = `/admin/pesanan/laporan/${startDate}`;
                         } else {
-                            downloadUrl =  `/admin/pesanan/laporan/${startDate}/${endDate}`;
+                            downloadUrl = `/admin/pesanan/laporan/${startDate}/${endDate}`;
                         }
                     }
                     window.open(downloadUrl, '_blank');

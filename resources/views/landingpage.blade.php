@@ -282,7 +282,7 @@
                             <div class="member">
                                 <img src="{{ asset('landingpage/assets/img/5.jpg') }}" alt="" />
                                 <h4>{{ $produks->nama_produk }}</h4>
-                                <span class="harga-awal">IDR 100.000 - 150.000</span>
+                                <span class="harga-awal">@currency($produks->harga_asli)</span>
                                 <span class="harga-sekarang">@currency($produks->biaya_dasar)</span>
                                 <div class="link">
                                     @if (auth('users')->check())

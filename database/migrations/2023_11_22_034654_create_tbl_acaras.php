@@ -22,7 +22,7 @@ class CreateTblAcaras extends Migration
             $table->string('tempat_acara')->nullable();
             $table->string('alamat_acara')->nullable();
             $table->enum('countdown', [1, 0])->default(0);
-            $table->string('google_map')->nullable();
+            $table->text('google_map')->nullable();
             $table->string('long_acara')->nullable();
 
             $table->timestamps();

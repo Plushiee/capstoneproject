@@ -16,10 +16,9 @@ class CreateTblProduks extends Migration
         Schema::create('tbl_produks', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('nama_produk');
-            $table->string('jenis_produk');
-            $table->string('nama_file');
-            $table->string('biaya_dasar');
-            $table->string('benefit');
+            $table->integer('harga_asli');
+            $table->integer('biaya_dasar');
+            $table->boolean('aktif')->default(false);
             $table->timestamps();
         });
     }

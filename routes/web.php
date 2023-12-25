@@ -104,6 +104,11 @@ Route::middleware(['auth:admin'])->group(function () {
     Route::post('admin/pesanan/lunas', 'PageUserController@lunas')->name('adminPesananLunas');
     Route::get('admin/pesanan/laporan/{tanggalMulai?}/{tanggalAkhir?}', 'PageUserController@laporanTransaksi')->name('adminUnduhLaporan');
 
+    Route::get('admin/produk', 'PageUserController@adminProduk')->name('adminProduk');
+    Route::post('admin/produk/form', 'PageUserController@produkForm')->name('produkForm');
+    Route::post('admin/produk/simpan', 'PageUserController@produkSimpan')->name('produkSimpan');
+    Route::post('admin/produk/hapus', 'PageUserController@produkHapus')->name('produkHapus');
+
     // User
     Route::get('admin/akun/user', 'PageUserController@adminAkunUser')->name('adminAkunUser');
     Route::post('admin/akun/user/edit', 'PageUserController@adminAkunUserEdit')->name('adminAkunUserEdit');
