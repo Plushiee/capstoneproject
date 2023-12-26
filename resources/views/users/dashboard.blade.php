@@ -94,7 +94,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-xs-6 col-sm-4">
+            <!-- <div class="col-xs-6 col-sm-4">
                 <div class="box p-a">
                     <div class="pull-left m-r">
                         <span class="w-48 rounded pink-500">
@@ -106,7 +106,7 @@
                         <small class="text-muted">Memberikan Hadiah </small>
                     </div>
                 </div>
-            </div>
+            </div> -->
         </div>
 
         <div class="row">
