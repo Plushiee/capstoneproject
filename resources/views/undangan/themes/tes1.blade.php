@@ -186,19 +186,6 @@
                                         </div>
                                     @endforeach
 
-                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                        <div class="youtube">
-                                            <a rel="youtube" href="https://www.youtube.com/watch?v=PjHqsdT8pJQ"
-                                                class="swipebox-video">
-                                                <img src="https://img.youtube.com/vi/PjHqsdT8pJQ/maxresdefault.jpg"
-                                                    class="img img-responsive">
-                                                <div class="youtube-overlay">
-                                                    <i class="fa fa-play-circle"></i>
-                                                </div>
-                                            </a>
-                                        </div>
-                                    </div>
-
                                 </div>
                             </div>
                         </div>

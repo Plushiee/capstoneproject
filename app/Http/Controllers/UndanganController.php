@@ -49,7 +49,7 @@ class UndanganController extends Controller
         // 
         // $idnyaacara = optional($acaranya)->id;
         #
-        $salam = TblSalamsModel::select('tbl_salams.id', 'nama_tamu', 'isi_salam', 'kehadiran', 'tbl_salams.created_at as tanggal_post', 'like_by')->join('tbl_buku_tamus', 'tbl_salams.id_tamu', '=', 'tbl_buku_tamus.id')->orderBy('tbl_salams.created_at', 'desc')->get();
+        $salam = TblSalamsModel::select('tbl_salams.id', 'nama_tamu', 'isi_salam', 'kehadiran', 'tbl_salams.created_at as tanggal_post', 'like_by')->join('tbl_buku_tamus', 'tbl_salams.id_tamu', '=', 'tbl_buku_tamus.id')->orderBy('tbl_salams.created_at', 'desc')->where('tbl_buku_tamus.id_pesanan', $idnyapesanan)->get();
         $ceritanya = TblCeritasModel::where('id_pesanan', $idnyapesanan)->get();
 
         $mempelainya = TblMempelaisModel::where('id_pesanan', $idnyapesanan)->first();
