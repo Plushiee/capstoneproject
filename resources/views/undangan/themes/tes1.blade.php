@@ -10,7 +10,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
 
-    <link rel="icon" href="https://cepetnikah.my.id/assets/users/mIjh78y8ge13b89d99c1a29132e57d2ca/kita.png">
+    <link rel="icon" href="{{ $dir['fotowanita'] }}">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet"
         href="{{ asset('assets/themes/jellyblack/themes-rsvp/sw-vendor/jellyblack/jellyblack.css') }}">
