@@ -71,8 +71,8 @@
                                         <td>
                                             @if ($pesanan->status_pembayaran != 'lunas')
                                                 @if ($pesanan->status_pesanan === 'perlu konfirmasi')
-                                                    <button class="btn btn-raised btn-warning" data-toggle="modal"
-                                                        data-target="#confirmOrder">Konfirmasi
+                                                    <button class="btn btn-raised btn-warning confirmOrderBtn"
+                                                        data-toggle="modal" data-target="#confirmOrder" data-order-id="{{ $pesanan->id }}">Konfirmasi
                                                         Pembayaran</button>
                                                 @else
                                                     <span class="label danger">Belum Konfirmasi</span>
@@ -108,7 +108,7 @@
                             alt="Image" class="img-fluid">
                         <form action="{{ route('adminPesananLunas') }}" method="POST">
                             @csrf
-                            <input type="hidden" name="id" value="{{ $pesanan->id }}">
+                            <input type="hidden" name="id" id="orderIdInput" value="">
                             <input type="hidden" name="admin"
                                 value="{{ auth()->user()->id . ' - ' . auth()->user()->nama }}">
                             <div class="col mt-2">
@@ -139,6 +139,11 @@
         <!-- Download Laporan -->
         <script>
             $(document).ready(function() {
+                $('.confirmOrderBtn').on('click', function() {
+                    var orderId = $(this).data('order-id');
+                    $('#orderIdInput').val(orderId);
+                });
+
                 function download(startDate, endDate) {
                     var downloadUrl = '';
                     if (startDate == '') {

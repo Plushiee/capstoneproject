@@ -14,7 +14,6 @@
                     <i class="bi bi-caret-down-fill caret-icon"></i>
                     <span class="hidden-md-down nav-text m-l-sm text-left">
                         <span class="_500 ">{{ Auth::user()->nama }}</span>
-                        <small class="text-muted">Administrator</small>
                     </span>
                     <span class="avatar w-32">
                         <img src="{{ asset('assets/images/a0.jpg') }}" alt="...">
