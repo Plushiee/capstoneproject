@@ -229,9 +229,6 @@
                         showConfirmButton: false
                     }).then((result) => {
 
-
-                        // location.reload();
-
                     });
                 },
                 error: function(error) {
