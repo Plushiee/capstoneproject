@@ -23,10 +23,8 @@
 <body>
     <div class="form-body">
         <div class="website-logo">
-            <a href="index.html">
-                <div class="logo">
+            <a href="/">
                     <img class="logo-size" src="{{ asset('assets/images/logo-cp.png') }}" alt="logoManToe.png">
-                </div>
             </a>
         </div>
         <div class="row">
