@@ -53,7 +53,8 @@
                                         {{ $mempelainya->nama_panggilan_wanita }}</h3>
                                     <p class="mb-auto"><span id="tanggal-wedding"></span><input id="tgl_wedding"
                                             type="hidden"
-                                            value="{{ $acaranya->where('countdown', 1)->first()->waktu_acara }}"></p>
+                                            value=" {{ $acaranya->where('countdown', 1)->isEmpty() ? $acaranya->first()->waktu_acara : $acaranya->where('countdown', 1)->first()->waktu_acara }}">
+                                    </p>
                                     <figure><img class="img-responsive" style="padding-top: 25px"
                                             src="{{ $dir['fotosampul'] }}">
                                     </figure>
@@ -593,9 +594,11 @@
                 document.getElementById('normalscreen').style.display = 'none';
             }
         }
-        $('#clock').countdown("{{ $acaranya->where('countdown', 1)->first()->waktu_acara }}", function(event) {
-            $(this).html(event.strftime('%DH:%HJ:%MM:%S:D'));
-        });
+        $('#clock').countdown(
+            " {{ $acaranya->where('countdown', 1)->isEmpty() ? $acaranya->first()->waktu_acara : $acaranya->where('countdown', 1)->first()->waktu_acara }}",
+            function(event) {
+                $(this).html(event.strftime('%DH:%HJ:%MM:%S:D'));
+            });
         $(document).ready(function() {
             $("#over-lay-welcome").click(function() {
                 $("#over-lay-welcome").fadeOut(650);
