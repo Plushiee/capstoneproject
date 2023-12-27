@@ -68,7 +68,7 @@
                                         <td>{{ $pesanan->nama_produk }}</td>
                                         <td> <a href="{{ route('domainUndangan', ['domain' => $pesanan->domain]) }}">
                                                 {{ $pesanan->domain }}</a></td>
-                                        <td>{{ $pesanan->biaya }}</td>
+                                        <td>@currency($pesanan->biaya)</td>
                                         <td>{{ $pesanan->created_at }}</td>
                                         <td>
                                             @if ($pesanan->status_pembayaran != 'lunas')
