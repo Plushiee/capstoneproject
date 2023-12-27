@@ -49,6 +49,7 @@
                         <table id="transaksi" class="table table-striped" style="width:100%">
                             <thead>
                                 <tr>
+                                    <th>No.</th>
                                     <th>ID</th>
                                     <th>Nama Pemesan</th>
                                     <th>Jenis Produk</th>
@@ -59,8 +60,9 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($pesanans as $pesanan)
+                                @foreach ($pesanans as $index => $pesanan)
                                     <tr>
+                                        <td>{{ $index+1 }}</td>
                                         <td>{{ $pesanan->id }}</td>
                                         <td>{{ $pesanan->nama }}</td>
                                         <td>{{ $pesanan->nama_produk }}</td>
@@ -234,7 +236,7 @@
                 }
 
                 var table = $('#transaksi');
-                initializeDataTable(table, 'startDate', 'endDate', 'applyFilter', 'resetFilter', 5);
+                initializeDataTable(table, 'startDate', 'endDate', 'applyFilter', 'resetFilter', 6);
 
                 const startDateInput = document.getElementById("startDate");
                 const endDateInput = document.getElementById("endDate");
